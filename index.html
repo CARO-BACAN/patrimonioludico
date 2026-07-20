@@ -8,36 +8,36 @@
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <!-- Configuramos la escena para detectar marcadores tipo pattern -->
-    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono;">
+    <!-- Desactivamos el botón VR y configuramos la escena AR.js -->
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono;" vr-mode-ui="enabled: false">
       
-      <!-- Marcador 1: Mostrará un cubo azul -->
+      <!-- Marcador 1: Emboque -->
       <a-marker type="pattern" url="patt/pattern-emboque.patron.patt">
         <a-box position="0 0.5 0" scale="0.5 0.5 0.5" color="#163354"></a-box>
       </a-marker>
 
-      <!-- Marcador 2: Mostrará una esfera roja -->
-      <a-marker type="pattern" url="marcador2.patt">
+      <!-- Marcador 2: Cambia el nombre al archivo de tu segundo juguete -->
+      <a-marker type="pattern" url="patt/pattern-juguete2.patt">
         <a-sphere position="0 0.5 0" scale="0.5 0.5 0.5" color="#8c2a20"></a-sphere>
       </a-marker>
 
-      <!-- Marcador 3: Mostrará un cilindro azul -->
-      <a-marker type="pattern" url="marcador3.patt">
+      <!-- Marcador 3: Cambia el nombre al archivo de tu tercer juguete -->
+      <a-marker type="pattern" url="patt/pattern-juguete3.patt">
         <a-cylinder position="0 0.5 0" scale="0.5 0.5 0.5" color="#163354"></a-cylinder>
       </a-marker>
 
-      <!-- Marcador 4: Mostrará un cono rojo -->
-      <a-marker type="pattern" url="marcador4.patt">
+      <!-- Marcador 4: Cambia el nombre al archivo de tu cuarto juguete -->
+      <a-marker type="pattern" url="patt/pattern-juguete4.patt">
         <a-cone position="0 0.5 0" scale="0.5 0.5 0.5" color="#8c2a20"></a-cone>
       </a-marker>
 
-      <!-- Marcador 5: Mostrará un anillo (toroide) azul -->
-      <a-marker type="pattern" url="marcador5.patt">
+      <!-- Marcador 5: Cambia el nombre al archivo de tu quinto juguete -->
+      <a-marker type="pattern" url="patt/pattern-juguete5.patt">
         <a-torus position="0 0.5 0" scale="0.3 0.3 0.3" color="#163354"></a-torus>
       </a-marker>
 
-      <!-- Marcador 6: Mostrará un dodecaedro rojo -->
-      <a-marker type="pattern" url="marcador6.patt">
+      <!-- Marcador 6: Cambia el nombre al archivo de tu sexto juguete -->
+      <a-marker type="pattern" url="patt/pattern-juguete6.patt">
         <a-dodecahedron position="0 0.5 0" scale="0.5 0.5 0.5" color="#8c2a20"></a-dodecahedron>
       </a-marker>
 

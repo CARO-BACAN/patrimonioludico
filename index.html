@@ -65,84 +65,36 @@
         line-height: 1.4;
         margin-top: 5px;
       }
-      .option-btn {
-        display: block;
-        width: 100%;
-        margin: 8px 0;
-        padding: 10px;
-        background: #fff;
-        border: 2px solid #163354;
-        color: #163354;
-        font-weight: bold;
-        cursor: pointer;
-        border-radius: 5px;
-        text-align: left;
-      }
-      .option-btn:active {
-        background: #163354;
-        color: #fff;
-      }
-      #progress-container {
-        margin-top: 20px;
-        text-align: center;
-        font-weight: bold;
-        color: #163354;
-        background: #fff;
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px dashed #8c2a20;
-      }
     </style>
 
     <script>
-      // Base de datos de los juguetes
+      // Base de datos de los juguetes solo con curiosidades
       const toyData = {
         'emboque': {
           title: 'Emboque',
-          curiosities: 'El emboque desarrolla la coordinación entre la vista y las manos. Existen muchas formas de jugarlo: algunos intentan embocar la pieza en distintas posiciones para aumentar la dificultad. En Chile es común encontrar emboques elaborados artesanalmente en madera.',
-          question: '¿Cuál es el objetivo principal del emboque?',
-          options: ['Lanzarlo lo más lejos posible.', 'Hacer que la pieza encaje en el palo.', 'Hacerlo girar sobre el suelo.'],
-          correct: 1
+          curiosities: 'El emboque desarrolla la coordinación entre la vista y las manos. Existen muchas formas de jugarlo: algunos intentan embocar la pieza en distintas posiciones para aumentar la dificultad. En Chile es común encontrar emboques elaborados artesanalmente en madera.'
         },
         'polcas': {
           title: 'Polcas',
-          curiosities: 'Las primeras canicas estaban hechas de piedra, barro o arcilla antes de fabricarse en vidrio. Existen numerosos juegos con canicas, cada uno con reglas diferentes. Muchas personas coleccionan canicas por sus colores y diseños únicos.',
-          question: '¿De qué material suelen estar hechas las canicas modernas?',
-          options: ['Madera.', 'Vidrio.', 'Metal.'],
-          correct: 1
+          curiosities: 'Las primeras canicas estaban hechas de piedra, barro o arcilla antes de fabricarse en vidrio. Existen numerosos juegos con canicas, cada uno con reglas diferentes. Muchas personas coleccionan canicas por sus colores y diseños únicos.'
         },
         'runrun': {
           title: 'Runrún',
-          curiosities: 'El sonido del runrún se produce porque el disco gira rápidamente y hace vibrar el aire. Puede fabricarse con madera, plástico o incluso con botones reciclados e hilo. Es uno de los juguetes tradicionales más simples, pero requiere coordinación para mantener el giro.',
-          question: '¿Qué produce el característico sonido del runrún?',
-          options: ['Un pequeño cascabel en su interior.', 'El roce con el suelo.', 'El giro rápido del disco.'],
-          correct: 2
+          curiosities: 'El sonido del runrún se produce porque el disco gira rápidamente y hace vibrar el aire. Puede fabricarse con madera, plástico o incluso con botones reciclados e hilo. Es uno de los juguetes tradicionales más simples, pero requiere coordinación para mantener el giro.'
         },
         'tejo': {
           title: 'Rayuela',
-          curiosities: 'El tejo consiste en lanzar una pieza metálica hacia un cajón con arcilla intentando quedar lo más cerca posible del objetivo. En Chile la rayuela fue reconocida como deporte nacional en 2014. Existen clubes y campeonatos de rayuela en distintas regiones del país.',
-          question: '¿Qué se intenta hacer al jugar rayuela?',
-          options: ['Lanzar el tejo lo más cerca posible del objetivo.', 'Derribar botellas.', 'Golpear una pelota con un palo.'],
-          correct: 0
+          curiosities: 'El tejo consiste en lanzar una pieza metálica hacia un cajón con arcilla intentando quedar lo más cerca posible del objetivo. En Chile la rayuela fue reconocida como deporte nacional en 2014. Existen clubes y campeonatos de rayuela en distintas regiones del país.'
         },
         'trompo': {
           title: 'Trompo',
-          curiosities: 'Los trompos tradicionales suelen fabricarse en madera torneada y llevar una punta metálica que les permite girar por más tiempo. En Chile existen competencias donde gana quien mantiene el trompo girando durante más tiempo o logra realizar distintos trucos. Aunque hoy existen versiones de plástico, muchas personas siguen prefiriendo los trompos de madera por su equilibrio y sonido característico.',
-          question: '¿Con qué elemento se hace girar un trompo tradicional?',
-          options: ['Con una cuerda enrollada.', 'Con una goma elástica.', 'Soplando con fuerza.'],
-          correct: 0
+          curiosities: 'Los trompos tradicionales suelen fabricarse en madera torneada y llevar una punta metálica que les permite girar por más tiempo. En Chile existen competencias donde gana quien mantiene el trompo girando durante más tiempo o logra realizar distintos trucos. Aunque hoy existen versiones de plástico, muchas personas siguen prefiriendo los trompos de madera por su equilibrio y sonido característico.'
         },
         'volantin': {
           title: 'Volantín',
-          curiosities: 'En Chile es una tradición muy ligada a las Fiestas Patrias y al inicio de la primavera. El volantín necesita del viento para elevarse y mantenerse en el aire. Esta ilustración representa un volantín tipo cometa, uno de los diseños más conocidos en Chile.',
-          question: '¿Qué necesita un volantín para poder volar?',
-          options: ['Agua.', 'Arena.', 'Viento.'],
-          correct: 2
+          curiosities: 'En Chile es una tradición muy ligada a las Fiestas Patrias y al inicio de la primavera. El volantín necesita del viento para elevarse y mantenerse en el aire. Esta ilustración representa un volantín tipo cometa, uno de los diseños más conocidos en Chile.'
         }
       };
-
-      // Cargar progreso del LocalStorage
-      let descubiertos = JSON.parse(localStorage.getItem('progreso_juguetes')) || [];
 
       // Componente personalizado para detectar cuando la cámara ve un marcador
       AFRAME.registerComponent('detector-juguetes', {
@@ -157,42 +109,9 @@
 
       // Función para actualizar y mostrar la interfaz
       function mostrarInterfaz(id) {
-        // Lógica de progreso y colección
-        let mensajeNuevo = "";
-        if(!descubiertos.includes(id)) {
-          descubiertos.push(id);
-          localStorage.setItem('progreso_juguetes', JSON.stringify(descubiertos));
-          mensajeNuevo = "✨ ¡Nuevo juego descubierto!\n";
-        }
-        
         const datos = toyData[id];
         document.getElementById('ui-title').innerText = datos.title;
         document.getElementById('ui-curiosities').innerText = datos.curiosities;
-        document.getElementById('ui-question').innerText = datos.question;
-        
-        // Limpiar opciones anteriores y crear nuevas
-        const contenedorOpciones = document.getElementById('ui-options');
-        contenedorOpciones.innerHTML = '';
-        datos.options.forEach((opcion, index) => {
-          const boton = document.createElement('button');
-          boton.className = 'option-btn';
-          boton.innerText = opcion;
-          boton.onclick = () => {
-            if(index === datos.correct) {
-              alert('¡Correcto! ✅');
-            } else {
-              alert('Inténtalo de nuevo ❌');
-            }
-          };
-          contenedorOpciones.appendChild(boton);
-        });
-
-        // Actualizar el texto del progreso inferior
-        let textoProgreso = descubiertos.length + '/6 Completados';
-        if(descubiertos.length === 6) {
-          textoProgreso = "🎉 ¡Colección Completa!";
-        }
-        document.getElementById('progress-text').innerText = mensajeNuevo + textoProgreso;
         
         // Mostrar la ventana
         document.getElementById('ui-container').style.display = 'block';
@@ -215,14 +134,6 @@
       
       <div class="section-title">💡 Curiosidades</div>
       <div class="text-content" id="ui-curiosities">Texto de curiosidades...</div>
-      
-      <div class="section-title">❓ Desafío</div>
-      <div class="text-content" id="ui-question">Pregunta...</div>
-      <div id="ui-options"></div>
-      
-      <div id="progress-container">
-        🏅 Colección: <span id="progress-text">0/6 Completados</span>
-      </div>
     </div>
 
     <!-- Escena AR.js -->

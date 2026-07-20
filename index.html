@@ -6,42 +6,253 @@
     <!-- Importamos A-Frame y AR.js -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <style>
+      /* Estilos para la ventana emergente simulando las tarjetas físicas */
+      #ui-container {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 85%;
+        max-width: 350px;
+        background-color: #f6ecd8; /* Color crema de fondo */
+        border: 4px solid #163354; /* Azul oscuro */
+        border-radius: 8px;
+        padding: 20px;
+        display: none;
+        z-index: 1000;
+        font-family: Arial, sans-serif;
+        color: #333;
+        box-shadow: 0px 8px 16px rgba(0,0,0,0.4);
+      }
+      #ui-container::before {
+        content: "";
+        position: absolute;
+        top: 4px; left: 4px; right: 4px; bottom: 4px;
+        border: 2px solid #8c2a20; /* Borde rojo interior */
+        pointer-events: none;
+      }
+      #close-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #8c2a20;
+        color: white;
+        border: none;
+        font-weight: bold;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        border-radius: 50%;
+        z-index: 1001;
+      }
+      .title {
+        color: #163354;
+        text-align: center;
+        font-size: 1.8em;
+        font-weight: bold;
+        margin-bottom: 15px;
+        margin-top: 5px;
+      }
+      .section-title {
+        font-weight: bold;
+        color: #8c2a20;
+        margin-top: 15px;
+        font-size: 1.1em;
+      }
+      .text-content {
+        font-size: 0.9em;
+        line-height: 1.4;
+        margin-top: 5px;
+      }
+      .option-btn {
+        display: block;
+        width: 100%;
+        margin: 8px 0;
+        padding: 10px;
+        background: #fff;
+        border: 2px solid #163354;
+        color: #163354;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 5px;
+        text-align: left;
+      }
+      .option-btn:active {
+        background: #163354;
+        color: #fff;
+      }
+      #progress-container {
+        margin-top: 20px;
+        text-align: center;
+        font-weight: bold;
+        color: #163354;
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px dashed #8c2a20;
+      }
+    </style>
+
+    <script>
+      // Base de datos de los juguetes
+      const toyData = {
+        'emboque': {
+          title: 'Emboque',
+          curiosities: 'El emboque desarrolla la coordinación entre la vista y las manos. Existen muchas formas de jugarlo: algunos intentan embocar la pieza en distintas posiciones para aumentar la dificultad. En Chile es común encontrar emboques elaborados artesanalmente en madera.',
+          question: '¿Cuál es el objetivo principal del emboque?',
+          options: ['Lanzarlo lo más lejos posible.', 'Hacer que la pieza encaje en el palo.', 'Hacerlo girar sobre el suelo.'],
+          correct: 1
+        },
+        'polcas': {
+          title: 'Polcas',
+          curiosities: 'Las primeras canicas estaban hechas de piedra, barro o arcilla antes de fabricarse en vidrio. Existen numerosos juegos con canicas, cada uno con reglas diferentes. Muchas personas coleccionan canicas por sus colores y diseños únicos.',
+          question: '¿De qué material suelen estar hechas las canicas modernas?',
+          options: ['Madera.', 'Vidrio.', 'Metal.'],
+          correct: 1
+        },
+        'runrun': {
+          title: 'Runrún',
+          curiosities: 'El sonido del runrún se produce porque el disco gira rápidamente y hace vibrar el aire. Puede fabricarse con madera, plástico o incluso con botones reciclados e hilo. Es uno de los juguetes tradicionales más simples, pero requiere coordinación para mantener el giro.',
+          question: '¿Qué produce el característico sonido del runrún?',
+          options: ['Un pequeño cascabel en su interior.', 'El roce con el suelo.', 'El giro rápido del disco.'],
+          correct: 2
+        },
+        'tejo': {
+          title: 'Rayuela',
+          curiosities: 'El tejo consiste en lanzar una pieza metálica hacia un cajón con arcilla intentando quedar lo más cerca posible del objetivo. En Chile la rayuela fue reconocida como deporte nacional en 2014. Existen clubes y campeonatos de rayuela en distintas regiones del país.',
+          question: '¿Qué se intenta hacer al jugar rayuela?',
+          options: ['Lanzar el tejo lo más cerca posible del objetivo.', 'Derribar botellas.', 'Golpear una pelota con un palo.'],
+          correct: 0
+        },
+        'trompo': {
+          title: 'Trompo',
+          curiosities: 'Los trompos tradicionales suelen fabricarse en madera torneada y llevar una punta metálica que les permite girar por más tiempo. En Chile existen competencias donde gana quien mantiene el trompo girando durante más tiempo o logra realizar distintos trucos. Aunque hoy existen versiones de plástico, muchas personas siguen prefiriendo los trompos de madera por su equilibrio y sonido característico.',
+          question: '¿Con qué elemento se hace girar un trompo tradicional?',
+          options: ['Con una cuerda enrollada.', 'Con una goma elástica.', 'Soplando con fuerza.'],
+          correct: 0
+        },
+        'volantin': {
+          title: 'Volantín',
+          curiosities: 'En Chile es una tradición muy ligada a las Fiestas Patrias y al inicio de la primavera. El volantín necesita del viento para elevarse y mantenerse en el aire. Esta ilustración representa un volantín tipo cometa, uno de los diseños más conocidos en Chile.',
+          question: '¿Qué necesita un volantín para poder volar?',
+          options: ['Agua.', 'Arena.', 'Viento.'],
+          correct: 2
+        }
+      };
+
+      // Cargar progreso del LocalStorage
+      let descubiertos = JSON.parse(localStorage.getItem('progreso_juguetes')) || [];
+
+      // Componente personalizado para detectar cuando la cámara ve un marcador
+      AFRAME.registerComponent('detector-juguetes', {
+        init: function () {
+          this.el.addEventListener('markerFound', () => {
+            // Extraer el nombre del juguete del ID del marcador
+            let idJuguete = this.el.id.replace('marker-', '');
+            mostrarInterfaz(idJuguete);
+          });
+        }
+      });
+
+      // Función para actualizar y mostrar la interfaz
+      function mostrarInterfaz(id) {
+        // Lógica de progreso y colección
+        let mensajeNuevo = "";
+        if(!descubiertos.includes(id)) {
+          descubiertos.push(id);
+          localStorage.setItem('progreso_juguetes', JSON.stringify(descubiertos));
+          mensajeNuevo = "✨ ¡Nuevo juego descubierto!\n";
+        }
+        
+        const datos = toyData[id];
+        document.getElementById('ui-title').innerText = datos.title;
+        document.getElementById('ui-curiosities').innerText = datos.curiosities;
+        document.getElementById('ui-question').innerText = datos.question;
+        
+        // Limpiar opciones anteriores y crear nuevas
+        const contenedorOpciones = document.getElementById('ui-options');
+        contenedorOpciones.innerHTML = '';
+        datos.options.forEach((opcion, index) => {
+          const boton = document.createElement('button');
+          boton.className = 'option-btn';
+          boton.innerText = opcion;
+          boton.onclick = () => {
+            if(index === datos.correct) {
+              alert('¡Correcto! ✅');
+            } else {
+              alert('Inténtalo de nuevo ❌');
+            }
+          };
+          contenedorOpciones.appendChild(boton);
+        });
+
+        // Actualizar el texto del progreso inferior
+        let textoProgreso = descubiertos.length + '/6 Completados';
+        if(descubiertos.length === 6) {
+          textoProgreso = "🎉 ¡Colección Completa!";
+        }
+        document.getElementById('progress-text').innerText = mensajeNuevo + textoProgreso;
+        
+        // Mostrar la ventana
+        document.getElementById('ui-container').style.display = 'block';
+      }
+
+      // Cerrar la ventana al hacer clic en la X
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById('close-btn').addEventListener('click', () => {
+          document.getElementById('ui-container').style.display = 'none';
+        });
+      });
+    </script>
   </head>
   <body style="margin: 0; overflow: hidden;">
-    <!-- Desactivamos el botón VR y configuramos la escena AR.js -->
+    
+    <!-- Contenedor de la Interfaz UI Emergente -->
+    <div id="ui-container">
+      <button id="close-btn">X</button>
+      <div class="title" id="ui-title">Título</div>
+      
+      <div class="section-title">💡 Curiosidades</div>
+      <div class="text-content" id="ui-curiosities">Texto de curiosidades...</div>
+      
+      <div class="section-title">❓ Desafío</div>
+      <div class="text-content" id="ui-question">Pregunta...</div>
+      <div id="ui-options"></div>
+      
+      <div id="progress-container">
+        🏅 Colección: <span id="progress-text">0/6 Completados</span>
+      </div>
+    </div>
+
+    <!-- Escena AR.js -->
     <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono;" vr-mode-ui="enabled: false">
       
-      <!-- Marcador 1: Emboque -->
-      <a-marker type="pattern" url="patt/pattern-emboque.patt">
+      <!-- Agregamos los IDs y el componente detector a cada marcador -->
+      <a-marker id="marker-emboque" type="pattern" url="patt/pattern-emboque.patt" detector-juguetes>
         <a-box position="0 0.5 0" scale="0.5 0.5 0.5" color="#163354"></a-box>
       </a-marker>
 
-      <!-- Marcador 2: Polcas -->
-      <a-marker type="pattern" url="patt/pattern-polcas.patt">
+      <a-marker id="marker-polcas" type="pattern" url="patt/pattern-polcas.patt" detector-juguetes>
         <a-sphere position="0 0.5 0" scale="0.5 0.5 0.5" color="#8c2a20"></a-sphere>
       </a-marker>
 
-      <!-- Marcador 3: Runrun -->
-      <a-marker type="pattern" url="patt/pattern-runrun.patt">
+      <a-marker id="marker-runrun" type="pattern" url="patt/pattern-runrun.patt" detector-juguetes>
         <a-cylinder position="0 0.5 0" scale="0.5 0.5 0.5" color="#163354"></a-cylinder>
       </a-marker>
 
-      <!-- Marcador 4: Tejo -->
-      <a-marker type="pattern" url="patt/pattern-tejo.patt">
+      <a-marker id="marker-tejo" type="pattern" url="patt/pattern-tejo.patt" detector-juguetes>
         <a-dodecahedron position="0 0.5 0" scale="0.5 0.5 0.5" color="#8c2a20"></a-dodecahedron>
       </a-marker>
 
-      <!-- Marcador 5: Trompo -->
-      <a-marker type="pattern" url="patt/pattern-trompo.patt">
+      <a-marker id="marker-trompo" type="pattern" url="patt/pattern-trompo.patt" detector-juguetes>
         <a-cylinder position="0 0.5 0" scale="0.5 0.5 0.5" color="#163354"></a-cylinder>
       </a-marker>
 
-      <!-- Marcador 6: Volantín -->
-      <a-marker type="pattern" url="patt/pattern-volantin.patt">
+      <a-marker id="marker-volantin" type="pattern" url="patt/pattern-volantin.patt" detector-juguetes>
         <a-dodecahedron position="0 0.5 0" scale="0.5 0.5 0.5" color="#8c2a20"></a-dodecahedron>
       </a-marker>
 
-      <!-- Cámara de la experiencia -->
       <a-entity camera></a-entity>
     </a-scene>
   </body>

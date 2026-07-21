@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca de Recursos</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #f6ecd8;
+      color: #163354;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .btn-back {
+      background-color: #163354;
+      color: white;
+      text-decoration: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      border: 4px solid #163354;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    }
+    h1 { color: #8c2a20; border-bottom: 2px dashed #8c2a20; padding-bottom: 10px; }
+    h2 { color: #163354; margin-top: 30px; display: flex; align-items: center; gap: 10px; }
+    ul { list-style: none; padding: 0; }
+    li { margin-bottom: 15px; }
+    .download-link {
+      display: inline-block;
+      background-color: #f6ecd8;
+      color: #163354;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      border: 1px solid #163354;
+      width: 100%;
+      box-sizing: border-box;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .download-link:hover { background-color: #e5dac1; }
+    .kit-completo {
+      display: block;
+      background-color: #8c2a20;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-top: 40px;
+      border: 2px solid #8c2a20;
+    }
+    @media (min-width: 768px) {
+      .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="btn-back">⬅ Volver</a>
+    <h2>Recursos para el Aula</h2>
+  </header>
+
+  <div class="content">
+    <h1>Material Complementario</h1>
+    <p>Descarga e imprime estas actividades diseñadas para acompañar la experiencia de las tarjetas interactivas.</p>
+
+    <div class="grid">
+      <!-- Sección Crea -->
+      <div class="section">
+        <h2>🎨 Crea</h2>
+        <ul>
+          <li><a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="download-link">Plantilla: Dibuja tu trompo</a></li>
+          <li><a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="download-link">Retícula para canicas</a></li>
+        </ul>
+      </div>
+
+      <!-- Sección Construye -->
+      <div class="section">
+        <h2>✂️ Construye</h2>
+        <ul>
+          <li><a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="download-link">Paso a paso: Tu propio Runrún</a></li>
+          <li><a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="download-link">Estructura del Volantín</a></li>
+        </ul>
+      </div>
+
+      <!-- Sección Juega -->
+      <div class="section">
+        <h2>🎲 Juega</h2>
+        <ul>
+          <li><a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="download-link">Desafío: Puntajes de Rayuela</a></li>
+          <li><a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="download-link">Entrevista a los abuelos</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Botón Kit Completo -->
+    <a href="https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" download class="kit-completo">📥 Descargar Kit Completo (PDF)</a>
+
+  </div>
+
+</body>
+</html>

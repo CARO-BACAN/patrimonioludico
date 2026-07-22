@@ -79,7 +79,7 @@
       'runrun': {
         titulo: 'Runrún',
         juega: 'Se gira el disco central enroscando los hilos y luego se estira de manera rítmica para generar un zumbido constante.',
-        donde: 'En los recreos escolares y juegos de barrio tradicionales.',
+        donde: 'In los recreos escolares y juegos de barrio tradicionales.',
         sabias: 'Su nombre proviene directamente del sonido característico que produce el giro veloz del disco.'
       },
       'rayuela': {
@@ -151,7 +151,8 @@
 
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+  <!-- Añadido el parámetro renderer de tu otro proyecto para estabilizar el video webcam -->
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false" renderer="colorManagement: true;">
     
     <a-entity light="type: ambient; color: #ffffff; intensity: 1.0"></a-entity>
 

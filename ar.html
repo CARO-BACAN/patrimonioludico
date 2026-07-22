@@ -84,29 +84,36 @@ canvas.a-canvas {
     embedded
     device-orientation-permission-ui="enabled:false">
     
-    <a-entity light="type: ambient; color: #ffffff; intensity: 1.0"></a-entity>
+    <a-entity light="type: ambient; color: #ffffff; intensity: 2"></a-entity>
+
+<a-entity 
+light="type: directional; 
+color: #ffffff; 
+intensity: 1"
+position="0 2 1">
+</a-entity>
 
     <a-marker type="pattern" url="patt/pattern-trompo.patt" detector-juguete="trompo">
       <a-box 
-position="0 0 0"
+position="0 0.5 0"
 width="1"
 height="1"
 depth="1"></a-box>
     </a-marker>
     <a-marker type="pattern" url="patt/pattern-emboque.patt" detector-juguete="emboque">
-      <a-cylinder position="0 0 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
+      <a-cylinder position="0 0.5 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
     </a-marker>
     <a-marker type="pattern" url="patt/pattern-runrun.patt" detector-juguete="runrun">
-      <a-sphere position="0 0 0" material="color: #2e7d32;" radius="0.5"></a-sphere>
+      <a-sphere position="0 0.5 0" material="color: #2e7d32;" radius="0.5"></a-sphere>
     </a-marker>
     <a-marker type="pattern" url="patt/pattern-tejo.patt" detector-juguete="rayuela">
-      <a-cone position="0 0 0" material="color: #f57f17;" radius-bottom="0.5" height="1"></a-cone>
+      <a-cone position="0 0.5 0" material="color: #f57f17;" radius-bottom="0.5" height="1"></a-cone>
     </a-marker>
     <a-marker type="pattern" url="patt/pattern-volantin.patt" detector-juguete="volantin">
-      <a-plane position="0 0 0" rotation="-90 0 0" material="color: #6a1b9a;" width="0.8" height="0.8"></a-plane>
+      <a-plane position="0 0.5 0" rotation="-90 0 0" material="color: #6a1b9a;" width="0.8" height="0.8"></a-plane>
     </a-marker>
     <a-marker type="pattern" url="patt/pattern-polcas.patt" detector-juguete="polcas">
-      <a-torus position="0 0 0" rotation="90 0 0" material="color: #d84315;" radius="0.4" radius-tubular="0.1"></a-torus>
+      <a-torus position="0 0.5 0" rotation="90 0 0" material="color: #d84315;" radius="0.4" radius-tubular="0.1"></a-torus>
     </a-marker>
 
     <a-entity camera></a-entity>

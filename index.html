@@ -3,99 +3,171 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aprende Jugando - Patrimonio Lúdico</title>
+  <title>Patrimonio Lúdico</title>
   <style>
-    /* Esto arregla que los elementos se salgan de la pantalla */
-    * { box-sizing: border-box; }
+    /* Estilos Base */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background-color: #f6ecd8; color: #163354; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
     
-    body {
-      margin: 0; padding: 20px;
-      font-family: Arial, sans-serif;
-      background-color: #f6ecd8;
-      color: #163354;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      min-height: 100vh; text-align: center;
-    }
-    .container {
-      padding: 30px 20px;
-      width: 100%; max-width: 500px;
-      border: 4px solid #163354;
-      border-radius: 12px;
-      background-color: #fff;
-      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-      position: relative;
-    }
-    .container::before {
-      content: ""; position: absolute;
-      top: 6px; left: 6px; right: 6px; bottom: 6px;
-      border: 2px solid #8c2a20;
-      pointer-events: none; border-radius: 8px;
-    }
-    h1 { font-size: 2em; margin: 0 0 15px 0; color: #163354; }
-    p { font-size: 1.05em; line-height: 1.5; margin: 0 0 20px 0; padding: 0 10px; }
+    /* Contenedor Principal */
+    .app-container { width: 100%; max-width: 500px; background-color: #fff; min-height: 100vh; position: relative; overflow-x: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
     
-    .input-clave {
-      padding: 12px; width: 85%; max-width: 300px;
-      font-size: 1.1em; text-align: center;
-      border: 2px solid #163354; border-radius: 8px;
-      margin-bottom: 15px; font-family: Arial, sans-serif;
-    }
-    .btn {
-      display: block; width: 85%; max-width: 300px;
-      margin: 10px auto; padding: 15px;
-      font-size: 1.1em; font-weight: bold;
-      text-decoration: none; border-radius: 8px;
-      transition: transform 0.2s; cursor: pointer;
-    }
-    .btn-ingresar { background-color: #163354; color: #fff; border: none; }
-    .btn-ar { background-color: #163354; color: #fff; border: 2px solid #163354; }
-    .btn-recursos { background-color: #8c2a20; color: #fff; border: 2px solid #8c2a20; }
-    .btn:active { transform: scale(0.95); }
+    /* Encabezado */
+    .header { background-color: #163354; color: #fff; padding: 20px; text-align: center; position: relative; }
+    .header h1 { font-size: 1.5em; margin-bottom: 5px; }
+    .back-btn { position: absolute; left: 15px; top: 20px; color: #fff; text-decoration: none; font-size: 1.2em; display: none; cursor: pointer; }
     
-    #error-msg { color: #8c2a20; font-weight: bold; display: none; margin-top: 10px; font-size: 0.9em; }
+    /* Secciones (Pantallas) */
+    .screen { display: none; padding: 20px; animation: fadeIn 0.3s; }
+    .screen.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Botones Genéricos */
+    .btn { display: block; width: 100%; padding: 15px; margin-bottom: 15px; font-size: 1.1em; font-weight: bold; text-align: center; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; transition: transform 0.1s; }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background-color: #163354; color: #fff; }
+    .btn-secondary { background-color: #8c2a20; color: #fff; }
+    .btn-outline { background-color: transparent; border: 2px solid #163354; color: #163354; }
+
+    /* Pantalla 1: Login */
+    .login-box { text-align: center; padding-top: 40px; }
+    .input-clave { width: 100%; padding: 15px; font-size: 1.2em; text-align: center; border: 2px solid #163354; border-radius: 8px; margin: 20px 0; text-transform: uppercase; }
+    #error-msg { color: #8c2a20; font-weight: bold; display: none; margin-top: 10px; }
+
+    /* Pantalla 2: Inicio y Guía */
+    .guide-box { background-color: #f9f9f9; border-left: 4px solid #8c2a20; padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0; }
+    .guide-box h3 { margin-bottom: 10px; font-size: 1.1em; color: #8c2a20; }
+    .guide-step { margin-bottom: 10px; display: flex; align-items: flex-start; }
+    .guide-step span { font-weight: bold; margin-right: 10px; color: #163354; }
+    .guide-step p { font-size: 0.95em; line-height: 1.4; color: #333; }
+
+    /* Pantalla 3: Simulación AR */
+    .ar-view { background-color: #333; height: 300px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; margin-bottom: 20px; position: relative; border: 2px dashed #fff; }
     
-    /* Diseño de la notificación (Toast) */
-    #toast {
-      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-      background-color: #8c2a20; color: white; padding: 12px 24px;
-      border-radius: 8px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-      opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 1000;
-      width: max-content;
-      max-width: 90%;
-    }
+    /* Pantalla 4 y 5: Juguete y Curiosidades */
+    .toy-title { font-size: 1.8em; color: #8c2a20; text-align: center; margin-bottom: 5px; }
+    .toy-desc { text-align: center; font-size: 1em; color: #555; margin-bottom: 20px; }
+    .curiosity-card { background: #f6ecd8; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #e0d5c1; }
+    .curiosity-card h4 { color: #163354; margin-bottom: 5px; }
+    .curiosity-card p { font-size: 0.95em; color: #444; line-height: 1.4; }
+
+    /* Pantalla 6: Actividades */
+    .activity-card { display: flex; flex-direction: column; border: 2px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff; }
+    .activity-header { display: flex; align-items: center; margin-bottom: 8px; }
+    .activity-icon { font-size: 1.8em; margin-right: 12px; }
+    .activity-title { font-weight: bold; font-size: 1.1em; color: #163354; }
+    .activity-desc { font-size: 0.9em; color: #666; margin-bottom: 15px; }
+    .btn-download { background-color: #f0f0f0; color: #333; padding: 10px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 0.9em; border: 1px solid #ccc; }
   </style>
 </head>
 <body>
 
-  <!-- Notificación emergente -->
-  <div id="toast">¡Acceso correcto! Bienvenida.</div>
-
-  <div class="container">
-    <h1>Aprende Jugando</h1>
-    <p>Descubre el patrimonio lúdico chileno. Explora los juguetes tradicionales en realidad aumentada y accede al material educativo para el aula.</p>
+  <div class="app-container">
     
-    <!-- Sección de Login -->
-    <div id="login-section">
-      <p style="font-size: 0.9em; color: #555;">Ingresa la palabra secreta de tu tarjeta de bienvenida.</p>
-      <input type="text" id="password-input" class="input-clave" placeholder="Palabra secreta">
-      <button onclick="verificarClave()" class="btn btn-ingresar">Entrar</button>
-      <p id="error-msg">Palabra incorrecta, intenta de nuevo.</p>
+    <!-- Encabezado Global -->
+    <div class="header">
+      <span class="back-btn" id="btn-back" onclick="goBack()">❮ Volver</span>
+      <h1>Patrimonio Lúdico</h1>
     </div>
 
-    <!-- Sección de Contenido (Oculta al inicio) -->
-    <div id="content-section" style="display: none;">
-      <a href="ar.html" class="btn btn-ar">👁️ Explorar Tarjetas</a>
-      <a href="recursos.html" class="btn btn-recursos">📚 Biblioteca de Recursos</a>
+    <!-- Pantalla 1: Login -->
+    <div id="screen-login" class="screen active login-box">
+      <p>Ingrese la palabra secreta incluida en su kit.</p>
+      <input type="text" id="password-input" class="input-clave" placeholder="Palabra secreta">
+      <button onclick="verificarClave()" class="btn btn-primary">Entrar</button>
+      <p id="error-msg">Palabra incorrecta, intente de nuevo.</p>
     </div>
+
+    <!-- Pantalla 2: Inicio -->
+    <div id="screen-home" class="screen">
+      <p style="text-align: center; margin-bottom: 20px;">Explora los juguetes tradicionales y utiliza las actividades imprimibles para complementar la experiencia en el aula.</p>
+      
+      <div class="guide-box">
+        <h3>¿Cómo usar el kit?</h3>
+        <div class="guide-step"><span>1️⃣</span><p>Presenta una tarjeta al curso.</p></div>
+        <div class="guide-step"><span>2️⃣</span><p>Escanea el marcador para observar el juguete en realidad aumentada.</p></div>
+        <div class="guide-step"><span>3️⃣</span><p>Comparte las curiosidades en clase.</p></div>
+        <div class="guide-step"><span>4️⃣</span><p>Descarga una actividad pedagógica relacionada.</p></div>
+        <div class="guide-step"><span>5️⃣</span><p>Construyan y jueguen juntos.</p></div>
+      </div>
+
+      <button onclick="navTo('screen-ar')" class="btn btn-primary">📱 Explorar juguetes</button>
+      <button onclick="navTo('screen-activities')" class="btn btn-outline">📚 Actividades imprimibles</button>
+    </div>
+
+    <!-- Pantalla 3: Escáner AR -->
+    <div id="screen-ar" class="screen">
+      <h3 style="text-align: center; margin-bottom: 15px;">Apunta a la tarjeta</h3>
+      <div class="ar-view">
+        <p>[Cámara Activa]</p>
+      </div>
+      <!-- Botón simulador para avanzar al modelo 3D -->
+      <button onclick="navTo('screen-model')" class="btn btn-secondary">Simular: Tarjeta Detectada</button>
+    </div>
+
+    <!-- Pantalla 4: Vista Modelo 3D -->
+    <div id="screen-model" class="screen">
+      <!-- Aquí irá el visor de modelo .glb a futuro -->
+      <div style="background: #e9e9e9; height: 200px; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center;">
+        <span style="font-size: 4em;">🪁</span>
+      </div>
+      
+      <h2 class="toy-title">Volantín</h2>
+      <p class="toy-desc">Juguete tradicional de papel y varillas de coligüe elevado por el viento.</p>
+
+      <button onclick="navTo('screen-curiosities')" class="btn btn-primary">✨ Curiosidades</button>
+      <button onclick="navTo('screen-activities')" class="btn btn-outline">🖍 Ver actividades relacionadas</button>
+    </div>
+
+    <!-- Pantalla 5: Curiosidades -->
+    <div id="screen-curiosities" class="screen">
+      <h2 class="toy-title" style="margin-bottom: 20px;">Curiosidades</h2>
+      
+      <div class="curiosity-card">
+        <h4>¿Cómo se juega?</h4>
+        <p>Se eleva desenrollando hilo mientras el viento impulsa la estructura de papel hacia el cielo.</p>
+      </div>
+      <div class="curiosity-card">
+        <h4>¿Dónde era común verlo?</h4>
+        <p>En cerros y parques despejados durante las tardes de septiembre debido a los vientos primaverales.</p>
+      </div>
+      <div class="curiosity-card">
+        <h4>¿Sabías que...?</h4>
+        <p>Antiguamente los diseños de los volantines representaban escudos y emblemas de diferentes barrios.</p>
+      </div>
+    </div>
+
+    <!-- Pantalla 6: Actividades -->
+    <div id="screen-activities" class="screen">
+      <button class="btn btn-secondary" style="margin-bottom: 25px;">📥 Descargar unidad completa (PDF)</button>
+      
+      <div class="activity-card">
+        <div class="activity-header">
+          <span class="activity-icon">🎨</span>
+          <span class="activity-title">Colorear</span>
+        </div>
+        <p class="activity-desc">Permite reconocer las formas y los colores del volantín y el trompo.</p>
+        <div class="btn-download">Descargar PDF</div>
+      </div>
+
+      <div class="activity-card">
+        <div class="activity-header">
+          <span class="activity-icon">✂️</span>
+          <span class="activity-title">Construcción</span>
+        </div>
+        <p class="activity-desc">Crea un runrún utilizando hilo resistente y un botón grande.</p>
+        <div class="btn-download">Descargar PDF</div>
+      </div>
+    </div>
+
   </div>
 
   <script>
-    // 1. Esto soluciona el problema de tener que poner la clave a cada rato
+    // Memoria de la sesión para la clave
     document.addEventListener("DOMContentLoaded", () => {
       if (sessionStorage.getItem("accesoConcedido") === "true") {
-        document.getElementById("login-section").style.display = "none";
-        document.getElementById("content-section").style.display = "block";
+        document.getElementById("screen-login").classList.remove("active");
+        document.getElementById("screen-home").classList.add("active");
       }
     });
 
@@ -104,27 +176,46 @@
       const claveSecreta = "VOLANTIN26";
 
       if (input === claveSecreta) {
-        // Guarda en la memoria del navegador que ya entró
         sessionStorage.setItem("accesoConcedido", "true");
-        
-        // Muestra la notificación
-        const toast = document.getElementById("toast");
-        toast.style.opacity = "1";
-        
-        // Oculta el login
-        document.getElementById("login-section").style.display = "none";
-        document.getElementById("error-msg").style.display = "none";
-        
-        // Muestra los botones
-        document.getElementById("content-section").style.display = "block";
-
-        // Desaparece la notificación después de 3 segundos
-        setTimeout(() => {
-          toast.style.opacity = "0";
-        }, 3000);
-
+        navTo('screen-home');
       } else {
         document.getElementById('error-msg').style.display = 'block';
+      }
+    }
+
+    // Historial de navegación para el botón "Volver"
+    let historyStack = ['screen-home'];
+
+    function navTo(screenId) {
+      // Ocultar todas las pantallas
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      // Mostrar la pantalla solicitada
+      document.getElementById(screenId).classList.add('active');
+      
+      // Controlar el botón "Volver"
+      const btnBack = document.getElementById('btn-back');
+      if (screenId === 'screen-home' || screenId === 'screen-login') {
+        btnBack.style.display = 'none';
+        historyStack = [screenId]; // Reiniciar historial
+      } else {
+        btnBack.style.display = 'block';
+        if (historyStack[historyStack.length - 1] !== screenId) {
+          historyStack.push(screenId);
+        }
+      }
+    }
+
+    function goBack() {
+      if (historyStack.length > 1) {
+        historyStack.pop(); // Quitar la pantalla actual
+        const previousScreen = historyStack[historyStack.length - 1];
+        
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(previousScreen).classList.add('active');
+        
+        if (previousScreen === 'screen-home') {
+          document.getElementById('btn-back').style.display = 'none';
+        }
       }
     }
   </script>

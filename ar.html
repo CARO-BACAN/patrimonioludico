@@ -3,33 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Patrimonio Lúdico - Explorar AR</title>
+  <title>AR - Patrimonio Lúdico</title>
   
-  <script src="js/aframe.min.js"></script>
-  <script src="js/aframe-ar.js"></script>
+  <!-- Librerías estables vía CDN (las que funcionan en celulares) -->
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
 
+    /* Pantalla táctil de inicio para desbloquear la cámara obligatoriamente */
     #pantalla-carga {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; height: 100dvh;
       background: #163354; color: #ffffff; z-index: 9999999;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 5%; box-sizing: border-box; transition: opacity 0.8s ease; cursor: pointer;
+      text-align: center; padding: 5%; box-sizing: border-box; cursor: pointer;
     }
-    #pantalla-carga h2 { font-size: clamp(1.2rem, 5vw, 1.8rem); margin: 0 0 10px 0; font-weight: 600; }
-    #pantalla-carga p { font-size: clamp(0.9rem, 3.5vw, 1.1rem); margin: 0 0 20px 0; max-width: 600px; color: #f6ecd8; line-height: 1.6; }
+    #pantalla-carga h2 { font-size: 1.5rem; margin-bottom: 10px; }
+    #pantalla-carga p { font-size: 1rem; max-width: 500px; color: #f6ecd8; line-height: 1.5; margin-bottom: 20px; }
+    .texto-empezar { font-size: 0.8rem; color: #f6ecd8; text-transform: uppercase; letter-spacing: 1.5px; font-weight: bold; background-color: #8c2a20; padding: 12px 24px; border-radius: 8px; }
 
-    .texto-empezar {
-      font-size: 0.8rem; color: #f6ecd8; text-transform: uppercase; letter-spacing: 1.5px;
-      font-weight: bold; background-color: #8c2a20; padding: 12px 24px; border-radius: 8px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-    }
-
+    /* Botón de salida */
     .ar-ui-top { position: absolute; top: 20px; left: 20px; z-index: 99999; }
-    .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-flex; align-items: center; }
+    .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; }
 
+    /* Botón flotante de Curiosidades */
     #btn-curiosidades-ar { 
       position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
       z-index: 99999; background-color: #163354; color: white; border: none; 
@@ -37,23 +36,20 @@
       cursor: pointer; box-shadow: 0 6px 12px rgba(0,0,0,0.4); display: none; 
       animation: pulse 1.5s infinite;
     }
-
     @keyframes pulse {
       0% { transform: translateX(-50%) scale(1); }
       50% { transform: translateX(-50%) scale(1.05); }
       100% { transform: translateX(-50%) scale(1); }
     }
 
+    /* Modal */
     #curiosities-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 1000000; align-items: center; justify-content: center; padding: 20px; }
     .modal-content { background: #fff; width: 100%; max-width: 450px; border-radius: 12px; padding: 25px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: left; }
     .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5em; background: none; border: none; cursor: pointer; color: #163354; }
-    
     .toy-title { font-size: 1.5em; color: #8c2a20; margin-bottom: 15px; text-align: center; }
     .curiosity-card { background: #f6ecd8; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #e0d5c1; }
     .curiosity-card h4 { color: #163354; margin-bottom: 4px; font-size: 0.95em; }
     .curiosity-card p { font-size: 0.9em; color: #444; line-height: 1.3; }
-    
-    .btn-secondary { background-color: #8c2a20; color: #fff; width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; font-size: 1em; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-top: 15px; }
   </style>
 
   <script>
@@ -66,39 +62,39 @@
     const datosJuguetes = {
       'trompo': {
         titulo: 'Trompo',
-        juega: 'Se enrolla un cordinel de algodón alrededor del cuerpo de madera y se lanza con fuerza al suelo para hacerlo girar bailando sobre su punta de acero.',
-        donde: 'En las esquinas de los barrios y patios de tierra durante las tardes de otoño y primavera.',
-        sabias: 'Existen campeonatos donde los jugadores compiten midiendo destreza para sacar el trompo del contrincante.'
+        juega: 'Se enrolla un cordinel de algodón alrededor del cuerpo de madera y se lanza con fuerza al suelo.',
+        donde: 'En las esquinas de los barrios y patios de tierra.',
+        sabias: 'Existen campeonatos donde los jugadores compiten midiendo destreza.'
       },
       'emboque': {
         titulo: 'Emboque',
-        juega: 'Se sostiene el madero en la mano y se impulsa la torre de madera hacia arriba intentando insertar el vástago en el agujero central.',
-        donde: 'En plazas y corredores de casas antiguas de todo el sur de nuestro país.',
-        sabias: 'Antiguamente se fabricaban artesanalmente con madera de litre o quillay tallada a mano.'
+        juega: 'Se sostiene el madero y se impulsa la torre hacia arriba intentando insertar el vástago.',
+        donde: 'En plazas y corredores de casas antiguas.',
+        sabias: 'Antiguamente se fabricaban artesanalmente con madera de litre o quillay.'
       },
       'runrun': {
         titulo: 'Runrún',
-        juega: 'Se gira el disco central enroscando los hilos y luego se estira de manera rítmica para generar un zumbido constante.',
-        donde: 'En los recreos escolares y juegos de barrio tradicionales.',
-        sabias: 'Su nombre proviene directamente del sonido característico que produce el giro veloz del disco.'
+        juega: 'Se gira el disco central enroscando los hilos y se estira rítmicamente.',
+        donde: 'En los recreos escolares y juegos de barrio.',
+        sabias: 'Su nombre proviene del sonido característico que produce el giro.'
       },
       'rayuela': {
         titulo: 'Rayuela / Tejo',
-        juega: 'Se lanza un tejo metálico intentando atinar justo sobre la lienza tendida en una cancha de arcilla húmeda.',
-        donde: 'En ramadas, centros de huasos y campeonatos locales a lo largo de Chile.',
-        sabias: 'Es considerado un deporte nacional oficial con estrictas reglas de puntuación.'
+        juega: 'Se lanza un tejo metálico intentando atinar sobre la lienza en arcilla húmeda.',
+        donde: 'En ramadas y campeonatos locales a lo largo de Chile.',
+        sabias: 'Es considerado un deporte nacional oficial.'
       },
       'volantín': {
         titulo: 'Volantín',
-        juega: 'Se eleva desenrollando hilo mientras el viento impulsa la estructura de papel hacia el cielo.',
-        donde: 'En cerros y parques despejados durante las tardes de septiembre.',
-        sabias: 'Los diseños tradicionales llevaban nombres pintorescos como la pavo, el torito o la chicha.'
+        juega: 'Se eleva desenrollando hilo mientras el viento impulsa la estructura de papel.',
+        donde: 'En cerros y parques despejados en septiembre.',
+        sabias: 'Los diseños tradicionales llevaban nombres como la pavo o el torito.'
       },
       'polcas': {
         titulo: 'Polcas',
-        juega: 'Se traza un círculo en el suelo y se lanzan las fichas intentando chocar las de los demás compañeros para sacarlas del área.',
-        donde: 'En los patios de tierra de las escuelas rurales y pasajes vecinales.',
-        sabias: 'Es uno de los juegos de destreza más antiguos traspasados de generación en generación.'
+        juega: 'Se traza un círculo y se lanzan fichas para chocar las de los demás.',
+        donde: 'En patios de tierra de escuelas rurales.',
+        sabias: 'Es uno de los juegos de destreza más antiguos.'
       }
     };
 
@@ -106,12 +102,10 @@
       schema: { type: 'string' },
       init: function () {
         const idJuguete = this.data;
-        
         this.el.addEventListener('markerFound', () => {
           document.getElementById('btn-curiosidades-ar').style.display = 'block';
           actualizarModal(idJuguete);
         });
-        
         this.el.addEventListener('markerLost', () => {
           document.getElementById('btn-curiosidades-ar').style.display = 'none';
         });
@@ -135,19 +129,15 @@
     function cerrarCuriosidades() {
       document.getElementById('curiosities-modal').style.display = 'none';
     }
-
-    function irDesdeModalARecursos() {
-      cerrarCuriosidades();
-      window.location.href = 'recursos.html';
-    }
   </script>
 </head>
 <body style="margin: 0px; overflow: hidden;">
 
+  <!-- Pantalla de inicio para forzar la cámara -->
   <div id="pantalla-carga" onclick="iniciarExperiencia()">
     <h2>Activar Realidad Aumentada</h2>
-    <p>Apunta tu cámara hacia las tarjetas para visualizar los juguetes tradicionales de Chile.</p>
-    <div class="texto-empezar">Toca aquí para empezar</div>
+    <p>Toca la pantalla para encender la cámara y comenzar a escanear.</p>
+    <div class="texto-empezar">Tocar para empezar</div>
   </div>
 
   <div class="ar-ui-top">
@@ -190,21 +180,9 @@
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarCuriosidades()">×</button>
       <h2 class="toy-title" id="modal-titulo">Juguete</h2>
-      
-      <div class="curiosity-card">
-        <h4>¿Cómo se juega?</h4>
-        <p id="modal-juega">Texto...</p>
-      </div>
-      <div class="curiosity-card">
-        <h4>¿Dónde era común verlo?</h4>
-        <p id="modal-donde">Texto...</p>
-      </div>
-      <div class="curiosity-card">
-        <h4>¿Sabías que...?</h4>
-        <p id="modal-sabias">Dato...</p>
-      </div>
-
-      <button onclick="irDesdeModalARecursos()" class="btn btn-secondary">🖍 Ver actividades relacionadas</button>
+      <div class="curiosity-card"><h4>¿Cómo se juega?</h4><p id="modal-juega">-</p></div>
+      <div class="curiosity-card"><h4>¿Dónde era común verlo?</h4><p id="modal-donde">-</p></div>
+      <div class="curiosity-card"><h4>¿Sabías que...?</h4><p id="modal-sabias">-</p></div>
     </div>
   </div>
 

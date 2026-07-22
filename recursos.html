@@ -5,22 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - Recursos</title>
   <style>
+    :root {
+      --azul: #163354;
+      --rojo: #8c2a20;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background-color: #fff; color: #163354; min-height: 100vh; display: flex; flex-direction: column; }
+    body { background-color: #fff; color: var(--azul); min-height: 100vh; display: flex; flex-direction: column; }
     .app-container { width: 100%; min-height: 100vh; background-color: #fff; display: flex; flex-direction: column; }
     
-    .header { background-color: #163354; color: #fff; padding: 20px; text-align: center; position: relative; }
+    .header { background-color: var(--azul); color: #fff; padding: 20px; text-align: center; position: relative; }
     .header h1 { font-size: 1.5em; }
     .back-btn { position: absolute; left: 15px; top: 20px; color: #fff; text-decoration: none; font-size: 1em; background: none; border: none; cursor: pointer; font-weight: bold; }
 
     .content { padding: 20px; max-width: 600px; margin: 0 auto; width: 100%; flex: 1; }
     
-    .btn-secondary { background-color: #8c2a20; color: #fff; width: 100%; padding: 16px; border-radius: 8px; border: none; font-weight: bold; font-size: 1.1em; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-bottom: 25px; }
+    .btn-secondary { background-color: var(--rojo); color: #fff; width: 100%; padding: 16px; border-radius: 8px; border: none; font-weight: bold; font-size: 1.1em; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-bottom: 25px; }
 
     .activity-card { display: flex; flex-direction: column; border: 2px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff; text-align: left; }
     .activity-header { display: flex; align-items: center; margin-bottom: 8px; }
     .activity-icon { font-size: 1.8em; margin-right: 12px; }
-    .activity-title { font-weight: bold; font-size: 1.1em; color: #163354; }
+    .activity-title { font-weight: bold; font-size: 1.1em; color: var(--azul); }
     .activity-desc { font-size: 0.9em; color: #666; margin-bottom: 15px; line-height: 1.4; }
     .btn-download { background-color: #f0f0f0; color: #333; padding: 12px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 0.9em; border: 1px solid #ccc; text-decoration: none; display: block; }
   </style>

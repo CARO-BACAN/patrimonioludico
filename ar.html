@@ -10,54 +10,162 @@
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body, html { width: 100%; height: 100%; overflow: hidden; background-color: transparent !important; }
+    
+    /* Layout Responsivo Total para la vista AR */
+    body, html { 
+      width: 100%; 
+      height: 100%; 
+      overflow: hidden; 
+      background-color: #000; 
+    }
 
-    /* FORZAR VISIBILIDAD DE LA CÁMARA */
-    canvas.a-canvas {
+    /* Forzar que el canvas y el contenedor de A-Frame se adapten fluidamente a cualquier pantalla */
+    a-scene {
+      width: 100% !important;
+      height: 100% !important;
       position: absolute !important;
       top: 0 !important;
       left: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      z-index: 1 !important;
-      background: transparent !important;
     }
 
-    video {
+    canvas.a-canvas {
+      width: 100vw !important;
+      height: 100vh !important;
       position: absolute !important;
-      top: 50% !important;
-      left: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      width: 100% !important;
-      height: 100% !important;
-      object-fit: cover !important;
-      z-index: 0 !important;
+      top: 0 !important;
+      left: 0 !important;
     }
 
-    .ar-ui-top { position: absolute; top: 20px; left: 20px; z-index: 99999; }
-    .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-flex; align-items: center; }
+    /* Interfaz de usuario responsiva adaptada a bordes seguros */
+    .ar-ui-top { 
+      position: absolute; 
+      top: env(safe-area-inset-top, 20px); 
+      left: 20px; 
+      z-index: 99999; 
+    }
+    
+    .ar-btn { 
+      background-color: #8c2a20; 
+      color: white; 
+      border: none; 
+      padding: 12px 20px; 
+      border-radius: 8px; 
+      font-weight: bold; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+      text-decoration: none; 
+      display: inline-flex; 
+      align-items: center; 
+    }
 
     #btn-curiosidades-ar { 
-      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
-      z-index: 99999; background-color: #163354; color: white; border: none; 
-      padding: 15px 25px; border-radius: 30px; font-weight: bold; font-size: 1.1em; 
-      cursor: pointer; box-shadow: 0 6px 12px rgba(0,0,0,0.4); display: none; 
+      position: absolute; 
+      bottom: max(30px, env(safe-area-inset-bottom, 30px)); 
+      left: 50%; 
+      transform: translateX(-50%); 
+      z-index: 99999; 
+      background-color: #163354; 
+      color: white; 
+      border: none; 
+      padding: 14px 24px; 
+      border-radius: 30px; 
+      font-weight: bold; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4); 
+      display: none; 
       animation: pulse 1.5s infinite;
+      white-space: nowrap;
     }
+
     @keyframes pulse {
       0% { transform: translateX(-50%) scale(1); }
       50% { transform: translateX(-50%) scale(1.05); }
       100% { transform: translateX(-50%) scale(1); }
     }
 
-    #curiosities-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 1000000; align-items: center; justify-content: center; padding: 20px; }
-    .modal-content { background: #fff; width: 100%; max-width: 450px; border-radius: 12px; padding: 25px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: left; }
-    .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5em; background: none; border: none; cursor: pointer; color: #163354; }
-    .toy-title { font-size: 1.5em; color: #8c2a20; margin-bottom: 15px; text-align: center; }
-    .curiosity-card { background: #f6ecd8; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #e0d5c1; }
-    .curiosity-card h4 { color: #163354; margin-bottom: 4px; font-size: 0.95em; }
-    .curiosity-card p { font-size: 0.9em; color: #444; line-height: 1.3; }
-    .btn-secondary { background-color: #8c2a20; color: #fff; width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; font-size: 1em; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-top: 15px; }
+    /* Modal adaptativo para móviles y escritorios */
+    #curiosities-modal { 
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100vw; 
+      height: 100vh; 
+      background: rgba(0,0,0,0.7); 
+      z-index: 1000000; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 15px; 
+    }
+    
+    .modal-content { 
+      background: #fff; 
+      width: 100%; 
+      max-width: 450px; 
+      border-radius: 12px; 
+      padding: 20px; 
+      max-height: 90vh; 
+      overflow-y: auto; 
+      position: relative; 
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+      text-align: left; 
+    }
+    
+    .modal-close { 
+      position: absolute; 
+      top: 12px; 
+      right: 15px; 
+      font-size: 1.5rem; 
+      background: none; 
+      border: none; 
+      cursor: pointer; 
+      color: #163354; 
+    }
+    
+    .toy-title { 
+      font-size: 1.4rem; 
+      color: #8c2a20; 
+      margin-bottom: 12px; 
+      text-align: center; 
+    }
+    
+    .curiosity-card { 
+      background: #f6ecd8; 
+      padding: 10px 12px; 
+      border-radius: 8px; 
+      margin-bottom: 10px; 
+      border: 1px solid #e0d5c1; 
+    }
+    
+    .curiosity-card h4 { 
+      color: #163354; 
+      margin-bottom: 3px; 
+      font-size: 0.9rem; 
+    }
+    
+    .curiosity-card p { 
+      font-size: 0.85rem; 
+      color: #444; 
+      line-height: 1.3; 
+    }
+    
+    .btn-secondary { 
+      background-color: #8c2a20; 
+      color: #fff; 
+      width: 100%; 
+      padding: 12px; 
+      border-radius: 8px; 
+      border: none; 
+      font-weight: bold; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      text-align: center; 
+      text-decoration: none; 
+      display: block; 
+      margin-top: 12px; 
+    }
   </style>
 
   <script>
@@ -145,7 +253,7 @@
 
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720;" vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true;">
     <a-entity light="type: ambient; color: #ffffff; intensity: 1.0"></a-entity>
 
     <a-marker type="pattern" url="patt/pattern-trompo.patt" detector-juguete="trompo">

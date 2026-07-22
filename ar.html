@@ -2,11 +2,9 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <!-- Meta clave para evitar zooms extraños y asegurar responsividad móvil -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - Explorar AR</title>
   
-  <!-- A-Frame y AR.js con optimización móvil -->
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
 
@@ -14,11 +12,9 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
 
-    /* Botón de salida fijo arriba a la izquierda */
     .ar-ui-top { position: absolute; top: 20px; left: 20px; z-index: 100; }
     .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-flex; align-items: center; }
 
-    /* Botón de Curiosidades flotante (Oculto por defecto, aparece al detectar el marcador) */
     #btn-curiosidades-ar { 
       position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
       z-index: 100; background-color: #163354; color: white; border: none; 
@@ -33,7 +29,6 @@
       100% { transform: translateX(-50%) scale(1); }
     }
 
-    /* Modal de Curiosidades */
     #curiosities-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; padding: 20px; }
     .modal-content { background: #fff; width: 100%; max-width: 450px; border-radius: 12px; padding: 25px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: left; }
     .modal-close { position: absolute; top: 15px; right: 15px; font-size: 1.5em; background: none; border: none; cursor: pointer; color: #163354; }
@@ -48,43 +43,40 @@
 </head>
 <body>
 
-  <!-- Botón Salir -->
   <div class="ar-ui-top">
     <a href="index.html" class="ar-btn">❮ Salir</a>
   </div>
 
-  <!-- Botón de Curiosidades que solo aparece al detectar un juguete -->
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <!-- Escena AR.js con configuración limpia para celulares -->
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;" vr-mode-ui="enabled: false">
     
-    <!-- 1. TROMPO (Cubo rojo) -->
+    <!-- 1. TROMPO -->
     <a-marker type="pattern" url="marcador/trompo.patt" id="marker-trompo" emitevents="true">
-      <a-box position="0 0.5 0" material=color: #8c2a20;" scale="0.6 0.6 0.6"></a-box>
+      <a-box position="0 0.5 0" material="color: #8c2a20;" scale="0.6 0.6 0.6"></a-box>
     </a-marker>
 
-    <!-- 2. EMBOQUE (Cilindro azul) -->
-    <a-marker type="pattern" url="marcadors/emboque.patt" id="marker-emboque" emitevents="true">
+    <!-- 2. EMBOQUE -->
+    <a-marker type="pattern" url="marcador/emboque.patt" id="marker-emboque" emitevents="true">
       <a-cylinder position="0 0.5 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
     </a-marker>
 
-    <!-- 3. RUNRUN (Esfera verde) -->
+    <!-- 3. RUNRUN -->
     <a-marker type="pattern" url="marcador/runrun.patt" id="marker-runrun" emitevents="true">
       <a-sphere position="0 0.5 0" material="color: #2e7d32;" radius="0.5"></a-sphere>
     </a-marker>
 
-    <!-- 4. RAYUELA / TEJO (Cono amarillo) -->
+    <!-- 4. RAYUELA -->
     <a-marker type="pattern" url="marcador/tejo.patt" id="marker-rayuela" emitevents="true">
       <a-cone position="0 0.5 0" material="color: #f57f17;" radius-bottom="0.5" height="1"></a-cone>
     </a-marker>
 
-    <!-- 5. VOLANTÍN (Plano violeta) -->
+    <!-- 5. VOLANTÍN -->
     <a-marker type="pattern" url="marcador/volantin.patt" id="marker-volantin" emitevents="true">
       <a-plane position="0 0.5 0" rotation="-90 0 0" material="color: #6a1b9a;" width="0.8" height="0.8"></a-plane>
     </a-marker>
 
-    <!-- 6. POLCAS (Toroide / Rosquilla anaranjada) -->
+    <!-- 6. POLCAS -->
     <a-marker type="pattern" url="marcador/polcas.patt" id="marker-polcas" emitevents="true">
       <a-torus position="0 0.5 0" rotation="90 0 0" material="color: #d84315;" radius="0.4" radius-tubular="0.1"></a-torus>
     </a-marker>
@@ -92,7 +84,6 @@
     <a-entity camera></a-entity>
   </a-scene>
 
-  <!-- Modal dinámico de Curiosidades -->
   <div id="curiosities-modal">
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarCuriosidades()">×</button>
@@ -116,7 +107,6 @@
   </div>
 
   <script>
-    // Base de datos temporal para los textos de cada juguete según el marcador detectado
     const datosJuguetes = {
       'trompo': {
         titulo: 'Trompo',
@@ -156,24 +146,20 @@
       }
     };
 
-    let jugueteActual = 'trompo'; // Por defecto
-
-    // Detección automática de eventos de marcadores en A-Frame
     const juguetesIDs = ['trompo', 'emboque', 'runrun', 'rayuela', 'volantin', 'polcas'];
 
     juguetesIDs.forEach(id => {
       const marcador = document.querySelector(`#marker-${id}`);
-      
-      marcador.addEventListener('targetFound', () => {
-        jugueteActual = id;
-        document.getElementById('btn-curiosidades-ar').style.display = 'block';
-        actualizarModal(id);
-      });
+      if(marcador) {
+        marcador.addEventListener('targetFound', () => {
+          document.getElementById('btn-curiosidades-ar').style.display = 'block';
+          actualizarModal(id);
+        });
 
-      marcador.addEventListener('targetLost', () => {
-        // Ocultar botón si el marcador sale de la cámara
-        document.getElementById('btn-curiosidades-ar').style.display = 'none';
-      });
+        marcador.addEventListener('targetLost', () => {
+          document.getElementById('btn-curiosidades-ar').style.display = 'none';
+        });
+      }
     });
 
     function actualizarModal(id) {

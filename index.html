@@ -26,6 +26,7 @@
       background-color: #fff;
       box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
       position: relative;
+      width: 85%;
     }
     .container::before {
       content: "";
@@ -43,19 +44,36 @@
     p {
       font-size: 1.1em;
       line-height: 1.5;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       padding: 0 15px;
+    }
+    .input-clave {
+      padding: 12px;
+      width: 70%;
+      font-size: 1.2em;
+      text-align: center;
+      border: 2px solid #163354;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-family: Arial, sans-serif;
     }
     .btn {
       display: block;
       width: 80%;
-      margin: 15px auto;
+      margin: 10px auto;
       padding: 15px;
       font-size: 1.2em;
       font-weight: bold;
       text-decoration: none;
       border-radius: 8px;
       transition: transform 0.2s;
+      cursor: pointer;
+    }
+    .btn-ingresar {
+      background-color: #163354;
+      color: #fff;
+      border: none;
+      width: 50%;
     }
     .btn-ar {
       background-color: #163354;
@@ -70,17 +88,49 @@
     .btn:active {
       transform: scale(0.95);
     }
+    #error-msg {
+      color: #8c2a20;
+      font-weight: bold;
+      display: none;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
   <div class="container">
     <h1>Patrimonio Lúdico</h1>
-    <p>Explora seis juegos tradicionales chilenos mediante realidad aumentada y descubre recursos para seguir aprendiendo y creando.</p>
     
-    <a href="ar.html" class="btn btn-ar">👁️ Explorar Tarjetas</a>
-    <a href="recursos.html" class="btn btn-recursos">📚 Biblioteca de Recursos</a>
+    <!-- Sección de Login -->
+    <div id="login-section">
+      <p>Ingresa la palabra secreta de tu tarjeta de bienvenida para acceder al material.</p>
+      <input type="text" id="password-input" class="input-clave" placeholder="Palabra secreta">
+      <button onclick="verificarClave()" class="btn btn-ingresar">Entrar</button>
+      <p id="error-msg">Palabra incorrecta, intenta de nuevo.</p>
+    </div>
+
+    <!-- Sección de Contenido (Oculta al inicio) -->
+    <div id="content-section" style="display: none;">
+      <p style="color: #163354; font-weight: bold;">¡Acceso concedido! Elige qué deseas hacer:</p>
+      <a href="ar.html" class="btn btn-ar">👁️ Explorar Tarjetas</a>
+      <a href="recursos.html" class="btn btn-recursos">📚 Biblioteca de Recursos</a>
+    </div>
   </div>
+
+  <script>
+    function verificarClave() {
+      // Captura el texto, lo pasa a mayúsculas y quita espacios extra
+      const input = document.getElementById('password-input').value.toUpperCase().trim();
+      const claveSecreta = "VOLANTIN26";
+
+      if (input === claveSecreta) {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('content-section').style.display = 'block';
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+      }
+    }
+  </script>
 
 </body>
 </html>

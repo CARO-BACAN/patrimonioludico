@@ -5,25 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - Explorar AR</title>
   
+  <!-- Librerías estables -->
   <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="https://unpkg.com/aframe-ar@1.4.3/dist/aframe-ar.js"></script>
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
 
+    /* Forzar que el video de AR.js y el canvas ocupen toda la pantalla correctamente */
+    .a-enter-vr { display: none !important; }
+    canvas.a-canvas { width: 100% !important; height: 100% !important; position: absolute !important; top: 0 !important; left: 0 !important; }
+    video { position: absolute !important; top: 50% !important; left: 50% !important; transform: translate(-50%, -50%) !important; width: 100% !important; height: 100% !important; object-fit: cover !important; z-index: 0 !important; }
+
     .ar-ui-top { position: absolute; top: 20px; left: 20px; z-index: 100; }
     .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-flex; align-items: center; }
-
-    /* Pantalla de inicio para activar la cámara manualmente y evitar el pantallazo negro */
-    #permission-screen {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background-color: #163354; z-index: 9999; display: flex;
-      flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; color: white;
-    }
-    #permission-screen h2 { margin-bottom: 15px; font-size: 1.5em; }
-    #permission-screen p { margin-bottom: 25px; font-size: 1em; max-width: 300px; line-height: 1.4; color: #f6ecd8; }
-    .btn-start-cam { background-color: #8c2a20; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
 
     #btn-curiosidades-ar { 
       position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
@@ -53,52 +49,39 @@
 </head>
 <body>
 
-  <!-- Pantalla intermedia para forzar el permiso de la cámara de forma limpia -->
-  <div id="permission-screen">
-    <h2>Activar Cámara AR</h2>
-    <p>Presiona el botón para conceder acceso a la cámara y comenzar a escanear tus tarjetas.</p>
-    <button class="btn-start-cam" onclick="iniciarExperienciaAR()">Permitir y Escanear</button>
-  </div>
-
   <div class="ar-ui-top">
     <a href="index.html" class="ar-btn">❮ Salir</a>
   </div>
 
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <!-- Escena AR.js -->
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;" vr-mode-ui="enabled: false">
     
     <a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>
     <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="-1 2 1"></a-entity>
 
-    <!-- 1. TROMPO -->
+    <!-- Marcadores de tus 6 juguetes -->
     <a-marker type="pattern" url="marcador/trompo.patt" id="marker-trompo" emitevents="true">
       <a-box position="0 0.5 0" material="color: #8c2a20;" scale="0.6 0.6 0.6"></a-box>
     </a-marker>
 
-    <!-- 2. EMBOQUE -->
     <a-marker type="pattern" url="marcador/emboque.patt" id="marker-emboque" emitevents="true">
       <a-cylinder position="0 0.5 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
     </a-marker>
 
-    <!-- 3. RUNRUN -->
     <a-marker type="pattern" url="marcador/runrun.patt" id="marker-runrun" emitevents="true">
       <a-sphere position="0 0.5 0" material="color: #2e7d32;" radius="0.5"></a-sphere>
     </a-marker>
 
-    <!-- 4. RAYUELA -->
     <a-marker type="pattern" url="marcador/tejo.patt" id="marker-rayuela" emitevents="true">
       <a-cone position="0 0.5 0" material="color: #f57f17;" radius-bottom="0.5" height="1"></a-cone>
     </a-marker>
 
-    <!-- 5. VOLANTÍN -->
     <a-marker type="pattern" url="marcador/volantin.patt" id="marker-volantin" emitevents="true">
       <a-plane position="0 0.5 0" rotation="-90 0 0" material="color: #6a1b9a;" width="0.8" height="0.8"></a-plane>
     </a-marker>
 
-    <!-- 6. POLCAS -->
-    <a-marker type="pattern" url="marcador/canicas.patt" id="marker-polcas" emitevents="true">
+    <a-marker type="pattern" url="marcador/polcas.patt" id="marker-polcas" emitevents="true">
       <a-torus position="0 0.5 0" rotation="90 0 0" material="color: #d84315;" radius="0.4" radius-tubular="0.1"></a-torus>
     </a-marker>
 
@@ -128,11 +111,6 @@
   </div>
 
   <script>
-    function iniciarExperienciaAR() {
-      // Oculta la pantalla de permisos y permite que AR.js tome el control del video limpiamente
-      document.getElementById('permission-screen').style.display = 'none';
-    }
-
     const datosJuguetes = {
       'trompo': {
         titulo: 'Trompo',
@@ -178,7 +156,7 @@
       const marcador = document.querySelector(`#marker-${id}`);
       if(marcador) {
         marcador.addEventListener('targetFound', () => {
-          document.getElementById('btn-curiosidades-ar').style.display = 'block';
+          document.getElementById('btn-curiosities-ar').style.display = 'block';
           actualizarModal(id);
         });
 

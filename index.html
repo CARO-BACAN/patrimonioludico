@@ -2,28 +2,34 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - Inicio</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background-color: #f6ecd8; color: #163354; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-    .app-container { width: 100%; max-width: 500px; background-color: #fff; min-height: 100vh; position: relative; box-shadow: 0 0 20px rgba(0,0,0,0.1); padding-bottom: 30px; }
+    
+    /* El body ahora es el lienzo total sin márgenes extraños */
+    body { background-color: #fff; color: #163354; min-height: 100vh; display: flex; flex-direction: column; }
+    
+    /* Contenedor responsivo total para celulares */
+    .app-container { width: 100%; min-height: 100vh; background-color: #fff; display: flex; flex-direction: column; }
+    
     .header { background-color: #163354; color: #fff; padding: 20px; text-align: center; }
     .header h1 { font-size: 1.5em; }
-    .content { padding: 20px; }
     
-    /* Botones con SVG */
-    .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 15px; margin-bottom: 15px; font-size: 1.1em; font-weight: bold; text-align: center; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; }
+    .content { padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 600px; margin: 0 auto; width: 100%; }
+    
+    /* Botones adaptables */
+    .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; margin-bottom: 15px; font-size: 1.1em; font-weight: bold; text-align: center; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; }
     .btn-primary { background-color: #163354; color: #fff; }
     .btn-outline { background-color: transparent; border: 2px solid #163354; color: #163354; }
     .btn svg { width: 22px; height: 22px; fill: currentColor; }
     
     /* Login */
-    .login-box { text-align: center; padding-top: 40px; }
+    .login-box { text-align: center; }
     .input-clave { width: 100%; padding: 15px; font-size: 1.2em; text-align: center; border: 2px solid #163354; border-radius: 8px; margin: 20px 0; text-transform: uppercase; }
     #error-msg { color: #8c2a20; font-weight: bold; display: none; margin-top: 10px; }
 
-    /* Guía estilizada con círculos */
+    /* Guía estilizada */
     .guide-box { background-color: #f9f9f9; border-left: 4px solid #8c2a20; padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0; text-align: left; }
     .guide-box h3 { margin-bottom: 12px; font-size: 1.1em; color: #8c2a20; }
     .guide-step { margin-bottom: 12px; display: flex; align-items: flex-start; }
@@ -35,7 +41,7 @@
 
   <div class="app-container">
     <div class="header">
-      <h1>Aprende jugando</h1>
+      <h1>Patrimonio Lúdico</h1>
     </div>
 
     <!-- Pantalla Login -->
@@ -59,13 +65,11 @@
         <div class="guide-step"><div class="step-number">5</div><p>Construyan y jueguen juntos.</p></div>
       </div>
 
-      <!-- Botón Explorar con SVG de Teléfono/Cámara -->
       <a href="ar.html" class="btn btn-primary">
         <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
         Explorar juguetes
       </a>
 
-      <!-- Botón Actividades con SVG de Libro -->
       <a href="recursos.html" class="btn btn-outline">
         <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
         Actividades imprimibles

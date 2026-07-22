@@ -10,11 +10,29 @@
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+    body, html { width: 100%; height: 100%; overflow: hidden; background-color: transparent !important; }
 
-    /* Estilos limpios y estables para que el canvas y el video se acoplen perfectamente */
-    .a-enter-vr { display: none !important; }
-    canvas.a-canvas { width: 100% !important; height: 100% !important; position: absolute !important; top: 0 !important; left: 0 !important; }
+    /* FORZAR VISIBILIDAD DE LA CÁMARA */
+    canvas.a-canvas {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 1 !important;
+      background: transparent !important;
+    }
+
+    video {
+      position: absolute !important;
+      top: 50% !important;
+      left: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      z-index: 0 !important;
+    }
 
     .ar-ui-top { position: absolute; top: 20px; left: 20px; z-index: 99999; }
     .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-flex; align-items: center; }
@@ -53,7 +71,7 @@
       'emboque': {
         titulo: 'Emboque',
         juega: 'Se sostiene el madero en la mano y se impulsa la torre de madera hacia arriba intentando insertar el vástago en el agujero central.',
-        donde: 'In plazas y corredores de casas antiguas de todo el sur de nuestro país.',
+        donde: 'En plazas y corredores de casas antiguas de todo el sur de nuestro país.',
         sabias: 'Antiguamente se fabricaban artesanalmente con madera de litre o quillay tallada a mano.'
       },
       'runrun': {
@@ -127,7 +145,6 @@
 
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <!-- Escena limpia con los parámetros base originales sin forzar resoluciones rotas -->
   <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
     <a-entity light="type: ambient; color: #ffffff; intensity: 1.0"></a-entity>
 

@@ -2,7 +2,6 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - AR</title>
   
 <script src="js/aframe.min.js"></script>
@@ -80,8 +79,8 @@ canvas.a-canvas {
   <a-scene
     renderer="alpha:true; antialias:true; precision:mediump"
     vr-mode-ui="enabled:false"
-    arjs="sourceType:webcam; debugUIEnabled:false;"
-    device-orientation-permission-ui="enabled:false">
+    arjs="sourceType:webcam; debugUIEnabled:false; sourceWidth:640; sourceHeight:480;"
+    embedded>
     
     <a-entity light="type: ambient; color: #ffffff; intensity: 2"></a-entity>
 

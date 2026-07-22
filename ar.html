@@ -31,19 +31,23 @@ a-scene{
     inset:0;
 }
 
-canvas.a-canvas{
-    position:fixed !important;
-    inset:0;
-    width:100% !important;
-    height:100% !important;
+video {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    object-fit: cover !important;
+    z-index: 0 !important;
 }
 
-video{
-    position:fixed !important;
-    inset:0;
-    width:100% !important;
-    height:100% !important;
-    object-fit:cover !important;
+canvas.a-canvas {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    z-index: 1 !important;
 }
 
     .ar-ui-top { position: fixed; top: 20px; left: 20px; z-index: 99999; }
@@ -87,10 +91,10 @@ video{
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
   <a-scene
+    embedded
     renderer="alpha:true; antialias:true;"
     vr-mode-ui="enabled:false"
-    device-orientation-permission-ui="enabled:false"
-    arjs="sourceType:webcam; debugUIEnabled:false;">
+    arjs="sourceType: webcam; debugUIEnabled:false;">
     
     <a-entity light="type: ambient; color: #ffffff; intensity: 1.0"></a-entity>
 

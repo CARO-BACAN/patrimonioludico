@@ -32,24 +32,12 @@ a-scene{
 }
 
 video {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    object-fit: cover !important;
-    z-index: 0 !important;
+    display: block;
 }
 
 canvas.a-canvas {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    z-index: 1 !important;
+    display: block;
 }
-
     .ar-ui-top { position: fixed; top: 20px; left: 20px; z-index: 99999; }
     .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-block; }
 
@@ -92,7 +80,7 @@ canvas.a-canvas {
 
   <a-scene
     embedded
-    renderer="alpha:true; antialias:true;"
+    renderer="alpha:true"
     vr-mode-ui="enabled:false"
     arjs="sourceType: webcam; debugUIEnabled:false;">
     

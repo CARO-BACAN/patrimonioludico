@@ -15,6 +15,16 @@
     .ar-ui-top { position: absolute; top: 20px; left: 20px; z-index: 100; }
     .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-flex; align-items: center; }
 
+    /* Pantalla de inicio para activar la cámara manualmente y evitar el pantallazo negro */
+    #permission-screen {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background-color: #163354; z-index: 9999; display: flex;
+      flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; color: white;
+    }
+    #permission-screen h2 { margin-bottom: 15px; font-size: 1.5em; }
+    #permission-screen p { margin-bottom: 25px; font-size: 1em; max-width: 300px; line-height: 1.4; color: #f6ecd8; }
+    .btn-start-cam { background-color: #8c2a20; color: white; border: none; padding: 15px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); }
+
     #btn-curiosidades-ar { 
       position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); 
       z-index: 100; background-color: #163354; color: white; border: none; 
@@ -43,14 +53,21 @@
 </head>
 <body>
 
+  <!-- Pantalla intermedia para forzar el permiso de la cámara de forma limpia -->
+  <div id="permission-screen">
+    <h2>Activar Cámara AR</h2>
+    <p>Presiona el botón para conceder acceso a la cámara y comenzar a escanear tus tarjetas.</p>
+    <button class="btn-start-cam" onclick="iniciarExperienciaAR()">Permitir y Escanear</button>
+  </div>
+
   <div class="ar-ui-top">
     <a href="index.html" class="ar-btn">❮ Salir</a>
   </div>
 
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <!-- Escena AR.js con parámetros de estabilidad ajustados para móviles -->
-  <a-scene embedded arjs="sourceType: webcam; sourceWidth: 1280; sourceHeight: 720; displayWidth: 1280; displayHeight: 720; debugUIEnabled: false;" vr-mode-ui="enabled: false" renderer="logarithmicDepthBuffer: true; precision: medium;">
+  <!-- Escena AR.js -->
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;" vr-mode-ui="enabled: false">
     
     <a-entity light="type: ambient; color: #FFF; intensity: 1.0"></a-entity>
     <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="-1 2 1"></a-entity>
@@ -111,6 +128,11 @@
   </div>
 
   <script>
+    function iniciarExperienciaAR() {
+      // Oculta la pantalla de permisos y permite que AR.js tome el control del video limpiamente
+      document.getElementById('permission-screen').style.display = 'none';
+    }
+
     const datosJuguetes = {
       'trompo': {
         titulo: 'Trompo',
@@ -156,7 +178,7 @@
       const marcador = document.querySelector(`#marker-${id}`);
       if(marcador) {
         marcador.addEventListener('targetFound', () => {
-          document.getElementById('btn-curiosities-ar').style.display = 'block';
+          document.getElementById('btn-curiosidades-ar').style.display = 'block';
           actualizarModal(id);
         });
 

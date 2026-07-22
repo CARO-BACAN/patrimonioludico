@@ -3,107 +3,81 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Patrimonio Lúdico Chileno</title>
+  <title>Aprende Jugando - Patrimonio Lúdico</title>
   <style>
+    /* Esto arregla que los elementos se salgan de la pantalla */
+    * { box-sizing: border-box; }
+    
     body {
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 20px;
       font-family: Arial, sans-serif;
       background-color: #f6ecd8;
       color: #163354;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100vh; text-align: center;
     }
     .container {
-      padding: 20px;
-      max-width: 600px;
+      padding: 30px 20px;
+      width: 100%; max-width: 500px;
       border: 4px solid #163354;
       border-radius: 12px;
       background-color: #fff;
       box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
       position: relative;
-      width: 85%;
     }
     .container::before {
-      content: "";
-      position: absolute;
+      content: ""; position: absolute;
       top: 6px; left: 6px; right: 6px; bottom: 6px;
       border: 2px solid #8c2a20;
-      pointer-events: none;
-      border-radius: 8px;
+      pointer-events: none; border-radius: 8px;
     }
-    h1 {
-      font-size: 2.2em;
-      margin-bottom: 10px;
-      color: #163354;
-    }
-    p {
-      font-size: 1.1em;
-      line-height: 1.5;
-      margin-bottom: 20px;
-      padding: 0 15px;
-    }
+    h1 { font-size: 2em; margin: 0 0 15px 0; color: #163354; }
+    p { font-size: 1.05em; line-height: 1.5; margin: 0 0 20px 0; padding: 0 10px; }
+    
     .input-clave {
-      padding: 12px;
-      width: 70%;
-      font-size: 1.2em;
-      text-align: center;
-      border: 2px solid #163354;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-family: Arial, sans-serif;
+      padding: 12px; width: 85%; max-width: 300px;
+      font-size: 1.1em; text-align: center;
+      border: 2px solid #163354; border-radius: 8px;
+      margin-bottom: 15px; font-family: Arial, sans-serif;
     }
     .btn {
-      display: block;
-      width: 80%;
-      margin: 10px auto;
-      padding: 15px;
-      font-size: 1.2em;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: transform 0.2s;
-      cursor: pointer;
+      display: block; width: 85%; max-width: 300px;
+      margin: 10px auto; padding: 15px;
+      font-size: 1.1em; font-weight: bold;
+      text-decoration: none; border-radius: 8px;
+      transition: transform 0.2s; cursor: pointer;
     }
-    .btn-ingresar {
-      background-color: #163354;
-      color: #fff;
-      border: none;
-      width: 50%;
-    }
-    .btn-ar {
-      background-color: #163354;
-      color: #fff;
-      border: 2px solid #163354;
-    }
-    .btn-recursos {
-      background-color: #8c2a20;
-      color: #fff;
-      border: 2px solid #8c2a20;
-    }
-    .btn:active {
-      transform: scale(0.95);
-    }
-    #error-msg {
-      color: #8c2a20;
-      font-weight: bold;
-      display: none;
-      margin-top: 10px;
+    .btn-ingresar { background-color: #163354; color: #fff; border: none; }
+    .btn-ar { background-color: #163354; color: #fff; border: 2px solid #163354; }
+    .btn-recursos { background-color: #8c2a20; color: #fff; border: 2px solid #8c2a20; }
+    .btn:active { transform: scale(0.95); }
+    
+    #error-msg { color: #8c2a20; font-weight: bold; display: none; margin-top: 10px; font-size: 0.9em; }
+    
+    /* Diseño de la notificación (Toast) */
+    #toast {
+      position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+      background-color: #8c2a20; color: white; padding: 12px 24px;
+      border-radius: 8px; font-weight: bold; box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      opacity: 0; transition: opacity 0.5s; pointer-events: none; z-index: 1000;
+      width: max-content;
+      max-width: 90%;
     }
   </style>
 </head>
 <body>
 
+  <!-- Notificación emergente -->
+  <div id="toast">¡Acceso correcto! Bienvenida.</div>
+
   <div class="container">
-    <h1>Patrimonio Lúdico</h1>
+    <h1>Aprende Jugando</h1>
+    <p>Descubre el patrimonio lúdico chileno. Explora los juguetes tradicionales en realidad aumentada y accede al material educativo para el aula.</p>
     
     <!-- Sección de Login -->
     <div id="login-section">
-      <p>Ingresa la palabra secreta de tu tarjeta de bienvenida para acceder al material.</p>
+      <p style="font-size: 0.9em; color: #555;">Ingresa la palabra secreta de tu tarjeta de bienvenida.</p>
       <input type="text" id="password-input" class="input-clave" placeholder="Palabra secreta">
       <button onclick="verificarClave()" class="btn btn-ingresar">Entrar</button>
       <p id="error-msg">Palabra incorrecta, intenta de nuevo.</p>
@@ -111,26 +85,48 @@
 
     <!-- Sección de Contenido (Oculta al inicio) -->
     <div id="content-section" style="display: none;">
-      <p style="color: #163354; font-weight: bold;">¡Acceso concedido! Elige qué deseas hacer:</p>
       <a href="ar.html" class="btn btn-ar">👁️ Explorar Tarjetas</a>
       <a href="recursos.html" class="btn btn-recursos">📚 Biblioteca de Recursos</a>
     </div>
   </div>
 
   <script>
+    // 1. Esto soluciona el problema de tener que poner la clave a cada rato
+    document.addEventListener("DOMContentLoaded", () => {
+      if (sessionStorage.getItem("accesoConcedido") === "true") {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("content-section").style.display = "block";
+      }
+    });
+
     function verificarClave() {
-      // Captura el texto, lo pasa a mayúsculas y quita espacios extra
       const input = document.getElementById('password-input').value.toUpperCase().trim();
       const claveSecreta = "VOLANTIN26";
 
       if (input === claveSecreta) {
-        document.getElementById('login-section').style.display = 'none';
-        document.getElementById('content-section').style.display = 'block';
+        // Guarda en la memoria del navegador que ya entró
+        sessionStorage.setItem("accesoConcedido", "true");
+        
+        // Muestra la notificación
+        const toast = document.getElementById("toast");
+        toast.style.opacity = "1";
+        
+        // Oculta el login
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("error-msg").style.display = "none";
+        
+        // Muestra los botones
+        document.getElementById("content-section").style.display = "block";
+
+        // Desaparece la notificación después de 3 segundos
+        setTimeout(() => {
+          toast.style.opacity = "0";
+        }, 3000);
+
       } else {
         document.getElementById('error-msg').style.display = 'block';
       }
     }
   </script>
-
 </body>
 </html>

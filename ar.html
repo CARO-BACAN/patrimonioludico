@@ -5,15 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - AR</title>
   
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <!-- Error 2: Versión fija de AR.js en lugar de 'master' -->
-  <script src="https://raw.githack.com/AR-js-org/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
-  <!-- Error 12: Textos separados -->
+  <!-- Librerías locales que descargaste -->
+  <script src="js/aframe.min.js"></script>
+  <script src="js/aframe-ar.js"></script>
+  <!-- Archivo de textos separado -->
   <script src="js/datos.js"></script> 
 
   <style>
     :root {
-      /* Error 14: Variables de color */
       --azul: #163354;
       --rojo: #8c2a20;
       --beige: #f6ecd8;
@@ -23,7 +22,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
     body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
 
-    /* Error 4: canvas position fixed */
+    /* Canvas y video fluidos, pegados a la pantalla */
     canvas.a-canvas {
       position: fixed !important; 
       top: 0 !important; 
@@ -33,7 +32,6 @@
       z-index: 1 !important;
     }
 
-    /* Error 3: video fluido sin deformaciones extrañas */
     video {
       width: 100vw !important;
       height: 100vh !important;
@@ -47,51 +45,45 @@
     }
 
     .ar-ui-top { position: fixed; top: 20px; left: 20px; z-index: 99999; }
-    .ar-btn { background-color: var(--rojo); color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; }
+    .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-block; }
 
     #btn-curiosidades-ar { 
       position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); 
-      z-index: 99999; background-color: var(--azul); color: white; border: none; 
+      z-index: 99999; background-color: #163354; color: white; border: none; 
       padding: 14px 24px; border-radius: 30px; font-weight: bold; font-size: 1rem; 
       cursor: pointer; box-shadow: 0 6px 12px rgba(0,0,0,0.4); display: none; 
       animation: pulse 1.5s infinite; white-space: nowrap;
     }
     @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
 
-    /* Errores 9 y 11: Pantallas de Carga y Error */
+    /* Pantalla interactiva que cubre el video hasta que tocas */
     .fullscreen-overlay {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      background: var(--azul); color: white; z-index: 9999999;
+      background: #163354; color: white; z-index: 9999999;
       display: flex; flex-direction: column; justify-content: center; align-items: center;
-      text-align: center; padding: 20px;
+      text-align: center; padding: 20px; cursor: pointer;
     }
     .fullscreen-overlay h2 { margin-bottom: 10px; font-size: 1.5rem; }
-    .fullscreen-overlay p { color: var(--beige); margin-bottom: 25px; max-width: 400px; font-size: 1rem; line-height: 1.4; }
+    .fullscreen-overlay p { color: #f6ecd8; margin-bottom: 25px; max-width: 400px; font-size: 1rem; line-height: 1.4; }
 
-    /* Modal */
+    /* Modal de curiosidades */
     #curiosities-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 1000000; align-items: center; justify-content: center; padding: 15px; }
     .modal-content { background: #fff; width: 100%; max-width: 450px; border-radius: 12px; padding: 20px; max-height: 90vh; overflow-y: auto; position: relative; box-shadow: 0 8px 20px rgba(0,0,0,0.3); text-align: left; }
-    .modal-close { position: absolute; top: 12px; right: 15px; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: var(--azul); }
-    .toy-title { font-size: 1.4rem; color: var(--rojo); margin-bottom: 12px; text-align: center; }
-    .curiosity-card { background: var(--beige); padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e0d5c1; }
-    .curiosity-card h4 { color: var(--azul); margin-bottom: 3px; font-size: 0.9rem; }
-    .curiosity-card p { font-size: 0.85rem; color: var(--texto); line-height: 1.3; }
-    .btn-secondary { background-color: var(--rojo); color: #fff; width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-top: 12px; }
+    .modal-close { position: absolute; top: 12px; right: 15px; font-size: 1.5rem; background: none; border: none; cursor: pointer; color: #163354; }
+    .toy-title { font-size: 1.4rem; color: #8c2a20; margin-bottom: 12px; text-align: center; }
+    .curiosity-card { background: #f6ecd8; padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e0d5c1; }
+    .curiosity-card h4 { color: #163354; margin-bottom: 3px; font-size: 0.9rem; }
+    .curiosity-card p { font-size: 0.85rem; color: #333333; line-height: 1.3; }
+    .btn-secondary { background-color: #8c2a20; color: #fff; width: 100%; padding: 12px; border-radius: 8px; border: none; font-weight: bold; font-size: 1rem; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-top: 12px; }
   </style>
 </head>
 <body>
 
-  <!-- Error 11: Feedback visual -->
-  <div id="loading-screen" class="fullscreen-overlay">
-    <h2>Inicializando cámara...</h2>
-    <p>Por favor, espera unos segundos mientras preparamos el entorno de realidad aumentada.</p>
-  </div>
-
-  <!-- Error 9: Fallback de error -->
-  <div id="error-screen" class="fullscreen-overlay" style="display: none; background: var(--rojo);">
-    <h2>No fue posible acceder a la cámara</h2>
-    <p id="error-text">Verifique los permisos del navegador en las opciones de su celular.</p>
-    <a href="index.html" class="ar-btn" style="background: white; color: var(--rojo);">Volver al inicio</a>
+  <!-- Esta pantalla se borra instantáneamente al hacer clic -->
+  <div id="pantalla-carga" class="fullscreen-overlay" onclick="iniciarCamara()">
+    <h2>Cámara detectada</h2>
+    <p>Apunta hacia las tarjetas impresas para descubrir los juguetes.</p>
+    <div class="ar-btn" style="background: white; color: #8c2a20;">Tocar para empezar</div>
   </div>
 
   <div class="ar-ui-top">
@@ -100,34 +92,31 @@
 
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
-  <!-- Error 1: Sin embedded para no romper proporciones -->
   <a-scene 
     arjs="sourceType: webcam; debugUIEnabled: false;" 
     vr-mode-ui="enabled: false">
     
     <a-entity light="type: ambient; color: #ffffff; intensity: 1.0"></a-entity>
 
-    <!-- Error 13: Rutas limpias en 'markers/' -->
-    <a-marker type="pattern" url="markers/trompo.patt" detector-juguete="trompo">
-      <a-box position="0 0.5 0" material="color: var(--rojo);" scale="0.6 0.6 0.6"></a-box>
+    <a-marker type="pattern" url="patt/pattern-trompo.patt" detector-juguete="trompo">
+      <a-box position="0 0.5 0" material="color: #8c2a20;" scale="0.6 0.6 0.6"></a-box>
     </a-marker>
-    <a-marker type="pattern" url="markers/emboque.patt" detector-juguete="emboque">
-      <a-cylinder position="0 0.5 0" material="color: var(--azul);" radius="0.4" height="0.8"></a-cylinder>
+    <a-marker type="pattern" url="patt/pattern-emboque.patt" detector-juguete="emboque">
+      <a-cylinder position="0 0.5 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
     </a-marker>
-    <a-marker type="pattern" url="markers/runrun.patt" detector-juguete="runrun">
+    <a-marker type="pattern" url="patt/pattern-runrun.patt" detector-juguete="runrun">
       <a-sphere position="0 0.5 0" material="color: #2e7d32;" radius="0.5"></a-sphere>
     </a-marker>
-    <a-marker type="pattern" url="markers/tejo.patt" detector-juguete="rayuela">
+    <a-marker type="pattern" url="patt/pattern-tejo.patt" detector-juguete="rayuela">
       <a-cone position="0 0.5 0" material="color: #f57f17;" radius-bottom="0.5" height="1"></a-cone>
     </a-marker>
-    <a-marker type="pattern" url="markers/volantin.patt" detector-juguete="volantin">
+    <a-marker type="pattern" url="patt/pattern-volantin.patt" detector-juguete="volantin">
       <a-plane position="0 0.5 0" rotation="-90 0 0" material="color: #6a1b9a;" width="0.8" height="0.8"></a-plane>
     </a-marker>
-    <a-marker type="pattern" url="markers/polcas.patt" detector-juguete="polcas">
+    <a-marker type="pattern" url="patt/pattern-polcas.patt" detector-juguete="polcas">
       <a-torus position="0 0.5 0" rotation="90 0 0" material="color: #d84315;" radius="0.4" radius-tubular="0.1"></a-torus>
     </a-marker>
 
-    <!-- Error 5: a-camera, más semántico -->
     <a-camera></a-camera>
   </a-scene>
 
@@ -135,32 +124,20 @@
     <div class="modal-content">
       <button class="modal-close" onclick="cerrarCuriosidades()">×</button>
       <h2 class="toy-title" id="modal-titulo">Juguete</h2>
-      <div class="curiosity-card"><h4>¿Cómo se juega?</h4><p id="modal-juega">Texto...</p></div>
-      <div class="curiosity-card"><h4>¿Dónde era común verlo?</h4><p id="modal-donde">Texto...</p></div>
-      <div class="curiosity-card"><h4>¿Sabías que...?</h4><p id="modal-sabias">Dato...</p></div>
+      <div class="curiosity-card"><h4>¿Cómo se juega?</h4><p id="modal-juega"></p></div>
+      <div class="curiosity-card"><h4>¿Dónde era común verlo?</h4><p id="modal-donde"></p></div>
+      <div class="curiosity-card"><h4>¿Sabías que...?</h4><p id="modal-sabias"></p></div>
       <button onclick="irARecursos()" class="btn-secondary">🖍 Ver actividades relacionadas</button>
     </div>
   </div>
 
   <script>
-    // Error 10: Detección de soporte de cámara
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      document.getElementById('loading-screen').style.display = 'none';
-      document.getElementById('error-screen').style.display = 'flex';
-      document.getElementById('error-text').innerText = "Tu navegador actual no soporta tecnología de cámara. Intenta usar Chrome o Safari actualizados.";
+    // 1. Quitar el bloqueador con un simple clic
+    function iniciarCamara() {
+      document.getElementById('pantalla-carga').style.display = 'none';
     }
 
-    // Error 11: AR.js dispara eventos nativos cuando la cámara prende o falla
-    const sceneEl = document.querySelector('a-scene');
-    sceneEl.addEventListener('camera-init', () => {
-      document.getElementById('loading-screen').style.display = 'none';
-    });
-    sceneEl.addEventListener('camera-error', () => {
-      document.getElementById('loading-screen').style.display = 'none';
-      document.getElementById('error-screen').style.display = 'flex';
-    });
-
-    // Error 6: Resetear estado al volver con el botón "Atrás" del navegador
+    // 2. Cerrar curiosidades al volver a la página o tocar fuera del modal
     window.addEventListener("pageshow", function(event) {
       if (event.persisted) {
         document.getElementById('btn-curiosidades-ar').style.display = 'none';
@@ -168,11 +145,11 @@
       }
     });
 
-    // Error 8: Cerrar modal haciendo clic afuera
     document.getElementById('curiosities-modal').addEventListener('click', function(e) {
       if (e.target === this) cerrarCuriosidades();
     });
 
+    // 3. Detectores de objetos
     AFRAME.registerComponent('detector-juguete', {
       schema: { type: 'string' },
       init: function () {
@@ -183,7 +160,7 @@
         });
         this.el.addEventListener('markerLost', () => {
           document.getElementById('btn-curiosidades-ar').style.display = 'none';
-          cerrarCuriosidades(); // Error 7
+          cerrarCuriosidades(); 
         });
       }
     });

@@ -8,6 +8,27 @@
 <script src="js/aframe-ar.js"></script>
 <script src="js/datos.js"></script>
 
+<script>
+AFRAME.registerComponent('detector-juguete', {
+  schema: { type: 'string' },
+  init: function () {
+    const idJuguete = this.data;
+
+    this.el.addEventListener('markerFound', () => {
+      console.log("Encontró:", idJuguete);
+
+      document.getElementById('btn-curiosidades-ar').style.display = 'block';
+      actualizarModal(idJuguete);
+    });
+
+    this.el.addEventListener('markerLost', () => {
+      document.getElementById('btn-curiosidades-ar').style.display = 'none';
+      cerrarCuriosidades();
+    });
+  }
+});
+</script>
+
   <style>
 
     :root {
@@ -146,23 +167,6 @@ depth="1"></a-box>
       if (e.target === this) cerrarCuriosidades();
     });
 
-    // 3. Detectores de objetos
-    AFRAME.registerComponent('detector-juguete', {
-      schema: { type: 'string' },
-      init: function () {
-        const idJuguete = this.data;
-        this.el.addEventListener('markerFound', () => {
-            console.log("Encontró:", idJuguete);
-
-            document.getElementById('btn-curiosidades-ar').style.display = 'block';
-            actualizarModal(idJuguete);
-        });
-        this.el.addEventListener('markerLost', () => {
-          document.getElementById('btn-curiosidades-ar').style.display = 'none';
-          cerrarCuriosidades(); 
-        });
-      }
-    });
 
     function actualizarModal(id) {
       if (typeof datosJuguetes !== 'undefined' && datosJuguetes[id]) {

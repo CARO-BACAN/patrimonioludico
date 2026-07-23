@@ -1,66 +1,460 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Patrimonio Lúdico - Recursos</title>
-  <style>
-    :root {
-      --azul: #163354;
-      --rojo: #8c2a20;
-      --beige: #f6ecd8;
-      --texto: #333333;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background-color: #fff; color: var(--azul); min-height: 100vh; display: flex; flex-direction: column; }
-    .app-container { width: 100%; min-height: 100vh; background-color: #fff; display: flex; flex-direction: column; }
-    
-    .header { background-color: var(--azul); color: #fff; padding: 20px; text-align: center; position: relative; }
-    .header h1 { font-size: 1.5em; }
-    .back-btn { position: absolute; left: 15px; top: 20px; color: #fff; text-decoration: none; font-size: 1em; background: none; border: none; cursor: pointer; font-weight: bold; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    .content { padding: 20px; max-width: 600px; margin: 0 auto; width: 100%; flex: 1; }
-    
-    .btn-secondary { background-color: var(--rojo); color: #fff; width: 100%; padding: 16px; border-radius: 8px; border: none; font-weight: bold; font-size: 1.1em; cursor: pointer; text-align: center; text-decoration: none; display: block; margin-bottom: 25px; }
+<title>Patrimonio Lúdico - Material Pedagógico</title>
 
-    .activity-card { display: flex; flex-direction: column; border: 2px solid #e0e0e0; border-radius: 8px; padding: 15px; margin-bottom: 15px; background: #fff; text-align: left; }
-    .activity-header { display: flex; align-items: center; margin-bottom: 8px; }
-    .activity-icon { font-size: 1.8em; margin-right: 12px; }
-    .activity-title { font-weight: bold; font-size: 1.1em; color: var(--azul); }
-    .activity-desc { font-size: 0.9em; color: #666; margin-bottom: 15px; line-height: 1.4; }
-    .btn-download { background-color: #f0f0f0; color: #333; padding: 12px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 0.9em; border: 1px solid #ccc; text-decoration: none; display: block; }
-  </style>
+<style>
+
+:root {
+  --azul: #163354;
+  --rojo: #8c2a20;
+  --beige: #f6ecd8;
+  --texto: #333333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+body {
+  background-color: #fff;
+  color: var(--azul);
+  min-height: 100vh;
+}
+
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+
+
+/* HEADER */
+
+.header {
+  background-color: var(--azul);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+
+.header h1 {
+  font-size: 1.5em;
+}
+
+
+.back-btn {
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  color:white;
+  text-decoration:none;
+  font-size:1em;
+  background:none;
+  border:none;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+
+
+
+/* CONTENIDO */
+
+.content {
+  padding:20px;
+  max-width:600px;
+  margin:auto;
+  width:100%;
+}
+
+
+
+.intro {
+  color:#555;
+  font-size:0.95em;
+  line-height:1.5;
+  margin-bottom:25px;
+  text-align:center;
+}
+
+
+
+
+/* TARJETAS */
+
+
+.material-card {
+
+  border:2px solid #e0e0e0;
+  border-radius:10px;
+  padding:18px;
+  margin-bottom:18px;
+  background:white;
+
+}
+
+
+
+.material-header {
+
+  display:flex;
+  align-items:center;
+  margin-bottom:10px;
+
+}
+
+
+
+.material-icon {
+
+  font-size:2em;
+  margin-right:12px;
+
+}
+
+
+
+.material-title {
+
+  font-size:1.15em;
+  font-weight:bold;
+  color:var(--azul);
+
+}
+
+
+
+.material-desc {
+
+  color:#666;
+  font-size:0.9em;
+  line-height:1.45;
+  margin-bottom:15px;
+
+}
+
+
+
+
+/* BOTON */
+
+.btn-download {
+
+  background-color:var(--rojo);
+  color:white;
+  padding:13px;
+  border-radius:7px;
+  text-decoration:none;
+  text-align:center;
+  display:block;
+  font-weight:bold;
+  font-size:0.95em;
+
+}
+
+
+
+.btn-download:hover {
+
+  opacity:0.9;
+
+}
+
+
+
+
+/* GUIA DOCENTE */
+
+.guide {
+
+  background-color:var(--beige);
+  border-radius:10px;
+  padding:18px;
+  margin-top:10px;
+  margin-bottom:20px;
+
+}
+
+
+.guide-title {
+
+  font-weight:bold;
+  color:var(--azul);
+  margin-bottom:8px;
+
+}
+
+
+.guide-text {
+
+  font-size:0.9em;
+  color:#555;
+  line-height:1.4;
+
+}
+
+
+
+</style>
+
 </head>
+
+
 <body>
 
-  <div class="app-container">
-    <div class="header">
-      <button onclick="window.location.href='index.html'" class="back-btn">❮ Volver</button>
-      <h1>Actividades Imprimibles</h1>
-    </div>
 
-    <div class="content">
-      <a href="#" class="btn-secondary">📥 Descargar unidad completa (PDF)</a>
-      
-      <div class="activity-card">
-        <div class="activity-header">
-          <span class="activity-icon">🎨</span>
-          <span class="activity-title">Colorear</span>
-        </div>
-        <p class="activity-desc">Permite reconocer las formas y los colores del volantín, el trompo y el emboque.</p>
-        <a href="#" class="btn-download">Descargar PDF</a>
-      </div>
+<div class="app-container">
 
-      <div class="activity-card">
-        <div class="activity-header">
-          <span class="activity-icon">✂️</span>
-          <span class="activity-title">Construcción</span>
-        </div>
-        <p class="activity-desc">Crea un runrún o una rayuela utilizando materiales sencillos paso a paso.</p>
-        <a href="#" class="btn-download">Descargar PDF</a>
-      </div>
-    </div>
-  </div>
+
+<header class="header">
+
+<button onclick="window.location.href='index.html'" class="back-btn">
+❮ Volver
+</button>
+
+<h1>Material Pedagógico</h1>
+
+</header>
+
+
+
+<main class="content">
+
+
+<p class="intro">
+Descarga actividades complementarias para aprender sobre los juegos tradicionales chilenos mediante creatividad, lectura, construcción y desafíos educativos.
+</p>
+
+
+
+
+
+<!-- PACK 1 -->
+
+<div class="material-card">
+
+<div class="material-header">
+
+<span class="material-icon">🎨</span>
+
+<span class="material-title">
+Crear y expresar
+</span>
+
+</div>
+
+
+<p class="material-desc">
+Actividades artísticas para reconocer formas, colores y características de los juegos tradicionales mediante dibujo, simetría y observación.
+</p>
+
+
+<a href="pdf/crear-expresar.pdf" class="btn-download">
+📥 Descargar PDF
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- PACK 2 -->
+
+
+<div class="material-card">
+
+<div class="material-header">
+
+<span class="material-icon">🧩</span>
+
+<span class="material-title">
+Pensar y resolver
+</span>
+
+</div>
+
+
+<p class="material-desc">
+Desafíos de lógica, memoria y observación como laberintos, sopa de letras, crucigramas y juegos de asociación.
+</p>
+
+
+<a href="pdf/pensar-resolver.pdf" class="btn-download">
+📥 Descargar PDF
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- PACK 3 -->
+
+
+<div class="material-card">
+
+
+<div class="material-header">
+
+<span class="material-icon">✂️</span>
+
+<span class="material-title">
+Construir y experimentar
+</span>
+
+</div>
+
+
+<p class="material-desc">
+Actividades prácticas para crear juguetes tradicionales utilizando materiales simples y reutilizados.
+</p>
+
+
+<a href="pdf/construir-experimentar.pdf" class="btn-download">
+📥 Descargar PDF
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- PACK 4 -->
+
+
+<div class="material-card">
+
+
+<div class="material-header">
+
+<span class="material-icon">📚</span>
+
+<span class="material-title">
+Leer y comprender
+</span>
+
+
+</div>
+
+
+<p class="material-desc">
+Textos y ejercicios de comprensión lectora relacionados con el patrimonio lúdico chileno y sus tradiciones.
+</p>
+
+
+<a href="pdf/leer-comprender.pdf" class="btn-download">
+📥 Descargar PDF
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- PACK 5 -->
+
+
+<div class="material-card">
+
+
+<div class="material-header">
+
+<span class="material-icon">🎲</span>
+
+<span class="material-title">
+Jugar y aprender
+</span>
+
+
+</div>
+
+
+<p class="material-desc">
+Recursos educativos como memoria, verdadero o falso y actividades para aprender jugando.
+</p>
+
+
+<a href="pdf/jugar-aprender.pdf" class="btn-download">
+📥 Descargar PDF
+</a>
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- GUIA -->
+
+
+<div class="guide">
+
+
+<div class="guide-title">
+📘 Guía docente del kit
+</div>
+
+
+<p class="guide-text">
+Conoce recomendaciones de uso, niveles sugeridos, objetivos pedagógicos y formas de integrar las actividades junto a la experiencia de realidad aumentada.
+</p>
+
+
+<br>
+
+
+<a href="pdf/guia-docente.pdf" class="btn-download">
+📥 Descargar guía
+</a>
+
+
+</div>
+
+
+
+
+</main>
+
+
+</div>
+
+
 
 </body>
 </html>

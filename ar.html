@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Patrimonio Lúdico - AR</title>
   
+<script src="js/aframe.min.js"></script>
 <script src="js/aframe-ar.js"></script>
 <script src="js/datos.js"></script>
 
@@ -76,9 +77,9 @@ canvas.a-canvas {
   <button id="btn-curiosidades-ar" onclick="abrirCuriosidades()">✨ Ver Curiosidades</button>
 
   <a-scene
-    renderer="colorManagement:true"
+    renderer="alpha:true; antialias:true; precision:mediump"
     vr-mode-ui="enabled:false"
-    arjs="sourceType:webcam; debugUIEnabled:false;"
+    arjs="sourceType:webcam; debugUIEnabled:false; sourceWidth:640; sourceHeight:480;"
     embedded>
     
     <a-entity light="type: ambient; color: #ffffff; intensity: 2"></a-entity>

@@ -152,8 +152,10 @@ depth="1"></a-box>
       init: function () {
         const idJuguete = this.data;
         this.el.addEventListener('markerFound', () => {
-          document.getElementById('btn-curiosidades-ar').style.display = 'block';
-          actualizarModal(idJuguete);
+            console.log("Encontró:", idJuguete);
+
+            document.getElementById('btn-curiosidades-ar').style.display = 'block';
+            actualizarModal(idJuguete);
         });
         this.el.addEventListener('markerLost', () => {
           document.getElementById('btn-curiosidades-ar').style.display = 'none';

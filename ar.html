@@ -15,15 +15,18 @@ AFRAME.registerComponent('detector-juguete', {
     const idJuguete = this.data;
 
     this.el.addEventListener('markerFound', () => {
-      console.log("Encontró:", idJuguete);
+    document.getElementById('btn-curiosidades-ar').style.display = 'block';
+    actualizarModal(idJuguete);
 
-      document.getElementById('btn-curiosidades-ar').style.display = 'block';
-      actualizarModal(idJuguete);
-    });
+    if (
+        document.getElementById('curiosities-modal').style.display === 'flex'
+    ) {
+        actualizarModal(idJuguete);
+    }
+});
 
     this.el.addEventListener('markerLost', () => {
       document.getElementById('btn-curiosidades-ar').style.display = 'none';
-      cerrarCuriosidades();
     });
   }
 });

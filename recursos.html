@@ -292,7 +292,14 @@ background:var(--azul);
 </head>
 
 
-
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const accesoKit = sessionStorage.getItem("kit");
+    if (!accesoKit) {
+      window.location.href = "index.html";
+    }
+  });
+</script>
 <body>
 
 
@@ -302,7 +309,7 @@ background:var(--azul);
 
 <header class="header">
 
-<button onclick="window.location.href='index.html'" class="back-btn">
+<button onclick="window.location.href='patrimonio-ludico.html'" class="back-btn">
 ❮ Volver
 </button>
 

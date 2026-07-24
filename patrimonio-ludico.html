@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Patrimonio Lúdico - Inicio</title>
+  <style>
+    :root {
+      --azul: #163354;
+      --rojo: #8c2a20;
+      --beige: #f6ecd8;
+    }
+    
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: Arial, sans-serif; 
+    }
+    
+    body { 
+      background-color: #fff; 
+      color: var(--azul); 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+    }
+    
+    .app-container { 
+      width: 100%; 
+      min-height: 100vh; 
+      background-color: #fff; 
+      display: flex; 
+      flex-direction: column; 
+    }
+    
+    .header { 
+      background-color: var(--azul); 
+      color: #fff; 
+      padding: 20px; 
+      text-align: center; 
+    }
+    
+    .header h1 { 
+      font-size: 1.5em; 
+    }
+    
+    .content { 
+      padding: 20px; 
+      flex: 1; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: center; 
+      max-width: 600px; 
+      margin: 0 auto; 
+      width: 100%; 
+    }
+    
+    .btn { 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 10px; 
+      width: 100%; 
+      padding: 16px; 
+      margin-bottom: 15px; 
+      font-size: 1.1em; 
+      font-weight: bold; 
+      text-align: center; 
+      border-radius: 8px; 
+      border: none; 
+      cursor: pointer; 
+      text-decoration: none; 
+      transition: opacity 0.2s;
+    }
+    
+    .btn:hover { 
+      opacity: 0.9; 
+    }
+    
+    .btn-primary { 
+      background-color: var(--azul); 
+      color: #fff; 
+    }
+    
+    .btn-outline { 
+      background-color: transparent; 
+      border: 2px solid var(--azul); 
+      color: var(--azul); 
+    }
+    
+    .btn svg { 
+      width: 22px; 
+      height: 22px; 
+      fill: currentColor; 
+    }
+
+    .guide-box { 
+      background-color: #f9f9f9; 
+      border-left: 4px solid var(--rojo); 
+      padding: 15px; 
+      margin-bottom: 25px; 
+      border-radius: 0 8px 8px 0; 
+      text-align: left; 
+    }
+    
+    .guide-box h3 { 
+      margin-bottom: 12px; 
+      font-size: 1.1em; 
+      color: var(--rojo); 
+    }
+    
+    .guide-step { 
+      margin-bottom: 12px; 
+      display: flex; 
+      align-items: flex-start; 
+    }
+    
+    .step-number { 
+      background-color: var(--rojo); 
+      color: #fff; 
+      width: 24px; 
+      height: 24px; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      font-size: 0.85em; 
+      font-weight: bold; 
+      margin-right: 12px; 
+      flex-shrink: 0; 
+    }
+    
+    .guide-step p { 
+      font-size: 0.95em; 
+      line-height: 1.4; 
+      color: #333; 
+      padding-top: 2px; 
+    }
+  </style>
+</head>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const accesoKit = sessionStorage.getItem("kit");
+    if (!accesoKit) {
+      window.location.href = "index.html";
+    }
+  });
+</script>
+<body>
+
+  <div class="app-container">
+    <div class="header">
+      <h1>Patrimonio Lúdico</h1>
+    </div>
+
+    <!-- Se eliminó la sección de Login. Ahora el Home es lo principal -->
+    <div id="section-home" class="content">
+      <p style="text-align: center; margin-bottom: 20px;">Descubre los juguetes tradicionales de Chile mediante realidad aumentada y continúa la experiencia con actividades listas para el aula.</p>
+      
+      <div class="guide-box">
+        <h3>¿Cómo usar el kit?</h3>
+        <div class="guide-step"><div class="step-number">1</div><p>Presenta una tarjeta al curso.</p></div>
+        <div class="guide-step"><div class="step-number">2</div><p>Escanea el marcador para observar el juguete en realidad aumentada.</p></div>
+        <div class="guide-step"><div class="step-number">3</div><p>Comparte las curiosidades en clase.</p></div>
+        <div class="guide-step"><div class="step-number">4</div><p>Descarga una actividad pedagógica relacionada.</p></div>
+        <div class="guide-step"><div class="step-number">5</div><p>Construyan y jueguen juntos.</p></div>
+      </div>
+
+      <a href="ar.html" class="btn btn-primary">
+        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+        Explorar juguetes
+      </a>
+
+      <a href="recursos.html" class="btn btn-outline">
+        <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+        Actividades imprimibles
+      </a>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Leemos exactamente el mismo dato que configuraste en tu nuevo index.html ("kit")
+      const accesoKit = sessionStorage.getItem("kit");
+      
+      // Si la variable no existe (el usuario no pasó por index.html), lo expulsamos al inicio
+      if (!accesoKit) {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+</body>
+</html>

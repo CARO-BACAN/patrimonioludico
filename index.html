@@ -1,94 +1,266 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Patrimonio Lúdico - Inicio</title>
-  <style>
-    :root {
-      --azul: #163354;
-      --rojo: #8c2a20;
-      --beige: #f6ecd8;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background-color: #fff; color: var(--azul); min-height: 100vh; display: flex; flex-direction: column; }
-    .app-container { width: 100%; min-height: 100vh; background-color: #fff; display: flex; flex-direction: column; }
-    .header { background-color: var(--azul); color: #fff; padding: 20px; text-align: center; }
-    .header h1 { font-size: 1.5em; }
-    .content { padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 600px; margin: 0 auto; width: 100%; }
-    
-    .btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 16px; margin-bottom: 15px; font-size: 1.1em; font-weight: bold; text-align: center; border-radius: 8px; border: none; cursor: pointer; text-decoration: none; }
-    .btn-primary { background-color: var(--azul); color: #fff; }
-    .btn-outline { background-color: transparent; border: 2px solid var(--azul); color: var(--azul); }
-    .btn svg { width: 22px; height: 22px; fill: currentColor; }
-    
-    .login-box { text-align: center; }
-    .input-clave { width: 100%; padding: 15px; font-size: 1.2em; text-align: center; border: 2px solid var(--azul); border-radius: 8px; margin: 20px 0; text-transform: uppercase; }
-    #error-msg { color: var(--rojo); font-weight: bold; display: none; margin-top: 10px; }
 
-    .guide-box { background-color: #f9f9f9; border-left: 4px solid var(--rojo); padding: 15px; margin-bottom: 25px; border-radius: 0 8px 8px 0; text-align: left; }
-    .guide-box h3 { margin-bottom: 12px; font-size: 1.1em; color: var(--rojo); }
-    .guide-step { margin-bottom: 12px; display: flex; align-items: flex-start; }
-    .step-number { background-color: var(--rojo); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85em; font-weight: bold; margin-right: 12px; flex-shrink: 0; }
-    .guide-step p { font-size: 0.95em; line-height: 1.4; color: #333; padding-top: 2px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Acceso al Kit Educativo</title>
+
+<style>
+
+:root{
+    --azul:#163354;
+    --rojo:#8c2a20;
+    --beige:#f6ecd8;
+    --texto:#333;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#fff;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:var(--azul);
+}
+
+.container{
+
+    width:100%;
+    max-width:500px;
+    padding:30px;
+
+}
+
+.logo{
+
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    background:var(--beige);
+    margin:0 auto 25px auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:2.2em;
+
+}
+
+h1{
+
+    text-align:center;
+    margin-bottom:15px;
+    font-size:2em;
+
+}
+
+.subtitle{
+
+    text-align:center;
+    color:#666;
+    line-height:1.6;
+    margin-bottom:35px;
+
+}
+
+.card{
+
+    border:2px solid #e6e6e6;
+    border-radius:12px;
+    padding:25px;
+
+}
+
+label{
+
+    display:block;
+    font-weight:bold;
+    margin-bottom:10px;
+
+}
+
+input{
+
+    width:100%;
+    padding:15px;
+    border-radius:8px;
+    border:2px solid var(--azul);
+    font-size:1.1em;
+    text-align:center;
+    text-transform:uppercase;
+    margin-bottom:18px;
+
+}
+
+button{
+
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:8px;
+    background:var(--azul);
+    color:white;
+    font-size:1em;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.2s;
+
+}
+
+button:hover{
+
+    opacity:.9;
+
+}
+
+.info{
+
+    margin-top:25px;
+    background:var(--beige);
+    border-radius:8px;
+    padding:15px;
+    font-size:.9em;
+    line-height:1.5;
+    color:#555;
+
+}
+
+.error{
+
+    display:none;
+    color:var(--rojo);
+    font-weight:bold;
+    margin-top:15px;
+    text-align:center;
+
+}
+
+footer{
+
+    text-align:center;
+    margin-top:30px;
+    color:#999;
+    font-size:.8em;
+
+}
+
+</style>
+
 </head>
+
 <body>
 
-  <div class="app-container">
-    <div class="header">
-      <h1>Patrimonio Lúdico</h1>
-    </div>
+<div class="container">
 
-    <div id="section-login" class="content login-box">
-      <p>Ingrese la palabra secreta incluida en su kit.</p>
-      <input type="text" id="password-input" class="input-clave" placeholder="Palabra secreta">
-      <button onclick="verificarClave()" class="btn btn-primary" style="justify-content: center;">Entrar</button>
-      <p id="error-msg">Palabra incorrecta, intente de nuevo.</p>
-    </div>
+<div class="logo">
+📦
+</div>
 
-    <div id="section-home" class="content" style="display: none;">
-      <p style="text-align: center; margin-bottom: 20px;">Descubre los juguetes tradicionales de Chile mediante realidad aumentada y continúa la experiencia con actividades listas para el aula.</p>
-      
-      <div class="guide-box">
-        <h3>¿Cómo usar el kit?</h3>
-        <div class="guide-step"><div class="step-number">1</div><p>Presenta una tarjeta al curso.</p></div>
-        <div class="guide-step"><div class="step-number">2</div><p>Escanea el marcador para observar el juguete en realidad aumentada.</p></div>
-        <div class="guide-step"><div class="step-number">3</div><p>Comparte las curiosidades en clase.</p></div>
-        <div class="guide-step"><div class="step-number">4</div><p>Descarga una actividad pedagógica relacionada.</p></div>
-        <div class="guide-step"><div class="step-number">5</div><p>Construyan y jueguen juntos.</p></div>
-      </div>
+<h1>Bienvenido</h1>
 
-      <a href="ar.html" class="btn btn-primary">
-        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-        Explorar juguetes
-      </a>
+<p class="subtitle">
 
-      <a href="recursos.html" class="btn btn-outline">
-        <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-        Actividades imprimibles
-      </a>
+Accede a la experiencia digital de tu kit educativo ingresando el código incluido en la tarjeta de bienvenida.
 
-    </div>
-  </div>
+</p>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      if (sessionStorage.getItem("accesoConcedido") === "true") {
-        mostrarHome();
-      }
-    });
-    function verificarClave() {
-      const input = document.getElementById('password-input').value.toUpperCase().trim();
-      if (input === "VOLANTIN26") {
-        sessionStorage.setItem("accesoConcedido", "true");
-        mostrarHome();
-      } else { document.getElementById('error-msg').style.display = 'block'; }
-    }
-    function mostrarHome() {
-      document.getElementById('section-login').style.display = 'none';
-      document.getElementById('section-home').style.display = 'block';
-    }
-  </script>
+<div class="card">
+
+<label>
+
+Código del kit
+
+</label>
+
+<input
+id="codigo"
+type="text"
+placeholder="Ej. VOLANTIN26"
+autocomplete="off">
+
+<button onclick="ingresar()">
+
+Acceder al kit
+
+</button>
+
+<div class="error" id="error">
+
+Código inválido. Verifica la información e inténtalo nuevamente.
+
+</div>
+
+</div>
+
+<div class="info">
+
+<strong>¿Dónde encuentro el código?</strong>
+
+<br><br>
+
+El código se encuentra en la tarjeta de bienvenida incluida dentro del kit.
+
+</div>
+
+<footer>
+
+© 2026 Kit Educativo
+
+</footer>
+
+</div>
+
+<script>
+
+const kits={
+
+"VOLANTIN26":"patrimonio-ludico.html"
+
+};
+
+function ingresar(){
+
+const codigo=document
+.getElementById("codigo")
+.value
+.trim()
+.toUpperCase();
+
+if(kits[codigo]){
+
+sessionStorage.setItem("kit",codigo);
+
+window.location.href=kits[codigo];
+
+}else{
+
+document.getElementById("error").style.display="block";
+
+}
+
+}
+
+document
+.getElementById("codigo")
+.addEventListener("keypress",function(e){
+
+if(e.key==="Enter"){
+
+ingresar();
+
+}
+
+});
+
+</script>
+
 </body>
 </html>

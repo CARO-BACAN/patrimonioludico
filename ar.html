@@ -72,23 +72,32 @@ canvas.a-canvas {
     }
     @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
 
-/* Fondo difuminado moderno */
+    /* Fondo difuminado moderno y responsivo */
     .fullscreen-overlay {
-      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      right: 0; 
+      bottom: 0; /* Esto reemplaza el 100vw/100vh para evitar que se desborde */
       background: rgba(22, 51, 84, 0.85); 
       backdrop-filter: blur(4px); 
       z-index: 9999999;
-      display: flex; justify-content: center; align-items: center;
-      padding: 20px;
+      display: flex; 
+      justify-content: center; 
+      align-items: center;
+      padding: 24px; /* Este es el margen seguro para las pantallas de los celulares */
+      box-sizing: border-box; /* Obliga al navegador a respetar el margen */
     }
 
-    /* Tarjeta flotante animada */
+    /* Tarjeta flotante adaptativa */
     .carga-card {
       background: #ffffff;
       border-radius: 16px;
-      padding: 30px 25px;
+      padding: 30px 24px;
       text-align: center;
-      max-width: 340px;
+      width: 100%; /* Esto es clave: hace que se encoja al tamaño del celular */
+      max-width: 360px; /* Y esto evita que se estire gigante en tu PC */
+      box-sizing: border-box;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
       animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); 
     }

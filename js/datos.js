@@ -1,38 +1,26 @@
 const datosJuguetes = {
-  'trompo': {
-    titulo: 'Trompo',
-    juega: 'Se enrolla un cordel de algodón alrededor del cuerpo de madera y se lanza con fuerza al suelo para hacerlo girar bailando sobre su punta de acero.',
-    donde: 'En las esquinas de los barrios y patios de tierra durante las tardes de otoño y primavera.',
-    sabias: 'Existen campeonatos donde los jugadores compiten midiendo destreza para sacar el trompo del contrincante.'
+  "trompo": {
+    titulo: "Trompo",
+    curiosidad: "El juego más clásico consiste en dibujar un círculo en la tierra llamado 'troya', donde debes lanzar tu trompo para intentar sacar a los de tus amigos."
   },
-  'emboque': {
-    titulo: 'Emboque',
-    juega: 'Se sostiene el madero en la mano y se impulsa la torre de madera hacia arriba intentando insertar el vástago en el agujero central.',
-    donde: 'En plazas y corredores de casas antiguas de todo el sur de nuestro país.',
-    sabias: 'Antiguamente se fabricaban artesanalmente con madera de litre o quillay tallada a mano.'
+  "volantin": {
+    titulo: "Volantín",
+    curiosidad: "Para elevarlo muy alto sin que el hilo se enrede, se usa un carrete de madera que debe girar rapidísimo en las manos."
   },
-  'runrun': {
-    titulo: 'Runrún',
-    juega: 'Se gira el disco central enroscando los hilos y luego se estira de manera rítmica para generar un zumbido constante.',
-    donde: 'En los recreos escolares y juegos de barrio tradicionales.',
-    sabias: 'Su nombre proviene directamente del sonido característico que produce el giro veloz del disco.'
+  "runrun": {
+    titulo: "Runrún",
+    curiosidad: "Antiguamente se fabricaban de forma casera utilizando los botones grandes de los abrigos viejos o aplastando tapas de bebida."
   },
-  'rayuela': {
-    titulo: 'Rayuela / Tejo',
-    juega: 'Se lanza un tejo metálico intentando atinar justo sobre la lienza tendida en una cancha de arcilla húmeda.',
-    donde: 'En ramadas, centros de huasos y campeonatos locales a lo largo de Chile.',
-    sabias: 'Es considerado un deporte nacional oficial con estrictas reglas de puntuación.'
+  "emboque": {
+    titulo: "Emboque",
+    curiosidad: "Los jugadores más expertos conocen trucos de movimiento con nombres especiales como la simple, la doble o la mariquita."
   },
-  'volantin': {
-    titulo: 'Volantín',
-    juega: 'Se eleva desenrollando hilo mientras el viento impulsa la estructura de papel hacia el cielo.',
-    donde: 'En cerros y parques despejados durante las tardes de septiembre.',
-    sabias: 'Los diseños tradicionales llevaban nombres pintorescos como la pavo, el torito o la chicha.'
+  "rayuela": {
+    titulo: "Rayuela",
+    curiosidad: "El cajón se rellena con barro muy húmedo para que el tejo de metal no rebote al caer y quede totalmente enterrado."
   },
-  'polcas': {
-    titulo: 'Polcas',
-    juega: 'Se traza un círculo en el suelo y se lanzan las fichas intentando chocar las de los demás compañeros para sacarlas del área.',
-    donde: 'En los patios de tierra de las escuelas rurales y pasajes vecinales.',
-    sabias: 'Es uno de los juegos de destreza más antiguos traspasados de generación en generación.'
+  "polcas": {
+    titulo: "Polcas",
+    curiosidad: "A lo largo de los años los niños les han dado nombres divertidos según su diseño, como las ojito de gato, las agüitas y los bolones."
   }
 };

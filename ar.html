@@ -205,18 +205,20 @@ canvas.a-canvas {
     renderer="alpha:true; antialias:true; colorManagement: true;"
     vr-mode-ui="enabled:false"
     arjs="sourceType:webcam; debugUIEnabled:false;">
+    
+    <!-- 1. El inventario que obliga al celular a descargar el 3D -->
+    <a-assets>
+      <a-asset-item id="trompo-3d" src="glb/trompo.glb"></a-asset-item>
+    </a-assets>
 
-  <a-entity light="type: hemisphere; color: #ffffff; groundColor: #777777; intensity: 1.5"></a-entity>
-  <a-entity light="type: directional; color: #ffffff; intensity: 0.8" position="1 2 1"></a-entity>
+    <a-entity light="type: hemisphere; color: #ffffff; groundColor: #777777; intensity: 1.5"></a-entity>
+    <a-entity light="type: directional; color: #ffffff; intensity: 0.8" position="1 2 1"></a-entity>
 
+    <!-- 2. Llamamos al modelo desde el inventario usando el ID con un # -->
     <a-marker type="pattern" url="patt/pattern-trompo.patt" detector-juguete="trompo">
-      <a-gltf-model 
-        src="glb/trompo.glb" 
-        position="0 0.5 0" 
-        scale="0.2 0.2 0.2" 
-        rotation="0 0 0">
-      </a-gltf-model>
+      <a-gltf-model src="#trompo-3d" position="0 0.5 0" scale="0.2 0.2 0.2" rotation="0 0 0"></a-gltf-model>
     </a-marker>
+    
     <a-marker type="pattern" url="patt/pattern-emboque.patt" detector-juguete="emboque">
       <a-cylinder position="0 0.5 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
     </a-marker>

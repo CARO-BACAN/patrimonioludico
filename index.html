@@ -1,266 +1,244 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ColeccionAR - Experiencias Interactivas</title>
+  
+  <!-- Importando la tipografía amigable Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    :root {
+      /* Paleta basada en la ilustración */
+      --azul-fondo: #215A9E; 
+      --crema: #FFF9EC;
+      --rojo: #E94F4F;
+      --amarillo: #FFCA3A;
+      --verde: #3BB273;
+      --naranjo: #F59042;
+      --azul-oscuro: #123055; 
+    }
 
-<title>Acceso al Kit Educativo</title>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', sans-serif;
+    }
 
-<style>
+    body {
+      background-color: var(--azul-fondo);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--azul-oscuro);
+      position: relative;
+      overflow: hidden; 
+    }
 
-:root{
-    --azul:#163354;
-    --rojo:#8c2a20;
-    --beige:#f6ecd8;
-    --texto:#333;
-}
+    /* Detalles decorativos de fondo tipo vector */
+    .decoracion {
+      position: absolute;
+      z-index: 0;
+    }
+    .circulo-rojo { width: 40px; height: 40px; background: var(--rojo); border-radius: 50%; top: 10%; left: 15%; }
+    .cuadrado-amarillo { width: 35px; height: 35px; background: var(--amarillo); transform: rotate(15deg); bottom: 20%; right: 15%; }
+    .triangulo-verde { width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 35px solid var(--verde); top: 15%; right: 20%; transform: rotate(-25deg); }
+    .circulo-naranjo { width: 25px; height: 25px; background: var(--naranjo); border-radius: 50%; bottom: 15%; left: 20%; }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+    .login-card {
+      background-color: var(--crema);
+      width: 90%;
+      max-width: 420px;
+      padding: 40px 30px;
+      border-radius: 24px;
+      border: 4px solid var(--azul-oscuro);
+      /* Sombra sólida para el toque ilustrado */
+      box-shadow: 8px 8px 0px var(--azul-oscuro);
+      text-align: center;
+      z-index: 1;
+      position: relative;
+    }
 
-body{
-    background:#fff;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:var(--azul);
-}
+    .brand-logo {
+      font-weight: 900;
+      font-size: 2.2em; /* Un poco más pequeño para que entre la palabra larga */
+      margin-bottom: 5px;
+      letter-spacing: -1px;
+    }
+    
+    /* Coloreando letras para el look lúdico, destacando el AR */
+    .brand-logo .c1 { color: var(--azul-fondo); }
+    .brand-logo .o1 { color: var(--naranjo); }
+    .brand-logo .l { color: var(--verde); }
+    .brand-logo .e { color: var(--amarillo); }
+    .brand-logo .c2 { color: var(--azul-fondo); }
+    .brand-logo .c3 { color: var(--naranjo); }
+    .brand-logo .i { color: var(--verde); }
+    .brand-logo .o2 { color: var(--amarillo); }
+    .brand-logo .n { color: var(--azul-fondo); }
+    
+    .brand-logo .ar { 
+      color: var(--rojo); 
+      font-size: 1.2em; /* Hace que el AR resalte mucho más */
+      text-shadow: 3px 3px 0px var(--azul-oscuro); /* Sombra dura solo para el AR */
+      margin-left: 2px;
+    }
 
-.container{
+    .subtitle {
+      font-weight: 700;
+      font-size: 1.1em;
+      color: var(--naranjo);
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-    width:100%;
-    max-width:500px;
-    padding:30px;
+    h1 {
+      font-weight: 800;
+      font-size: 1.6em;
+      margin-bottom: 15px;
+      line-height: 1.2;
+    }
 
-}
+    p.instruccion {
+      font-size: 1.05em;
+      font-weight: 400;
+      margin-bottom: 25px;
+      color: #333;
+    }
 
-.logo{
+    .input-wrapper {
+      margin-bottom: 20px;
+    }
 
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    background:var(--beige);
-    margin:0 auto 25px auto;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:2.2em;
+    input {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2em;
+      font-weight: 700;
+      text-align: center;
+      text-transform: uppercase;
+      background-color: #fff;
+      border: 3px solid var(--azul-oscuro);
+      border-radius: 12px;
+      outline: none;
+      transition: all 0.2s;
+    }
 
-}
+    input:focus {
+      border-color: var(--naranjo);
+      box-shadow: 0 0 0 4px rgba(245, 144, 66, 0.2);
+    }
 
-h1{
+    input::placeholder {
+      color: #aaa;
+      font-weight: 400;
+      text-transform: none;
+    }
 
-    text-align:center;
-    margin-bottom:15px;
-    font-size:2em;
+    button {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.2em;
+      font-weight: 900;
+      color: #fff;
+      background-color: var(--rojo);
+      border: 3px solid var(--azul-oscuro);
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0px var(--azul-oscuro);
+      transition: all 0.1s;
+      text-transform: uppercase;
+    }
 
-}
+    button:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px var(--azul-oscuro);
+    }
 
-.subtitle{
+    .error {
+      display: none;
+      background-color: #FFE5E5;
+      color: var(--rojo);
+      font-weight: 700;
+      padding: 12px;
+      border-radius: 8px;
+      border: 2px solid var(--rojo);
+      margin-top: 20px;
+      font-size: 0.9em;
+    }
 
-    text-align:center;
-    color:#666;
-    line-height:1.6;
-    margin-bottom:35px;
-
-}
-
-.card{
-
-    border:2px solid #e6e6e6;
-    border-radius:12px;
-    padding:25px;
-
-}
-
-label{
-
-    display:block;
-    font-weight:bold;
-    margin-bottom:10px;
-
-}
-
-input{
-
-    width:100%;
-    padding:15px;
-    border-radius:8px;
-    border:2px solid var(--azul);
-    font-size:1.1em;
-    text-align:center;
-    text-transform:uppercase;
-    margin-bottom:18px;
-
-}
-
-button{
-
-    width:100%;
-    padding:15px;
-    border:none;
-    border-radius:8px;
-    background:var(--azul);
-    color:white;
-    font-size:1em;
-    font-weight:bold;
-    cursor:pointer;
-    transition:.2s;
-
-}
-
-button:hover{
-
-    opacity:.9;
-
-}
-
-.info{
-
-    margin-top:25px;
-    background:var(--beige);
-    border-radius:8px;
-    padding:15px;
-    font-size:.9em;
-    line-height:1.5;
-    color:#555;
-
-}
-
-.error{
-
-    display:none;
-    color:var(--rojo);
-    font-weight:bold;
-    margin-top:15px;
-    text-align:center;
-
-}
-
-footer{
-
-    text-align:center;
-    margin-top:30px;
-    color:#999;
-    font-size:.8em;
-
-}
-
-</style>
-
+    footer {
+      margin-top: 30px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9em;
+      text-align: center;
+      z-index: 1;
+      opacity: 0.9;
+    }
+  </style>
 </head>
-
 <body>
 
-<div class="container">
+  <!-- Figuras flotantes de fondo -->
+  <div class="decoracion circulo-rojo"></div>
+  <div class="decoracion cuadrado-amarillo"></div>
+  <div class="decoracion triangulo-verde"></div>
+  <div class="decoracion circulo-naranjo"></div>
 
-<div class="logo">
-📦
-</div>
+  <div class="login-card">
+    <div class="brand-logo">
+      <span class="c1">C</span><span class="o1">o</span><span class="l">l</span><span class="e">e</span><span class="c2">c</span><span class="c3">c</span><span class="i">i</span><span class="o2">o</span><span class="n">n</span><span class="ar">AR</span>
+    </div>
+    <div class="subtitle">Kits Interactivos</div>
+    
+    <h1>¡Descubre la magia en tu tarjeta!</h1>
+    <p class="instruccion">Ingresa el código secreto de tu kit para activar la experiencia.</p>
 
-<h1>Bienvenido</h1>
+    <div class="input-wrapper">
+      <input type="text" id="codigo" placeholder="Ej. VOLANTIN26" autocomplete="off">
+    </div>
 
-<p class="subtitle">
+    <button onclick="ingresar()">Explorar Kit</button>
 
-Accede a la experiencia digital de tu kit educativo ingresando el código incluido en la tarjeta de bienvenida.
+    <div class="error" id="error">
+      ¡Ups! Código incorrecto. Revisa tu tarjeta e intenta de nuevo.
+    </div>
+  </div>
 
-</p>
+  <footer>
+    Descubre tu patrimonio con ColeccionAR © 2026
+  </footer>
 
-<div class="card">
+  <script>
+    const kits = {
+      "VOLANTIN26": "patrimonio-ludico.html"
+    };
 
-<label>
+    function ingresar() {
+      const codigo = document.getElementById("codigo").value.trim().toUpperCase();
 
-Código del kit
+      if (kits[codigo]) {
+        sessionStorage.setItem("kit", codigo);
+        window.location.href = kits[codigo];
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
 
-</label>
-
-<input
-id="codigo"
-type="text"
-placeholder="Ej. VOLANTIN26"
-autocomplete="off">
-
-<button onclick="ingresar()">
-
-Acceder al kit
-
-</button>
-
-<div class="error" id="error">
-
-Código inválido. Verifica la información e inténtalo nuevamente.
-
-</div>
-
-</div>
-
-<div class="info">
-
-<strong>¿Dónde encuentro el código?</strong>
-
-<br><br>
-
-El código se encuentra en la tarjeta de bienvenida incluida dentro del kit.
-
-</div>
-
-<footer>
-
-© 2026 Kit Educativo
-
-</footer>
-
-</div>
-
-<script>
-
-const kits={
-
-"VOLANTIN26":"patrimonio-ludico.html"
-
-};
-
-function ingresar(){
-
-const codigo=document
-.getElementById("codigo")
-.value
-.trim()
-.toUpperCase();
-
-if(kits[codigo]){
-
-sessionStorage.setItem("kit",codigo);
-
-window.location.href=kits[codigo];
-
-}else{
-
-document.getElementById("error").style.display="block";
-
-}
-
-}
-
-document
-.getElementById("codigo")
-.addEventListener("keypress",function(e){
-
-if(e.key==="Enter"){
-
-ingresar();
-
-}
-
-});
-
-</script>
+    document.getElementById("codigo").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") {
+        ingresar();
+      }
+    });
+  </script>
 
 </body>
 </html>

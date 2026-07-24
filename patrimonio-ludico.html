@@ -3,194 +3,181 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Patrimonio Lúdico - Inicio</title>
+  <title>Kit: Juegos Tradicionales - ColeccionAR</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --azul: #163354;
-      --rojo: #8c2a20;
-      --beige: #f6ecd8;
+      /* Paleta cálida y nostálgica para los juegos tradicionales */
+      --fondo-crema: #FAF5E9;
+      --madera: #D97736;
+      --rojo-volantin: #E94F4F;
+      --azul-marino: #123055;
+      --blanco: #FFFFFF;
     }
-    
-    * { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: Arial, sans-serif; 
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+
+    body {
+      background-color: var(--fondo-crema);
+      color: var(--azul-marino);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-    
-    body { 
-      background-color: #fff; 
-      color: var(--azul); 
-      min-height: 100vh; 
-      display: flex; 
-      flex-direction: column; 
+
+    .app-container {
+      width: 100%;
+      max-width: 500px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    
-    .app-container { 
-      width: 100%; 
-      min-height: 100vh; 
-      background-color: #fff; 
-      display: flex; 
-      flex-direction: column; 
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 20px;
     }
-    
-    .header { 
-      background-color: var(--azul); 
-      color: #fff; 
-      padding: 20px; 
-      text-align: center; 
+
+    .marca { font-weight: 900; font-size: 1.2em; color: var(--madera); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+    h1 { font-weight: 900; font-size: 2em; line-height: 1.1; }
+
+    /* EL PROTAGONISTA: Botón gigante de AR */
+    .btn-ar-gigante {
+      background-color: var(--rojo-volantin);
+      color: var(--blanco);
+      text-decoration: none;
+      border: 4px solid var(--azul-marino);
+      border-radius: 20px;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 6px 6px 0px var(--azul-marino);
+      transition: all 0.1s;
+      margin-bottom: 30px;
     }
-    
-    .header h1 { 
-      font-size: 1.5em; 
+
+    .btn-ar-gigante:active {
+      transform: translate(4px, 4px);
+      box-shadow: 0px 0px 0px var(--azul-marino);
     }
-    
-    .content { 
-      padding: 20px; 
-      flex: 1; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: center; 
-      max-width: 600px; 
-      margin: 0 auto; 
-      width: 100%; 
+
+    .btn-ar-gigante svg { width: 60px; height: 60px; fill: currentColor; margin-bottom: 10px; }
+    .btn-ar-gigante span { font-weight: 900; font-size: 1.5em; text-transform: uppercase; }
+
+    /* INSTRUCCIONES RÁPIDAS: Una oración por punto */
+    .guia-rapida {
+      background: var(--blanco);
+      border: 3px solid var(--azul-marino);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 4px 4px 0px rgba(18, 48, 85, 0.1);
     }
-    
-    .btn { 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      gap: 10px; 
-      width: 100%; 
-      padding: 16px; 
-      margin-bottom: 15px; 
-      font-size: 1.1em; 
-      font-weight: bold; 
-      text-align: center; 
-      border-radius: 8px; 
-      border: none; 
-      cursor: pointer; 
-      text-decoration: none; 
+
+    .guia-rapida h3 { font-size: 1.2em; font-weight: 800; margin-bottom: 15px; color: var(--madera); text-align: center; }
+
+    .paso { display: flex; align-items: center; margin-bottom: 12px; }
+    .paso:last-child { margin-bottom: 0; }
+    .numero {
+      background: var(--madera); color: var(--blanco); font-weight: 900;
+      width: 30px; height: 30px; border-radius: 50%; display: flex;
+      align-items: center; justify-content: center; flex-shrink: 0; margin-right: 15px;
+    }
+    .paso p { font-weight: 700; font-size: 1em; line-height: 1.3; }
+
+    /* SEPARADOR DIVERTIDO */
+    .separador { border-top: 3px dashed var(--madera); opacity: 0.3; margin: 10px 0 30px 0; }
+
+    /* ZONA DOCENTE */
+    .zona-docente {
+      background-color: #E2EAF4;
+      border: 3px solid var(--azul-marino);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto; /* Empuja esto hacia abajo */
+    }
+
+    .zona-docente h4 { font-weight: 800; font-size: 1.1em; margin-bottom: 10px; }
+    .zona-docente p { font-size: 0.9em; margin-bottom: 15px; font-weight: 700; color: #444; }
+
+    .btn-recursos {
+      display: inline-block;
+      background-color: var(--azul-marino);
+      color: var(--blanco);
+      text-decoration: none;
+      font-weight: 800;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 2px solid var(--azul-marino);
       transition: opacity 0.2s;
     }
-    
-    .btn:hover { 
-      opacity: 0.9; 
-    }
-    
-    .btn-primary { 
-      background-color: var(--azul); 
-      color: #fff; 
-    }
-    
-    .btn-outline { 
-      background-color: transparent; 
-      border: 2px solid var(--azul); 
-      color: var(--azul); 
-    }
-    
-    .btn svg { 
-      width: 22px; 
-      height: 22px; 
-      fill: currentColor; 
-    }
 
-    .guide-box { 
-      background-color: #f9f9f9; 
-      border-left: 4px solid var(--rojo); 
-      padding: 15px; 
-      margin-bottom: 25px; 
-      border-radius: 0 8px 8px 0; 
-      text-align: left; 
-    }
-    
-    .guide-box h3 { 
-      margin-bottom: 12px; 
-      font-size: 1.1em; 
-      color: var(--rojo); 
-    }
-    
-    .guide-step { 
-      margin-bottom: 12px; 
-      display: flex; 
-      align-items: flex-start; 
-    }
-    
-    .step-number { 
-      background-color: var(--rojo); 
-      color: #fff; 
-      width: 24px; 
-      height: 24px; 
-      border-radius: 50%; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      font-size: 0.85em; 
-      font-weight: bold; 
-      margin-right: 12px; 
-      flex-shrink: 0; 
-    }
-    
-    .guide-step p { 
-      font-size: 0.95em; 
-      line-height: 1.4; 
-      color: #333; 
-      padding-top: 2px; 
-    }
+    .btn-recursos:hover { opacity: 0.9; }
+
   </style>
 </head>
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const accesoKit = sessionStorage.getItem("kit");
-    if (!accesoKit) {
-      window.location.href = "index.html";
-    }
-  });
-</script>
 <body>
 
   <div class="app-container">
-    <div class="header">
-      <h1>Patrimonio Lúdico</h1>
-    </div>
+    
+    <header>
+      <div class="marca">ColeccionAR</div>
+      <h1>Juegos Tradicionales</h1>
+    </header>
 
-    <!-- Se eliminó la sección de Login. Ahora el Home es lo principal -->
-    <div id="section-home" class="content">
-      <p style="text-align: center; margin-bottom: 20px;">Descubre los juguetes tradicionales de Chile mediante realidad aumentada y continúa la experiencia con actividades listas para el aula.</p>
-      
-      <div class="guide-box">
-        <h3>¿Cómo usar el kit?</h3>
-        <div class="guide-step"><div class="step-number">1</div><p>Presenta una tarjeta al curso.</p></div>
-        <div class="guide-step"><div class="step-number">2</div><p>Escanea el marcador para observar el juguete en realidad aumentada.</p></div>
-        <div class="guide-step"><div class="step-number">3</div><p>Comparte las curiosidades en clase.</p></div>
-        <div class="guide-step"><div class="step-number">4</div><p>Descarga una actividad pedagógica relacionada.</p></div>
-        <div class="guide-step"><div class="step-number">5</div><p>Construyan y jueguen juntos.</p></div>
+    <!-- Acción Principal para todos -->
+    <a href="ar.html" class="btn-ar-gigante">
+      <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+      <span>Escanear Tarjetas</span>
+    </a>
+
+    <!-- Guía al grano -->
+    <div class="guia-rapida">
+      <h3>¿Cómo funciona?</h3>
+      <div class="paso">
+        <div class="numero">1</div>
+        <p>Elige una tarjeta de tu colección.</p>
       </div>
-
-      <a href="ar.html" class="btn btn-primary">
-        <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
-        Explorar juguetes
-      </a>
-
-      <a href="recursos.html" class="btn btn-outline">
-        <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
-        Actividades imprimibles
-      </a>
-
+      <div class="paso">
+        <div class="numero">2</div>
+        <p>Apunta con la cámara a la parte frontal de la tarjeta</p>
+      </div>
+      <div class="paso">
+        <div class="numero">3</div>
+        <p>Descubre curiosidades.</p>
+      </div>
     </div>
+
+    <div class="separador"></div>
+
+    <!-- El Rincón para Profes -->
+    <div class="zona-docente">
+      <h4>Material educativo</h4>
+      <p>Descarga guías y actividades imprimibles para niños.</p>
+      <a href="recursos.html" class="btn-recursos">Ver recursos educativos</a>
+    </div>
+
   </div>
 
+  <!-- Candado de Seguridad -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Leemos exactamente el mismo dato que configuraste en tu nuevo index.html ("kit")
       const accesoKit = sessionStorage.getItem("kit");
-      
-      // Si la variable no existe (el usuario no pasó por index.html), lo expulsamos al inicio
       if (!accesoKit) {
         window.location.href = "index.html";
       }
     });
   </script>
+
 </body>
 </html>

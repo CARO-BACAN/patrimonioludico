@@ -2,37 +2,39 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Patrimonio Lúdico - AR</title>
   
-<script src="js/aframe.min.js"></script>
-<script src="js/aframe-ar.js"></script>
-<script src="js/datos.js"></script>
+  <!-- Librerías de A-Frame y MindAR -->
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+  <script src="js/datos.js"></script>
 
-<script>
-AFRAME.registerComponent('detector-juguete', {
-  schema: { type: 'string' },
-  init: function () {
-    const idJuguete = this.data;
+  <script>
+    /* Componente para detectar cuál juguete está enfocado */
+    AFRAME.registerComponent('detector-juguete', {
+      schema: { type: 'string' },
+      init: function () {
+        const idJuguete = this.data;
 
-    this.el.addEventListener('markerFound', () => {
-      actualizarInfo(idJuguete);
-      document.getElementById('info-card').classList.remove('oculto');
+        this.el.addEventListener('targetFound', () => {
+          actualizarInfo(idJuguete);
+          document.getElementById('info-card').classList.remove('oculto');
+        });
+
+        this.el.addEventListener('targetLost', () => {
+          document.getElementById('info-card').classList.add('oculto');
+          const content = document.getElementById('info-content');
+          const arrow = document.getElementById('info-arrow');
+          content.style.maxHeight = null;
+          content.style.paddingBottom = "0px";
+          arrow.style.transform = "rotate(0deg)";
+        });
+      }
     });
-
-    this.el.addEventListener('markerLost', () => {
-      document.getElementById('info-card').classList.add('oculto');
-      const content = document.getElementById('info-content');
-      const arrow = document.getElementById('info-arrow');
-      content.style.maxHeight = null;
-      content.style.paddingBottom = "0px";
-      arrow.style.transform = "rotate(0deg)";
-    });
-  }
-});
-</script>
+  </script>
 
   <style>
-
     :root {
       --azul: #163354;
       --rojo: #8c2a20;
@@ -41,86 +43,77 @@ AFRAME.registerComponent('detector-juguete', {
     }
     
     html, body {
-    margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
-
-a-scene {
-    width:100%;
-    height:100%;
-}
-
-video {
-    display: block;
-}
-
-canvas.a-canvas {
-    display: block;
-}
-    .ar-ui-top { position: fixed; top: 20px; left: 20px; z-index: 99999; }
-    .ar-btn { background-color: #8c2a20; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); text-decoration: none; display: inline-block; }
-
-    #btn-curiosidades-ar { 
-      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); 
-      z-index: 99999; background-color: #163354; color: white; border: none; 
-      padding: 14px 24px; border-radius: 30px; font-weight: bold; font-size: 1rem; 
-      cursor: pointer; box-shadow: 0 6px 12px rgba(0,0,0,0.4); display: none; 
-      animation: pulse 1.5s infinite; white-space: nowrap;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
     }
-    @keyframes pulse { 0% { transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.05); } 100% { transform: translateX(-50%) scale(1); } }
 
-    /* Fondo difuminado moderno y responsivo */
+    /* Estilos personalizados para las guías de escaneo rectangulares (Proporción 9x14) */
+    .mindar-ui-scanning .scanning {
+      width: 60vw !important;
+      height: 93.3vw !important;
+      max-width: 240px !important;
+      max-height: 373px !important;
+      border: 2px dashed rgba(255, 255, 255, 0.8) !important;
+      background: transparent !important;
+    }
+    .mindar-ui-scanning .scanning-text {
+      display: none !important;
+    }
+
+    .ar-ui-top { 
+      position: fixed; 
+      top: 20px; 
+      left: 20px; 
+      z-index: 99999; 
+    }
+    
+    .ar-btn { 
+      background-color: #8c2a20; 
+      color: white; 
+      border: none; 
+      padding: 12px 20px; 
+      border-radius: 8px; 
+      font-weight: bold; 
+      font-size: 1rem; 
+      cursor: pointer; 
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+      text-decoration: none; 
+      display: inline-block; 
+    }
+
+    /* Fondo difuminado moderno para el inicio */
     .fullscreen-overlay {
       position: fixed; 
-      top: 0; 
-      left: 0; 
-      right: 0; 
-      bottom: 0; /* Esto reemplaza el 100vw/100vh para evitar que se desborde */
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(22, 51, 84, 0.85); 
       backdrop-filter: blur(4px); 
       z-index: 9999999;
       display: flex; 
       justify-content: center; 
       align-items: center;
-      padding: 24px; /* Este es el margen seguro para las pantallas de los celulares */
-      box-sizing: border-box; /* Obliga al navegador a respetar el margen */
+      padding: 24px;
+      box-sizing: border-box;
     }
 
-    /* Tarjeta flotante adaptativa */
     .carga-card {
       background: #ffffff;
       border-radius: 16px;
       padding: 30px 24px;
       text-align: center;
-      width: 100%; /* Esto es clave: hace que se encoja al tamaño del celular */
-      max-width: 360px; /* Y esto evita que se estire gigante en tu PC */
+      width: 100%;
+      max-width: 360px;
       box-sizing: border-box;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); 
+      animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
 
-    .icono-camara {
-      font-size: 3rem;
-      margin-bottom: 5px;
-    }
+    .icono-camara { font-size: 3rem; margin-bottom: 5px; }
+    .carga-card h2 { color: var(--azul); font-size: 1.6rem; margin-bottom: 12px; margin-top: 0; }
+    .carga-card p { color: #555555; font-size: 1rem; line-height: 1.4; margin-bottom: 25px; }
 
-    .carga-card h2 {
-      color: var(--azul);
-      font-size: 1.6rem;
-      margin-bottom: 12px;
-      margin-top: 0;
-    }
-
-    .carga-card p {
-      color: #555555;
-      font-size: 1rem;
-      line-height: 1.4;
-      margin-bottom: 25px;
-    }
-
-    /* Botón más amigable */
     .btn-comenzar {
       background-color: var(--rojo);
       color: white;
@@ -132,11 +125,6 @@ canvas.a-canvas {
       width: 100%;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(140, 42, 32, 0.3);
-      transition: transform 0.2s;
-    }
-
-    .btn-comenzar:active {
-      transform: scale(0.95);
     }
 
     @keyframes popIn {
@@ -144,6 +132,7 @@ canvas.a-canvas {
       100% { transform: scale(1); opacity: 1; }
     }
 
+    /* Tarjeta deslizable de información */
     .info-card {
       position: fixed; bottom: 24px; left: 24px; right: 24px;
       background: #ffffff; border-radius: 16px;
@@ -171,11 +160,16 @@ canvas.a-canvas {
     }
 
     .info-content p { margin: 16px 0; font-size: 0.95rem; line-height: 1.4; color: var(--texto); }
-    </style>
+    
+    .btn-secondary {
+      display: block; width: 100%; background: var(--azul); color: white; border: none;
+      padding: 10px; border-radius: 8px; font-weight: bold; margin-bottom: 16px; cursor: pointer;
+    }
+  </style>
 </head>
 <body>
 
-<!-- Pantalla de inicio para desbloquear el autoplay de la cámara -->
+  <!-- Pantalla de inicio para desbloquear la cámara -->
   <div id="pantalla-carga" class="fullscreen-overlay">
     <div class="carga-card">
       <div class="icono-camara">📸</div>
@@ -185,10 +179,12 @@ canvas.a-canvas {
     </div>
   </div>
 
+  <!-- Botón de salir -->
   <div class="ar-ui-top">
     <a href="index.html" class="ar-btn">❮ Salir</a>
   </div>
 
+  <!-- Tarjeta deslizable inferior -->
   <div id="info-card" class="info-card oculto">
     <div class="info-header" onclick="toggleInfo()">
       <h2 id="info-titulo">Juguete</h2>
@@ -200,49 +196,84 @@ canvas.a-canvas {
     </div>
   </div>
 
-<a-scene
-    embedded
-    renderer="alpha:true; antialias:true; colorManagement: true;"
-    vr-mode-ui="enabled:false"
-    arjs="sourceType:webcam; debugUIEnabled:false;">
+  <!-- ESCENA DE REALIDAD AUMENTADA CON MINDAR -->
+  <a-scene 
+    mindar-image="imageTargetSrc: ./mind/juguetes.mind; uiLoading: no;" 
+    color-space="sRGB" 
+    renderer="colorManagement: true; physicallyCorrectLights: true;" 
+    vr-mode-ui="enabled: false" 
+    device-orientation-permission-ui="enabled: false">
 
-  <a-entity light="type: hemisphere; color: #ffffff; groundColor: #777777; intensity: 1.5"></a-entity>
-  <a-entity light="type: directional; color: #ffffff; intensity: 0.8" position="1 2 1"></a-entity>
+    <a-assets>
+      <a-asset-item id="trompo-3d" src="glb/trompo.glb"></a-asset-item>
+volantin
+      <a-asset-item id="emboque-3d" src="glb/emboque.glb"></a-asset-item>
+      <a-asset-item id="polcas-3d" src="glb/polcas.glb"></a-asset-item>
+      <a-asset-item id="rayuela-3d" src="glb/rayuela.glb"></a-asset-item>
+      <a-asset-item id="runrun-3d" src="glb/runrun.glb"></a-asset-item>
+    </a-assets>
 
-    <a-marker type="pattern" url="patt/pattern-trompo.patt" detector-juguete="trompo">
-      <a-gltf-model 
-        src="glb/trompo.glb" 
-        position="0 0.5 0" 
-        scale="0.2 0.2 0.2" 
-        rotation="0 0 0">
-      </a-gltf-model>
-    </a-marker>
-    <a-marker type="pattern" url="patt/pattern-emboque.patt" detector-juguete="emboque">
-      <a-cylinder position="0 0.5 0" material="color: #163354;" radius="0.4" height="0.8"></a-cylinder>
-    </a-marker>
-    <a-marker type="pattern" url="patt/pattern-runrun.patt" detector-juguete="runrun">
-      <a-sphere position="0 0.5 0" material="color: #2e7d32;" radius="0.5"></a-sphere>
-    </a-marker>
-    <a-marker type="pattern" url="patt/pattern-tejo.patt" detector-juguete="rayuela">
-      <a-cone position="0 0.5 0" material="color: #f57f17;" radius-bottom="0.5" height="1"></a-cone>
-    </a-marker>
-    <a-marker type="pattern" url="patt/pattern-volantin.patt" detector-juguete="volantin">
-      <a-plane position="0 0.5 0" rotation="-90 0 0" material="color: #6a1b9a;" width="0.8" height="0.8"></a-plane>
-    </a-marker>
-    <a-marker type="pattern" url="patt/pattern-polcas.patt" detector-juguete="polcas">
-      <a-torus position="0 0.5 0" rotation="90 0 0" material="color: #d84315;" radius="0.4" radius-tubular="0.1"></a-torus>
-    </a-marker>
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <a-entity camera></a-entity>
+<!-- 1. Luz Ambiental general mucho más potente para levantar las sombras internas -->
+<!-- 1. Luz Ambiental sutil para levantar la base -->
+<a-entity light="type: ambient; color: #ffffff; intensity: 1.8"></a-entity>
+
+<!-- 2. Foco Principal Frontal (Key Light): Bajamos un poquito a 3.2 para que no queme -->
+<a-entity light="type: directional; color: #ffffff; intensity: 3.2; castShadow: true;" position="0 5 4"></a-entity>
+
+<!-- 3. Luz de Relleno Lateral Izquierda -->
+<a-entity light="type: directional; color: #e6f2ff; intensity: 2.0" position="-3 3 2"></a-entity>
+
+<!-- 4. Luz de Relleno Lateral Derecha -->
+<a-entity light="type: directional; color: #fff5e6; intensity: 2.0" position="3 3 2"></a-entity>
+
+<!-- 5. Contra trasera para mantener el brillo interno del vidrio -->
+<a-entity light="type: directional; color: #ffffff; intensity: 2.8" position="0 3 -4"></a-entity>
+
+
+    <!-- 1. Trompo (Índice 0) -->
+    <a-entity mindar-image-target="targetIndex: 0" detector-juguete="trompo">
+      <a-gltf-model src="#trompo-3d" position="0 0.4 0.06" scale="0.2 0.2 0.2" rotation="25 0 0"></a-gltf-model>
+    </a-entity>
+<!-- 2. Volantín (Índice 1) -->
+
+
+    <!-- 3. Emboque (Índice 2) -->
+    <a-entity mindar-image-target="targetIndex: 2" detector-juguete="emboque">
+      <a-gltf-model src="#emboque-3d" position="0 0.25 0" scale="0.2 0.2 0.2" rotation="25 0 0"></a-gltf-model>
+    </a-entity>
+
+<!-- 4. Polcas (Índice 3) -->
+<a-entity mindar-image-target="targetIndex: 3" detector-juguete="polcas">
+  <a-gltf-model 
+    src="#polcas-3d" 
+    position="0 0 0" 
+    scale="0.2 0.2 0.2" 
+    rotation="0 0 0"
+    material="shader: standard; transparent: true; opacity: 0.6; roughness: 0.1; metalness: 0.1;"
+  ></a-gltf-model>
+</a-entity>
+
+    <!-- 5. Rayuela (Índice 4) -->
+    <a-entity mindar-image-target="targetIndex: 4" detector-juguete="rayuela">
+      <a-gltf-model src="#rayuela-3d" position="0 0.1 0.05" scale="0.25 0.25 0.25" rotation="25 0 0"></a-gltf-model>
+    </a-entity>
+
+    <!-- 6. Run Run (Índice 5) -->
+    <a-entity mindar-image-target="targetIndex: 5" detector-juguete="runrun">
+      <a-gltf-model src="#runrun-3d" position="0 0 0" scale="0.1 0.1 0.1" rotation="0 0 0"></a-gltf-model>
+    </a-entity>
+
   </a-scene>
 
-<script>
-    // 1. Quitar la pantalla inicial
+  <script>
+    // 1. Quitar la pantalla de inicio y activar la cámara
     function iniciarCamara() {
       document.getElementById('pantalla-carga').style.display = 'none';
     }
 
-    // 2. Cargar los datos del nuevo datos.js
+    // 2. Cargar los datos desde tu archivo datos.js
     function actualizarInfo(id) {
       if (typeof datosJuguetes !== 'undefined' && datosJuguetes[id]) {
         const info = datosJuguetes[id];
@@ -251,7 +282,7 @@ canvas.a-canvas {
       }
     }
 
-    // 3. Abrir y cerrar la curiosidad con animación
+    // 3. Desplegar o contraer la tarjeta de curiosidad inferior
     function toggleInfo() {
       const content = document.getElementById('info-content');
       const arrow = document.getElementById('info-arrow');

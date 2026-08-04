@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Material Pedagógico - ColeccionAR</title>
   
+<!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&family=Saira:wght@600;700&display=swap" rel="stylesheet">
+
 
   <style>
     :root {
@@ -18,12 +20,18 @@
       --blanco: #FFFFFF;
       --gris-suave: #F0F0F0;
     }
-
+/* Todo el texto base usará Roboto por defecto */
     * { 
       box-sizing: border-box; 
       margin: 0; 
       padding: 0; 
-      font-family: 'Nunito', sans-serif; 
+      font-family: 'Roboto', sans-serif; 
+    }
+
+    /* Los títulos y elementos destacados usarán Saira */
+    h1, h2, h3, h4, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
+      font-family: 'Saira', sans-serif;
+      font-weight: 700; 
     }
 
     body {
@@ -205,6 +213,7 @@
       color: var(--blanco);
       margin-bottom: 20px;
     }
+    
   </style>
 </head>
 <body>

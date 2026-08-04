@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ColecciónAR - Juego</title>
+
+  <!-- Tipografías de la marca -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Saira:wght@600;700&display=swap" rel="stylesheet">
+
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
+
+  <script src="js/datos.js"></script>
+  <script src="js/juego.js" defer></script>
+  <script src="js/misiones.js"></script>
+
+  <style>
+    :root {
+      /* Paleta vintage ColeccionAR */
+      --fondo-papel: #EAE3D5;
+      --azul-marino: #2A3B52;
+      --rojo-terracota: #A43A2E;
+      --linea-suave: #D1C7B7;
+      --crema-oscuro: #DFD5C4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* --- CÁMARA AR --- */
+    a-scene {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* --- INTERFAZ FLOTANTE --- */
+    #ui {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      pointer-events: none; /* Deja pasar los clics a la cámara si fuera necesario */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    /* BARRA SUPERIOR */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .back {
+      pointer-events: auto; /* Este sí es clickeable */
+      background: var(--fondo-papel);
+      color: var(--azul-marino);
+      text-decoration: none;
+      padding: 10px 15px;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9em;
+      border: 2px solid var(--azul-marino);
+      box-shadow: 3px 3px 0px var(--azul-marino);
+      transition: transform 0.1s;
+    }
+
+    .back:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px var(--azul-marino);
+    }
+
+    .progress {
+      background: var(--azul-marino);
+      color: var(--fondo-papel);
+      padding: 10px 15px;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.9em;
+      border: 2px solid var(--azul-marino);
+    }
+
+    /* PANEL INFERIOR (LA MISIÓN) */
+    .panel {
+      position: relative;
+      background: var(--fondo-papel);
+      border: 2px solid var(--rojo-terracota);
+      padding: 25px 20px;
+      text-align: center;
+      margin-bottom: 10px;
+      /* Sombra para despegarlo un poco del fondo de la cámara */
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+    }
+
+    /* Efecto de doble borde interior vintage */
+    .panel::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px solid var(--rojo-terracota);
+      pointer-events: none;
+    }
+
+    .panel h2 {
+      font-family: 'Saira', sans-serif;
+      color: var(--rojo-terracota);
+      font-size: 1.2em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 15px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel p {
+      color: var(--azul-marino);
+      font-size: 1.05em;
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Etiqueta de estado */
+    .estado {
+      display: inline-block;
+      background: var(--crema-oscuro);
+      color: var(--rojo-terracota);
+      font-family: 'Saira', sans-serif;
+      font-weight: 600;
+      font-size: 0.85em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 6px 12px;
+      border: 1px solid var(--linea-suave);
+      position: relative;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="ui">
+    
+    <!-- Barra Superior -->
+     <div class="topbar">
+      <a href="patrimonio-ludico.html" class="back">❮ Volver</a>
+      
+      <div class="progress">
+        Misión <span id="misionActual">1</span> | Pts: <span id="puntaje">0</span>
+      </div>
+    </div>
+
+    <!-- Panel de Misión Inferior -->
+    <div class="panel">
+      <h2 id="titulo">Busca la primera tarjeta</h2>
+      <p id="texto">Escanea cualquier tarjeta sobre la mesa para activar el juego y recibir tu primera pista.</p>
+      <div class="estado" id="estado">Esperando cámara...</div>
+    </div>
+
+  </div>
+
+  <!-- Escena AR -->
+<!-- Escena AR -->
+  <a-scene
+    mindar-image="imageTargetSrc: ./mind/juguetes.mind; uiLoading: no;"
+    color-space="sRGB"
+    renderer="colorManagement:true; physicallyCorrectLights:true;"
+    vr-mode-ui="enabled:false"
+    device-orientation-permission-ui="enabled:false"
+    embedded>
+    
+    <a-camera position="0 0 0" look-controls="enabled:false"></a-camera>
+
+<a-entity mindar-image-target="targetIndex: 0" class="tarjeta" data-id="0"></a-entity> <!-- Trompo -->
+    <!-- Entidades de MindAR para detectar cada tarjeta -->
+    <a-entity mindar-image-target="targetIndex: 0" ontartargetfound="escaneoCorrecto('trompo')"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 1" ontartargetfound="escaneoCorrecto('volantin')"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 2" ontartargetfound="escaneoCorrecto('runrun')"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 3" ontartargetfound="escaneoCorrecto('emboque')"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 4" ontartargetfound="escaneoCorrecto('rayuela')"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 5" ontartargetfound="escaneoCorrecto('polcas')"></a-entity>
+
+  </a-scene>
+
+</body>
+</html>

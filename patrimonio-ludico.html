@@ -3,26 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Kit: Juegos Tradicionales - ColeccionAR</title>
+  <title>Juegos típicos de Chile - Descubre Chile</title>
   
+  <!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Saira:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Importando Loslana Niu Pro desde Adobe Fonts -->
+  <link rel="stylesheet" href="https://use.typekit.net/dum5zgl.css">
 
   <style>
     :root {
-      /* Paleta cálida y nostálgica para los juegos tradicionales */
-      --fondo-crema: #FAF5E9;
-      --madera: #D97736;
-      --rojo-volantin: #E94F4F;
-      --azul-marino: #123055;
-      --blanco: #FFFFFF;
+      /* Paleta vintage inspirada en tus ilustraciones */
+      --fondo-papel: #EAE3D5;
+      --azul-marino: #2A3B52;
+      --rojo-terracota: #A43A2E;
+      --linea-suave: #D1C7B7;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Nunito', sans-serif; }
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Roboto', sans-serif; 
+    }
+
+    h1, h2, h3, h4, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
+      font-family: 'Saira', sans-serif;
+      font-weight: 700; 
+    }
 
     body {
-      background-color: var(--fondo-crema);
+      /* Volvemos al fondo de página normal */
+      background-color: var(--fondo-papel);
       color: var(--azul-marino);
       min-height: 100vh;
       display: flex;
@@ -39,90 +53,174 @@
       min-height: 100vh;
     }
 
+    /* Adaptación suave para pantallas grandes */
+    @media (min-width: 768px) {
+      .app-container {
+        padding: 40px 20px;
+      }
+    }
+
     header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 40px;
       margin-top: 20px;
     }
 
-    .marca { font-weight: 900; font-size: 1.2em; color: var(--madera); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
-    h1 { font-weight: 900; font-size: 2em; line-height: 1.1; }
+    .marca { 
+      font-weight: 700; 
+      font-size: 0.9em; 
+      color: var(--rojo-terracota); 
+      text-transform: uppercase; 
+      letter-spacing: 3px; 
+      margin-bottom: 10px; 
+    }
 
-    /* EL PROTAGONISTA: Botón gigante de AR */
+    h1 { 
+      font-weight: 700; 
+      font-size: 2.2em; 
+      line-height: 1.1; 
+      text-transform: uppercase; 
+    }
+
+    /* EL PROTAGONISTA: Ajustado para ser menos alto */
+    /* EL PROTAGONISTA: Estilo etiqueta vintage */
     .btn-ar-gigante {
-      background-color: var(--rojo-volantin);
-      color: var(--blanco);
+      position: relative;
+      background-color: #DFD5C4; /* Un crema un tono más oscuro que el fondo */
+      color: var(--azul-marino);
       text-decoration: none;
-      border: 4px solid var(--azul-marino);
-      border-radius: 20px;
-      padding: 30px 20px;
+      
+      /* Borde exterior grueso rojo */
+      border: 2px solid var(--rojo-terracota);
+      border-radius: 12px; 
+      
+      padding: 15px 25px;
       display: flex;
-      flex-direction: column;
+      flex-direction: row; /* Alinea el ícono y texto lado a lado */
       align-items: center;
       justify-content: center;
-      box-shadow: 6px 6px 0px var(--azul-marino);
+      margin-bottom: 40px;
       transition: all 0.1s;
-      margin-bottom: 30px;
     }
 
+    /* Borde interior delgado rojo (El detalle de la tarjeta) */
+    .btn-ar-gigante::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px solid var(--rojo-terracota);
+      border-radius: 8px;
+      pointer-events: none; /* Evita que el borde interfiera al hacer clic */
+    }
+
+    /* Efecto de clic sutil sin la sombra gigante */
     .btn-ar-gigante:active {
-      transform: translate(4px, 4px);
-      box-shadow: 0px 0px 0px var(--azul-marino);
+      transform: scale(0.98); 
+      background-color: #D5C9B5;
     }
 
-    .btn-ar-gigante svg { width: 60px; height: 60px; fill: currentColor; margin-bottom: 10px; }
-    .btn-ar-gigante span { font-weight: 900; font-size: 1.5em; text-transform: uppercase; }
+    .btn-ar-gigante svg { 
+      width: 32px; 
+      height: 32px; 
+      fill: var(--azul-marino); 
+      margin-right: 12px; /* Espacio entre ícono y texto */
+      margin-bottom: 0; 
+    }
 
-    /* INSTRUCCIONES RÁPIDAS: Una oración por punto */
+    .btn-ar-gigante span { 
+      font-weight: 700; 
+      font-size: 1.3em; 
+      text-transform: uppercase; 
+      letter-spacing: 1px;
+    }
+    /* INSTRUCCIONES RÁPIDAS: Alineadas a la izquierda y limpias */
+   /* INSTRUCCIONES RÁPIDAS: Estilo sutil y limpio */
     .guia-rapida {
-      background: var(--blanco);
-      border: 3px solid var(--azul-marino);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 4px 4px 0px rgba(18, 48, 85, 0.1);
+      background-color: transparent; /* Sin fondo, usa el de la página */
+      border: 1px solid var(--rojo-terracota); /* Solo una línea delgada */
+      border-radius: 8px; /* Curva suave */
+      padding: 25px 20px;
+      margin-bottom: 40px;
+      width: 100%;
     }
 
-    .guia-rapida h3 { font-size: 1.2em; font-weight: 800; margin-bottom: 15px; color: var(--madera); text-align: center; }
+    .guia-rapida h3 { 
+      font-size: 1.1em; 
+      margin-bottom: 20px; 
+      color: var(--rojo-terracota); 
+      text-align: center; 
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
 
-    .paso { display: flex; align-items: center; margin-bottom: 12px; }
+    .paso { 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-start; 
+      margin-bottom: 15px; 
+    }
+    
     .paso:last-child { margin-bottom: 0; }
+    
     .numero {
-      background: var(--madera); color: var(--blanco); font-weight: 900;
-      width: 30px; height: 30px; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; flex-shrink: 0; margin-right: 15px;
+      color: var(--rojo-terracota); 
+      font-weight: 700;
+      font-size: 1.1em;
+      margin-right: 12px;
     }
-    .paso p { font-weight: 700; font-size: 1em; line-height: 1.3; }
 
-    /* SEPARADOR DIVERTIDO */
-    .separador { border-top: 3px dashed var(--madera); opacity: 0.3; margin: 10px 0 30px 0; }
+    .paso p { 
+      font-weight: 400; 
+      font-size: 1em; 
+      line-height: 1.4; 
+    }
+
+    /* SEPARADOR ELEGANTE */
+    .separador { 
+      border-top: 1px solid var(--linea-suave); 
+      width: 80%;
+      margin: 10px auto 30px auto; 
+    }
 
     /* ZONA DOCENTE */
     .zona-docente {
-      background-color: #E2EAF4;
-      border: 3px solid var(--azul-marino);
-      border-radius: 16px;
-      padding: 20px;
       text-align: center;
-      margin-top: auto; /* Empuja esto hacia abajo */
+      margin-top: auto;
+      padding: 20px 10px;
     }
 
-    .zona-docente h4 { font-weight: 800; font-size: 1.1em; margin-bottom: 10px; }
-    .zona-docente p { font-size: 0.9em; margin-bottom: 15px; font-weight: 700; color: #444; }
+    .zona-docente h4 { 
+      font-weight: 700; 
+      font-size: 1.1em; 
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .zona-docente p { 
+      font-size: 0.9em; 
+      margin-bottom: 20px; 
+      color: #555; 
+    }
 
     .btn-recursos {
       display: inline-block;
       background-color: var(--azul-marino);
-      color: var(--blanco);
+      color: var(--fondo-papel);
       text-decoration: none;
-      font-weight: 800;
+      font-weight: 700;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       padding: 12px 24px;
-      border-radius: 10px;
       border: 2px solid var(--azul-marino);
-      transition: opacity 0.2s;
+      transition: background-color 0.2s;
     }
 
-    .btn-recursos:hover { opacity: 0.9; }
+    .btn-recursos:hover { 
+      background-color: var(--rojo-terracota); 
+      border-color: var(--rojo-terracota);
+    }
 
   </style>
 </head>
@@ -131,11 +229,11 @@
   <div class="app-container">
     
     <header>
-      <div class="marca">ColeccionAR</div>
-      <h1>Juegos Tradicionales</h1>
+      <div class="marca">Descubre Chile</div>
+      <h1>Juegos típicos de Chile</h1>
     </header>
 
-    <!-- Acción Principal para todos -->
+    <!-- Acción Principal -->
     <a href="ar.html" class="btn-ar-gigante">
       <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
       <span>Escanear Tarjetas</span>
@@ -145,18 +243,23 @@
     <div class="guia-rapida">
       <h3>¿Cómo funciona?</h3>
       <div class="paso">
-        <div class="numero">1</div>
+        <div class="numero">1.</div>
         <p>Elige una tarjeta de tu colección.</p>
       </div>
       <div class="paso">
-        <div class="numero">2</div>
+        <div class="numero">2.</div>
         <p>Apunta con la cámara a la parte frontal de la tarjeta</p>
       </div>
       <div class="paso">
-        <div class="numero">3</div>
+        <div class="numero">3.</div>
         <p>Descubre curiosidades.</p>
       </div>
     </div>
+
+        <a href="juego.html" class="btn-ar-gigante">
+      <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+      <span>Juego</span>
+    </a>
 
     <div class="separador"></div>
 

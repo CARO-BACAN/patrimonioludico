@@ -215,7 +215,7 @@
 
     <a-assets>
       <a-asset-item id="trompo-3d" src="glb/trompo.glb"></a-asset-item>
-volantin
+      <a-asset-item id="volantin-3d" src="glb/volantin.glb"></a-asset-item>
       <a-asset-item id="emboque-3d" src="glb/emboque.glb"></a-asset-item>
       <a-asset-item id="polcas-3d" src="glb/polcas.glb"></a-asset-item>
       <a-asset-item id="rayuela-3d" src="glb/rayuela.glb"></a-asset-item>
@@ -246,7 +246,9 @@ volantin
       <a-gltf-model src="#trompo-3d" position="0 0.4 0.06" scale="0.2 0.2 0.2" rotation="25 0 0"></a-gltf-model>
     </a-entity>
 <!-- 2. Volantín (Índice 1) -->
-
+<a-entity mindar-image-target="targetIndex: 1" detector-juguete="volantin">
+      <a-gltf-model src="#volantin-3d" position="0 0.25 0" scale="1.3 1.3 1.3" rotation="0 0 0"></a-gltf-model>
+</a-entity>
 
     <!-- 3. Emboque (Índice 2) -->
     <a-entity mindar-image-target="targetIndex: 2" detector-juguete="emboque">

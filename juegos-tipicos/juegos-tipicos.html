@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Juegos típicos de Chile - Descubre Chile</title>
+  
+  <!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&family=Saira:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Importando Loslana Niu Pro desde Adobe Fonts -->
+  <link rel="stylesheet" href="https://use.typekit.net/dum5zgl.css">
+
+  <style>
+    :root {
+      /* Paleta vintage inspirada en tus ilustraciones */
+      --fondo-papel: #EAE3D5;
+      --azul-marino: #2A3B52;
+      --rojo-terracota: #A43A2E;
+      --linea-suave: #D1C7B7;
+      --crema-oscuro: #DFD5C4;
+    }
+
+    * { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: 'Roboto', sans-serif; 
+    }
+
+    h1, h2, h3, h4, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
+      font-family: 'Saira', sans-serif;
+      font-weight: 700; 
+    }
+
+    body {
+      background-color: var(--fondo-papel);
+      color: var(--azul-marino);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 900px; /* Ampliado para que el grid luzca perfecto en PC */
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    @media (min-width: 768px) {
+      .app-container {
+        padding: 40px 20px;
+      }
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 20px;
+    }
+
+    .marca { 
+      font-weight: 700; 
+      font-size: 0.9em; 
+      color: var(--rojo-terracota); 
+      text-transform: uppercase; 
+      letter-spacing: 3px; 
+      margin-bottom: 10px; 
+    }
+
+    h1 { 
+      font-weight: 700; 
+      font-size: 2.2em; 
+      line-height: 1.1; 
+      text-transform: uppercase; 
+    }
+
+    /* --- NUEVO: SISTEMA DE GRID PARA COMPUTADOR --- */
+    .grid-principal {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    .grid-inferior {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .grid-principal {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 columnas iguales arriba */
+        gap: 25px;
+      }
+      .grid-inferior {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Tip a la izquierda, recursos a la derecha */
+        gap: 25px;
+        align-items: stretch;
+      }
+    }
+
+    /* EL PROTAGONISTA: Estilo etiqueta vintage */
+    .btn-ar-gigante {
+      position: relative;
+      background-color: var(--crema-oscuro); 
+      color: var(--azul-marino);
+      text-decoration: none;
+      border: 2px solid var(--rojo-terracota);
+      border-radius: 12px; 
+      padding: 15px 25px;
+      display: flex;
+      flex-direction: row; 
+      align-items: center;
+      justify-content: center;
+      transition: all 0.1s;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .btn-ar-gigante::before {
+      content: '';
+      position: absolute;
+      top: 4px; left: 4px; right: 4px; bottom: 4px;
+      border: 1px solid var(--rojo-terracota);
+      border-radius: 8px;
+      pointer-events: none; 
+    }
+
+    .btn-ar-gigante:active {
+      transform: scale(0.98); 
+      background-color: #D5C9B5;
+    }
+
+    .btn-ar-gigante svg { 
+      width: 32px; 
+      height: 32px; 
+      fill: var(--azul-marino); 
+      margin-right: 12px; 
+      margin-bottom: 0; 
+    }
+
+    .btn-ar-gigante span { 
+      font-weight: 700; 
+      font-size: 1.2em; 
+      text-transform: uppercase; 
+      letter-spacing: 1px;
+    }
+
+    /* INSTRUCCIONES RÁPIDAS: Estilo sutil y limpio */
+    .guia-rapida {
+      background-color: transparent; 
+      border: 1px solid var(--rojo-terracota); 
+      border-radius: 8px; 
+      padding: 25px 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .guia-rapida h3 { 
+      font-size: 1.1em; 
+      margin-bottom: 15px; 
+      color: var(--rojo-terracota); 
+      text-align: center; 
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .paso { 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-start; 
+      margin-bottom: 12px; 
+    }
+    
+    .paso:last-child { margin-bottom: 0; }
+    
+    .numero {
+      color: var(--rojo-terracota); 
+      font-weight: 700;
+      font-size: 1.1em;
+      margin-right: 12px;
+    }
+
+    .paso p { 
+      font-weight: 400; 
+      font-size: 0.95em; 
+      line-height: 1.4; 
+    }
+
+    /* NUEVO: CAJA DEL JUEGO */
+    .caja-juego {
+      border-color: var(--azul-marino);
+      background-color: rgba(42, 59, 82, 0.03);
+    }
+
+    .caja-juego h3 {
+      color: var(--azul-marino);
+    }
+
+    .caja-juego {
+  text-align: center;
+}
+
+.caja-juego .intro-juego {
+  max-width: 330px;
+  margin: 0 auto 15px auto;
+}
+
+    .caja-juego p.intro-juego {
+      font-size: 0.95em;
+      line-height: 1.4;
+      margin-bottom: 10px;
+    }
+
+    .caja-juego .btn-ar-gigante {
+      border-color: var(--azul-marino);
+    }
+    .caja-juego .btn-ar-gigante::before {
+      border-color: var(--azul-marino);
+    }
+
+    /* NUEVO: CONSEJOS AR EXTENDIDOS */
+    .consejos-ar {
+      border: 1px dashed var(--rojo-terracota);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .consejos-ar h4 {
+      font-family: 'Saira', sans-serif;
+      font-size: 1em;
+      color: var(--azul-marino);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .consejos-ar p {
+      font-size: 0.9em;
+      line-height: 1.5;
+      color: var(--azul-marino);
+      margin-bottom: 8px;
+    }
+
+    .consejos-ar p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* SEPARADOR ELEGANTE */
+    .separador { 
+      border-top: 1px solid var(--linea-suave); 
+      width: 80%;
+      margin: 10px auto 30px auto; 
+    }
+
+    /* ZONA DOCENTE */
+    .zona-docente {
+      border: 1px solid var(--azul-marino);
+      background-color: var(--crema-oscuro);
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .zona-docente h4 { 
+      font-weight: 700; 
+      font-size: 1.1em; 
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .zona-docente p { 
+      font-size: 0.9em; 
+      margin-bottom: 15px; 
+      line-height: 1.4;
+      color: #444; 
+    }
+
+    .btn-recursos {
+      display: inline-block;
+      background-color: var(--azul-marino);
+      color: var(--fondo-papel);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 10px 20px;
+      border: 2px solid var(--azul-marino);
+      transition: background-color 0.2s;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn-recursos:hover { 
+      background-color: var(--rojo-terracota); 
+      border-color: var(--rojo-terracota);
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <header>
+      <div class="marca">Descubre Chile</div>
+      <h1>Juegos típicos de Chile</h1>
+    </header>
+
+    <!-- GRID SUPERIOR: MODO EXPLORACIÓN Y MODO JUEGO -->
+    <div class="grid-principal">
+      
+      <!-- Modo Exploración -->
+      <div class="guia-rapida">
+        <div>
+          <h3>Colección AR</h3>
+          <div class="paso">
+            <div class="numero">1.</div>
+            <p>Elige una tarjeta de tu colección.</p>
+          </div>
+          <div class="paso">
+            <div class="numero">2.</div>
+            <p>Apunta con la cámara a la parte frontal.</p>
+          </div>
+          <div class="paso">
+            <div class="numero">3.</div>
+            <p>Descubre curiosidades del juguete en 3D.</p>
+          </div>
+        </div>
+        
+        <a href="ar.html" class="btn-ar-gigante">
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+          <span>Explorar</span>
+        </a>
+      </div>
+
+      <!-- Modo Juego -->
+      <div class="guia-rapida caja-juego">
+        <div>
+          <h3>Misión de Pistas</h3>
+          <p class="intro-juego">Lee la pista en pantalla, descubre de qué juguete hablamos y escanea la tarjeta correcta. ¡Descubre todas las estrellas antes de que el tiempo te gane!</p>
+        </div>
+        
+        <a href="juego.html" class="btn-ar-gigante">
+          <svg viewBox="0 0 24 24"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99zM17 19H7V5h10v14z"/></svg>
+          <span>Jugar Ahora</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- GRID INFERIOR: TIPS DE ILUMINACIÓN Y MATERIAL EDUCATIVO -->
+    <div class="grid-inferior">
+      
+      <!-- Advertencia de luz / Consejos AR extendidos -->
+      <div class="consejos-ar">
+        <h4>💡 Tips para la magia AR</h4>
+        <p>• <strong>Iluminación:</strong> Busca un lugar con buena luz natural, evitando sombras fuertes sobre la mesa[cite: 5].</p>
+        <p>• <strong>Cero reflejos:</strong> Asegúrate de que la tarjeta no tenga brillos ni reflejos molestos[cite: 5].</p>
+        <p>• <strong>Encuadre:</strong> Enfócala completa y de frente en tu pantalla para una lectura perfecta[cite: 5].</p>
+      </div>
+
+      <!-- El Rincón para Profes / Recursos -->
+      <div class="zona-docente">
+        <h4>Material educativo</h4>
+        <p>Descarga guías y actividades imprimibles para niños[cite: 5].</p>
+        <a href="recursos.html" class="btn-recursos">Ver recursos educativos</a>
+      </div>
+
+    </div>
+
+    <div class="separador"></div>
+
+  </div>
+
+  <!-- Candado de Seguridad -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const accesoKit = sessionStorage.getItem("kit");
+      if (!accesoKit) {
+        window.location.href = "index.html";
+      }
+    });
+  </script>
+
+</body>
+</html>

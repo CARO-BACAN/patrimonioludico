@@ -4,7 +4,7 @@ let indice = 0;
 let partidas = [];
 let bloqueado = true; 
 
-// Elementos de la interfaz
+// --- ELEMENTOS DE LA INTERFAZ ---
 const textoPistaDiv = document.getElementById("texto-pista");
 const estadoDiv = document.getElementById("estado");
 const misionActualSpan = document.getElementById("misionActual");
@@ -19,11 +19,13 @@ const estrellasFinal = document.getElementById("estrellas-final");
 const textoFinal = document.getElementById("texto-final");
 const textoErrores = document.getElementById("texto-errores");
 
+// --- FUNCIONES DEL JUEGO ---
+
 function iniciarJuego() {
   pantallaInicio.style.display = "none";
   pantallaFinal.style.display = "none";
   pantallaJuego.style.display = "block";
-  barraProgreso.style.display = "block"; // Mostramos el contador superior
+  barraProgreso.style.display = "block"; 
   
   partidas = [...misiones].sort(() => Math.random() - 0.5).slice(0, 6);
   
@@ -46,7 +48,6 @@ function mostrarMision() {
   textoPistaDiv.textContent = misionActual.pistas[indicePista];
   misionActualSpan.textContent = indice + 1;
   
-  // Reseteamos el estilo de la etiqueta de estado a tu diseño original
   estadoDiv.textContent = "Buscando...";
   estadoDiv.style.background = "var(--crema-oscuro)";
   estadoDiv.style.color = "var(--rojo-terracota)";
@@ -62,9 +63,8 @@ window.escaneoCorrecto = function(nombreTarjeta) {
   if (misionActual.respuestas.includes(nombreTarjeta)) {
     bloqueado = true; 
     
-    // Estilo verde al acertar
     estadoDiv.textContent = "¡Correcto! 🎯";
-    estadoDiv.style.background = "#2e7d32"; // Verde sutil
+    estadoDiv.style.background = "#2e7d32"; 
     estadoDiv.style.color = "white";
     
     indice++;
@@ -75,14 +75,15 @@ window.escaneoCorrecto = function(nombreTarjeta) {
 
   } else {
     errores++;
+    bloqueado = true; 
     
-    // Estilo rojo intenso al fallar
     estadoDiv.textContent = "¡Sigue buscando! ❌";
     estadoDiv.style.background = "var(--rojo-terracota)";
     estadoDiv.style.color = "white";
     
     setTimeout(() => {
-      if (!bloqueado) {
+      if (pantallaJuego.style.display !== "none") {
+        bloqueado = false; 
         estadoDiv.textContent = "Buscando...";
         estadoDiv.style.background = "var(--crema-oscuro)";
         estadoDiv.style.color = "var(--rojo-terracota)";
@@ -93,7 +94,7 @@ window.escaneoCorrecto = function(nombreTarjeta) {
 
 function terminarJuego() {
   bloqueado = true;
-  barraProgreso.style.display = "none"; // Ocultamos el contador
+  barraProgreso.style.display = "none"; 
 
   const tiempoFinal = Date.now();
   const segundosTotales = Math.floor((tiempoFinal - tiempoInicio) / 1000);

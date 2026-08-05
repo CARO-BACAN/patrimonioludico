@@ -8,19 +8,19 @@
 <!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&family=Saira:wght@600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Saira:wght@600;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --fondo-crema: #FAF5E9;
-      --madera: #D97736;
-      --rojo-volantin: #E94F4F;
-      --azul-marino: #123055;
+      /* La paleta oficial de tu marca */
+      --fondo-papel: #EAE3D5;
+      --azul-marino: #2A3B52;
+      --rojo-terracota: #A43A2E;
+      --linea-suave: #D1C7B7;
+      --crema-oscuro: #DFD5C4;
       --blanco: #FFFFFF;
-      --gris-suave: #F0F0F0;
     }
-/* Todo el texto base usará Roboto por defecto */
+
     * { 
       box-sizing: border-box; 
       margin: 0; 
@@ -28,14 +28,13 @@
       font-family: 'Roboto', sans-serif; 
     }
 
-    /* Los títulos y elementos destacados usarán Saira */
     h1, h2, h3, h4, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
       font-family: 'Saira', sans-serif;
       font-weight: 700; 
     }
 
     body {
-      background-color: var(--fondo-crema);
+      background-color: var(--fondo-papel);
       color: var(--azul-marino);
       min-height: 100vh;
       display: flex;
@@ -63,18 +62,20 @@
     }
 
     .btn-volver {
-      background: var(--blanco);
-      border: 3px solid var(--azul-marino);
-      border-radius: 12px;
+      background: var(--fondo-papel);
       color: var(--azul-marino);
       text-decoration: none;
-      font-weight: 900;
       padding: 8px 12px;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.85em;
+      border: 2px solid var(--azul-marino);
       box-shadow: 3px 3px 0px var(--azul-marino);
       transition: all 0.1s;
       position: absolute;
       left: 0;
-      font-size: 0.9em;
     }
 
     .btn-volver:active { 
@@ -83,42 +84,28 @@
     }
 
     h1 { 
-      font-weight: 900; 
+      font-weight: 700; 
       font-size: 1.4em; 
       text-align: center; 
+      text-transform: uppercase;
     }
 
     .intro {
       text-align: center;
       font-size: 1em;
-      font-weight: 700;
-      color: #444;
+      font-weight: 500;
+      color: var(--azul-marino);
       line-height: 1.4;
       margin-bottom: 25px;
     }
 
-    /* TARJETA DESTACADA: GUÍA DOCENTE */
-    .guia-destacada {
-      background-color: var(--madera);
-      color: var(--blanco);
-      border: 4px solid var(--azul-marino);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 35px;
-      box-shadow: 6px 6px 0px var(--azul-marino);
-    }
-
-    .guia-destacada h2 { font-size: 1.3em; font-weight: 900; margin-bottom: 10px; }
-    .guia-destacada p { font-size: 1em; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
-
     /* ACORDEONES (CARTAS DE RECURSOS) */
     .acordeon {
       background: var(--blanco);
-      border: 3px solid var(--azul-marino);
-      border-radius: 16px;
+      border: 2px solid var(--azul-marino);
+      border-radius: 12px;
       margin-bottom: 15px;
-      box-shadow: 4px 4px 0px rgba(18, 48, 85, 0.15);
+      box-shadow: 4px 4px 0px rgba(42, 59, 82, 0.15);
       overflow: hidden;
     }
 
@@ -128,18 +115,19 @@
       padding: 16px 20px;
       cursor: pointer;
       user-select: none;
+      background-color: var(--blanco);
     }
 
     .icono { font-size: 1.8em; margin-right: 15px; }
     
     .textos { flex-grow: 1; }
-    .textos h4 { font-size: 1.1em; font-weight: 900; color: var(--azul-marino); }
-    .textos p { font-size: 0.85em; font-weight: 700; color: #666; margin-top: 2px; }
+    .textos h4 { font-size: 1.1em; color: var(--azul-marino); text-transform: uppercase; letter-spacing: 1px; }
+    .textos p { font-size: 0.85em; font-weight: 500; color: #666; margin-top: 2px; }
 
     .flecha {
       font-weight: 900;
       font-size: 1.5em;
-      color: var(--rojo-volantin);
+      color: var(--rojo-terracota);
       transition: transform 0.3s;
     }
 
@@ -150,14 +138,15 @@
       max-height: 0px;
       overflow: hidden;
       padding: 0 20px;
-      background-color: #FAFAFA;
+      background-color: var(--fondo-papel);
+      border-top: 1px solid var(--linea-suave);
       transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
     }
 
     .material-desc {
       font-size: 0.95em;
-      font-weight: 700;
-      color: #555;
+      font-weight: 500;
+      color: var(--azul-marino);
       line-height: 1.4;
       margin-bottom: 15px;
       padding-top: 15px;
@@ -166,14 +155,15 @@
     /* RECURSOS INTERNOS */
     .resource {
       background: var(--blanco);
-      border: 2px solid var(--gris-suave);
-      border-radius: 12px;
+      border: 1px solid var(--linea-suave);
+      border-radius: 8px;
       padding: 15px;
       margin-bottom: 15px;
     }
 
     .resource-title {
-      font-weight: 900;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
       font-size: 1.05em;
       color: var(--azul-marino);
       margin-bottom: 5px;
@@ -181,8 +171,8 @@
 
     .resource-desc {
       font-size: 0.9em;
-      font-weight: 700;
-      color: #666;
+      font-weight: 400;
+      color: #555;
       line-height: 1.3;
       margin-bottom: 12px;
     }
@@ -190,17 +180,21 @@
     /* BOTONES DE DESCARGA */
     .btn-download {
       display: block;
-      background: var(--rojo-volantin);
+      background: var(--rojo-terracota);
       color: var(--blanco);
       text-decoration: none;
       text-align: center;
       padding: 12px;
-      border-radius: 10px;
-      font-weight: 900;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
       font-size: 0.95em;
-      border: 3px solid var(--azul-marino);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: 2px solid var(--azul-marino);
       box-shadow: 3px 3px 0px var(--azul-marino);
       transition: all 0.1s;
+      position: relative;
+      z-index: 2;
     }
 
     .btn-download:active { 
@@ -210,10 +204,9 @@
 
     .btn-pack {
       background: var(--azul-marino);
-      color: var(--blanco);
+      color: var(--fondo-papel);
       margin-bottom: 20px;
     }
-    
   </style>
 </head>
 <body>
@@ -221,20 +214,13 @@
   <div class="app-container">
     
     <header>
-      <a href="index.html" class="btn-volver">← Volver</a>
+      <a href="juegos-tipicos.html" class="btn-volver">← Volver</a>
       <h1>Material Pedagógico</h1>
     </header>
 
     <p class="intro">
-      Complementa la experiencia de realidad aumentada con actividades educativas sobre juegos tradicionales chilenos para estudiantes de 2° a 5° básico.
+      Descarga actividades imprimibles sobre juegos tradicionales chilenos para complementar la experiencia en el aula[cite: 4].
     </p>
-
-    <!-- GUIA DOCENTE -->
-    <div class="guia-destacada">
-      <h2>📘 Guía docente del kit</h2>
-      <p>Conoce recomendaciones de uso, objetivos pedagógicos, niveles sugeridos y formas de integrar las tarjetas AR dentro del aula.</p>
-      <a href="pdf/guia-docente.pdf" class="btn-download" style="background: var(--blanco); color: var(--azul-marino);">📥 Descargar guía docente</a>
-    </div>
 
     <!-- CREAR Y EXPRESAR -->
     <div class="acordeon" id="card-crear">

@@ -98,14 +98,14 @@ const misiones = [
   },
 
   {
-    id: 9,
-    titulo: "Tradición de septiembre",
-    respuestas: ["trompo", "volantin"],
-    pistas: [
-      "Soy un juego clásico que nunca falta para celebrar en septiembre.",
-      "Durante las Fiestas Patrias, soy un símbolo de tradición y alegría.",
-      "Uno gira sobre la tierra y el otro puede recorrer el cielo."
-    ]
-  }
+id: 9,
+titulo: "Tradición de septiembre",
+respuestas: ["trompo", "volantin"],
+pistas: [
+  "Soy un juego muy conocido que aparece durante las celebraciones chilenas.",
+  "Muchas familias vuelven a jugar conmigo durante las Fiestas Patrias.",
+  "Formo parte de los juegos tradicionales que pasan de generación en generación."
+]
+}
 
 ]

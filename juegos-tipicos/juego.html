@@ -33,8 +33,7 @@
     });
   </script>
 
-
-<style>
+  <style>
     :root {
       --fondo-papel: #EAE3D5;
       --azul-marino: #2A3B52;
@@ -55,17 +54,17 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-      background: transparent; /* Permite que el video de la cámara se vea por detrás */
+      background: transparent; 
     }
 
-    /* --- CÁMARA AR IDÉNTICA A ar.html --- */
+    /* --- CÁMARA AR --- */
     a-scene {
       position: fixed;
       inset: 0;
       z-index: 0;
     }
 
-    /* --- INTERFAZ FLOTANTE SUPERIOR --- */
+    /* --- INTERFAZ SUPERIOR --- */
     .ar-ui-top { 
       position: fixed; 
       top: 20px; 
@@ -88,6 +87,7 @@
       display: inline-block;
     }
 
+    /* Oculto al inicio, se muestra al jugar */
     .progress {
       position: fixed;
       top: 20px;
@@ -102,9 +102,10 @@
       letter-spacing: 1px;
       font-size: 0.9em;
       border: 2px solid var(--azul-marino);
+      display: none; 
     }
 
-    /* --- PANEL DE MISIÓN INFERIOR --- */
+    /* --- PANEL DE MISIÓN INFERIOR (Tu diseño) --- */
     .panel {
       position: fixed;
       bottom: 20px;
@@ -162,29 +163,73 @@
       border: 1px solid var(--linea-suave);
       position: relative;
       z-index: 2;
+      transition: all 0.3s ease;
+    }
+
+    /* Estilo del botón nuevo adaptado a tu diseño */
+    .btn-jugar {
+      background: var(--azul-marino);
+      color: var(--fondo-papel);
+      border: 2px solid var(--azul-marino);
+      padding: 10px 20px;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 1em;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      margin-top: 5px;
+      box-shadow: 3px 3px 0px var(--rojo-terracota);
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
+
+    .btn-jugar:active {
+      transform: translate(3px, 3px);
+      box-shadow: 0px 0px 0px var(--rojo-terracota);
     }
   </style>
 </head>
 <body>
 
-  <!-- Botón Salir -->
   <div class="ar-ui-top">
     <a href="index.html" class="back">❮ Salir</a>
   </div>
 
-  <!-- Indicador de Progreso Superior Derecho -->
-  <div class="progress">
-    Misión <span id="misionActual">1</span>
+  <div class="progress" id="barra-progreso">
+    Misión <span id="misionActual">1</span> de 6
   </div>
 
-  <!-- Panel de Misión Inferior -->
+  <!-- PANEL PRINCIPAL DINÁMICO -->
   <div class="panel">
-    <h2 id="titulo">Busca la primera tarjeta</h2>
-    <p id="texto">Escanea cualquier tarjeta sobre la mesa para activar el juego y recibir tu primera pista.</p>
-    <div class="estado" id="estado">Esperando cámara...</div>
+    
+    <!-- PANTALLA INICIO -->
+    <div id="pantalla-inicio">
+      <h2>¡Descubre los juguetes!</h2>
+      <p>Lee la pista que aparecerá aquí abajo y usa la cámara para escanear el juguete correcto.</p>
+      <button class="btn-jugar" onclick="iniciarJuego()">Empezar Juego</button>
+    </div>
+
+    <!-- PANTALLA JUEGO (Oculta al inicio) -->
+    <div id="pantalla-juego" style="display: none;">
+      <h2>Busca la tarjeta</h2>
+      <p id="texto-pista">Cargando pista...</p>
+      <div class="estado" id="estado">Buscando...</div>
+    </div>
+
+    <!-- PANTALLA FINAL (Oculta al inicio) -->
+    <div id="pantalla-final" style="display: none;">
+      <h2 id="titulo-final">¡Felicidades!</h2>
+      <div style="font-size: 2.2rem; margin: 5px 0; position: relative; z-index: 2;" id="estrellas-final">⭐⭐⭐</div>
+      <p id="texto-final" style="margin-bottom: 5px;">Descubriste las 6 misiones.</p>
+      <p id="texto-errores" style="font-size: 0.9em; margin-bottom: 15px;">0 intentos extra.</p>
+      <button class="btn-jugar" onclick="iniciarJuego()">Volver a jugar</button>
+    </div>
+
   </div>
 
-  <!-- ESCENA DE REALIDAD AUMENTADA IDÉNTICA A ar.html -->
+  <!-- ESCENA DE REALIDAD AUMENTADA -->
   <a-scene 
     mindar-image="imageTargetSrc: ./mind/juguetes.mind; uiLoading: no;" 
     color-space="sRGB" 
@@ -196,10 +241,10 @@
 
     <a-entity mindar-image-target="targetIndex: 0" detector-juego="trompo"></a-entity>
     <a-entity mindar-image-target="targetIndex: 1" detector-juego="volantin"></a-entity>
-    <a-entity mindar-image-target="targetIndex: 2" detector-juego="runrun"></a-entity>
-    <a-entity mindar-image-target="targetIndex: 3" detector-juego="emboque"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 2" detector-juego="emboque"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 3" detector-juego="polcas"></a-entity>
     <a-entity mindar-image-target="targetIndex: 4" detector-juego="rayuela"></a-entity>
-    <a-entity mindar-image-target="targetIndex: 5" detector-juego="polcas"></a-entity>
+    <a-entity mindar-image-target="targetIndex: 5" detector-juego="runrun"></a-entity>
 
   </a-scene>
 

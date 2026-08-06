@@ -210,28 +210,48 @@
       font-size: 0.9em;
     }
 
+    /* --- 4 TARJETAS INFERIORES HORIZONTALES --- */
     .features-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto; /* Permite deslizar hacia los lados en celular */
+      gap: 10px;
       width: 100%;
       margin-top: 30px;
+      padding-bottom: 10px; /* Espacio para que la sombra no se corte */
+      
+      /* Oculta la barra de scroll fea para que se vea limpio */
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch; /* Deslizamiento suave en iOS */
     }
 
-    @media (min-width: 480px) {
-      .features-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
+    .features-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .feature-card {
       background: transparent;
-      padding: 15px 10px;
+      padding: 10px 5px;
       text-align: center;
       display: flex;
       flex-direction: column;
       align-items: center;
       transition: transform 0.2s;
+      
+      /* Ancho fijo para que no se aplasten en pantallas pequeñas */
+      flex: 0 0 100px; 
+    }
+
+    @media (min-width: 480px) {
+      .features-grid {
+        justify-content: center; /* En computador se centran solas */
+        overflow-x: visible;
+      }
+      .feature-card {
+        flex: 1; 
+        max-width: 120px; /* No se estiran demasiado en monitores grandes */
+      }
     }
 
     .feature-icon {
@@ -253,6 +273,7 @@
       color: var(--gris-texto);
       line-height: 1.3;
     }
+
 /* --- REPRODUCTOR DE MÚSICA FLOTANTE --- */
     .btn-musica {
       position: fixed;
@@ -526,6 +547,60 @@
       }, 3000);
     }
 
+// --- ANIMACIÓN FLUIDA DE TARJETAS (SOLO MÓVIL) ---
+    const sliderTarjetas = document.querySelector('.features-grid');
+    let animacionPausada = false;
+    let direccionScroll = 1;
+    let velocidadScroll = 0.5; // Velocidad suave
+    let posicionExacta = 0; // El secreto para la fluidez sub-píxel
+
+    function autoScrollTarjetas() {
+      if (window.innerWidth < 480 && !animacionPausada) {
+        // Sumamos los decimales para un movimiento perfecto
+        posicionExacta += velocidadScroll * direccionScroll;
+        sliderTarjetas.scrollLeft = posicionExacta;
+        
+        // Detectar si tocamos los bordes para devolvernos
+        if (sliderTarjetas.scrollLeft >= (sliderTarjetas.scrollWidth - sliderTarjetas.clientWidth - 1)) {
+          direccionScroll = -1;
+        } else if (sliderTarjetas.scrollLeft <= 0) {
+          direccionScroll = 1;
+        }
+      }
+      requestAnimationFrame(autoScrollTarjetas);
+    }
+
+    // Arrancamos la magia
+    autoScrollTarjetas();
+
+    // Si pones el dedo, se pausa instantáneamente
+    sliderTarjetas.addEventListener('touchstart', () => {
+      animacionPausada = true;
+    }, {passive: true});
+
+    // Mientras deslizas con el dedo, sincronizamos la posición exacta
+    // para que no dé un salto brusco al soltar
+    sliderTarjetas.addEventListener('scroll', () => {
+      if (animacionPausada) {
+        posicionExacta = sliderTarjetas.scrollLeft;
+      }
+    }, {passive: true});
+
+    // Cuando sueltas el dedo, espera un segundito y retoma el vaivén
+    sliderTarjetas.addEventListener('touchend', () => {
+      setTimeout(() => {
+        animacionPausada = false;
+        posicionExacta = sliderTarjetas.scrollLeft; // Reajusta
+        
+        // Decide inteligentemente hacia dónde retomar el movimiento
+        if (sliderTarjetas.scrollLeft >= (sliderTarjetas.scrollWidth - sliderTarjetas.clientWidth) / 2) {
+           direccionScroll = -1; // Hacia la izquierda si estás más cerca del final
+        } else {
+           direccionScroll = 1;  // Hacia la derecha si estás al principio
+        }
+      }, 1500);
+    }, {passive: true});
+    
   </script>
 
 </body>

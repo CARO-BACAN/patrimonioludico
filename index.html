@@ -44,7 +44,6 @@
       align-items: center;
       color: var(--azul-patrimonio);
       padding: 20px;
-      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d9c5b2' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
     .main-container {
@@ -346,6 +345,9 @@
 </head>
 <body>
 
+<!-- Fondo animado interactivo -->
+  <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
+
   <div class="main-container">
     
     <header>
@@ -600,6 +602,107 @@
         }
       }, 1500);
     }, {passive: true});
+
+    // --- MAGIA DEL FONDO INTERACTIVO (DESTELLOS ✦) ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let sparks = [];
+    const spacing = 40; 
+    let mouse = { x: -1000, y: -1000 };
+
+    function initCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      sparks = [];
+      for (let x = 0; x < width; x += spacing) {
+        for (let y = 0; y < height; y += spacing) {
+          let offsetX = (Math.random() - 0.5) * 10;
+          let offsetY = (Math.random() - 0.5) * 10;
+          sparks.push({ x: x + offsetX, y: y + offsetY, baseSize: 3.5 });
+        }
+      }
+    }
+
+    window.addEventListener('resize', initCanvas);
+    window.addEventListener('mousemove', (e) => { 
+      mouse.x = e.clientX; 
+      mouse.y = e.clientY; 
+    });
+    window.addEventListener('mouseout', () => { 
+      mouse.x = -1000; 
+      mouse.y = -1000; 
+    });
+
+    window.addEventListener('touchstart', (e) => {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    });
+    window.addEventListener('touchmove', (e) => {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    });
+    window.addEventListener('touchend', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    function drawSparkle(x, y, size, color) {
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(x, y - size); 
+      ctx.quadraticCurveTo(x, y, x + size, y); 
+      ctx.quadraticCurveTo(x, y, x, y + size); 
+      ctx.quadraticCurveTo(x, y, x - size, y); 
+      ctx.quadraticCurveTo(x, y, x, y - size); 
+      ctx.fill();
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+      let time = Date.now();
+      
+      sparks.forEach(spark => {
+        let waveX = Math.sin(spark.y * 0.02 + time * 0.0008) * 4;
+        let waveY = Math.cos(spark.x * 0.02 + time * 0.0012) * 4;
+        
+        let baseX = spark.x + waveX;
+        let baseY = spark.y + waveY;
+
+        let dx = mouse.x - baseX;
+        let dy = mouse.y - baseY;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // 1. Radio de acción más pequeño
+        let maxDist = 90; 
+        
+        let currentSize = spark.baseSize;
+        let finalX = baseX;
+        let finalY = baseY;
+        let color = '';
+
+        if (distance < maxDist) {
+          let force = (maxDist - distance) / maxDist;
+          
+          // 2. Empuje y crecimiento mucho más sutiles
+          finalX -= (dx / distance) * force * 4; 
+          finalY -= (dy / distance) * force * 4;
+          currentSize = spark.baseSize + force * 1.5; 
+          
+          // 3. Color terracota más translúcido
+          color = `rgba(192, 108, 85, ${0.15 + force * 0.25})`;
+        } else {
+          let opacity = 0.15 + Math.sin(spark.x * 0.05 + time * 0.001) * 0.2;
+          color = `rgba(217, 197, 178, ${Math.max(0.05, opacity)})`; 
+        }
+        
+        drawSparkle(finalX, finalY, currentSize, color);
+      });
+      requestAnimationFrame(animateCanvas);
+    }
+
+    initCanvas();
+    animateCanvas();
     
   </script>
 

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Museo del Juguete Chileno - Descubre Chile</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Saira:wght@600;700;900&display=swap" rel="stylesheet">
+
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
+  <style>
+    :root {
+      /* Estética de Museo: Más oscura, sin rojos, con acentos bronce/dorado */
+      --fondo-museo: #0a0a0a;
+      --vitrina-fondo: #111111;
+      --vitrina-borde: #222222;
+      --acento-bronce: #b58950;
+      --crema-pergamino: #e0dbd5;
+      --texto-oscuro: #121212;
+      --azul-marino: #1a202c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    h1, h2, h3, h4, .marca, .placa-texto {
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+    }
+
+    body {
+      background-color: var(--fondo-museo);
+      color: var(--crema-pergamino);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 50px;
+      background-image: radial-gradient(circle at center, #1f1f1f 0%, #0a0a0a 100%);
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 1100px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* HEADER MUSEO */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 15px;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #333;
+      padding-bottom: 20px;
+    }
+
+    .btn-volver {
+      background: #222;
+      color: var(--crema-pergamino);
+      text-decoration: none;
+      padding: 8px 16px;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.85em;
+      border: 1px solid #444;
+      border-radius: 6px;
+      transition: all 0.1s;
+    }
+
+    .btn-volver:active {
+      transform: scale(0.95);
+    }
+
+    .titulo-museo {
+      text-align: center;
+    }
+
+    .titulo-museo .marca {
+      font-size: 0.8em;
+      color: var(--acento-bronce);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      margin-bottom: 4px;
+    }
+
+    .titulo-museo h1 {
+      font-size: 1.8em;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .intro-museo {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 40px auto;
+      font-size: 1.05em;
+      color: #999;
+      line-height: 1.5;
+    }
+
+    /* SALA DE EXPOSICIÓN */
+    .sala-exposicion {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 35px;
+    }
+
+    @media (min-width: 650px) {
+      .sala-exposicion {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 950px) {
+      .sala-exposicion {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    /* VITRINA 3D */
+    .vitrina {
+      background-color: var(--vitrina-fondo);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #2a2a2a;
+    }
+
+    .vitrina:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.9);
+      border-color: var(--acento-bronce);
+    }
+
+    /* Efecto de profundidad (cubo hacia adentro) */
+    .visor-container {
+      width: 100%;
+      height: 260px;
+      position: relative;
+      background: #050505;
+      /* Bordes internos oscuros para crear el efecto de caja o nicho */
+      border-top: 15px solid #0a0a0a;
+      border-bottom: 25px solid #1a1a1a;
+      border-left: 15px solid #111;
+      border-right: 15px solid #111;
+      box-shadow: inset 0 20px 50px rgba(0,0,0,1);
+    }
+
+    /* Reflejo de vidrio sobre la vitrina */
+    .visor-container::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 50%);
+      pointer-events: none; /* Para no bloquear los clics */
+    }
+
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      --poster-color: transparent;
+    }
+
+    /* Placa descriptiva */
+    .placa-museo {
+      background-color: #1a1a1a;
+      color: var(--crema-pergamino);
+      padding: 18px 15px;
+      text-align: center;
+      border-top: 1px solid #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .placa-museo h3 {
+      font-size: 1.1em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--acento-bronce);
+      margin-bottom: 4px;
+    }
+
+    .placa-museo span {
+      font-size: 0.8em;
+      color: #777;
+      font-style: italic;
+    }
+
+    /* --- VENTANA MODAL / FICHA EDUCATIVA --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background-color: #f4f1eb; /* Fondo claro para la ficha de lectura */
+      color: var(--texto-oscuro);
+      width: 100%;
+      max-width: 750px;
+      max-height: 90vh;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalAparecer 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes modalAparecer {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      background-color: #111;
+      color: var(--acento-bronce);
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid var(--acento-bronce);
+    }
+
+    .modal-header h2 {
+      font-size: 1.3em;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .btn-cerrar {
+      background: transparent;
+      color: #fff;
+      border: none;
+      font-size: 2em;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+    }
+
+    .modal-body {
+      padding: 25px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .modal-visor-grande {
+      width: 100%;
+      height: 350px;
+      background: radial-gradient(circle, #2a2a2a 0%, #111 100%);
+      border-radius: 12px;
+      border: 1px solid #333;
+      position: relative;
+    }
+
+    /* Etiqueta para indicar que aquí sí se puede girar */
+    .instruccion-3d {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.8em;
+      pointer-events: none;
+      letter-spacing: 1px;
+    }
+
+    .ficha-seccion {
+      background: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .ficha-seccion h4 {
+      color: #111;
+      font-size: 1.1em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      letter-spacing: 1px;
+      border-bottom: 2px solid var(--acento-bronce);
+      padding-bottom: 6px;
+      display: inline-block;
+    }
+
+    .ficha-seccion p, .ficha-seccion ul {
+      font-size: 0.95em;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    .ficha-seccion ul {
+      margin-left: 20px;
+    }
+
+    .ficha-seccion li {
+      margin-bottom: 6px;
+    }
+
+    .btn-ar-invitacion {
+      display: block;
+      background-color: #111;
+      color: var(--acento-bronce);
+      text-decoration: none;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-align: center;
+      transition: background 0.2s;
+      border: 1px solid var(--acento-bronce);
+    }
+
+    .btn-ar-invitacion:hover {
+      background-color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <header>
+      <a href="juegos-tipicos.html" class="btn-volver">← Volver</a>
+      <div class="titulo-museo">
+        <div class="marca">Descubre Chile</div>
+        <h1>Museo del Juguete</h1>
+      </div>
+      <div style="width: 70px;"></div> 
+    </header>
+
+    <p class="intro-museo">
+      Explora la colección permanente. Observa las piezas en exhibición y selecciona una para conocer su historia y manipular su modelo 3D detallado.
+    </p>
+
+    <!-- SALA DE EXPOSICIÓN (Sin camera-controls para que solo giren solos) -->
+    <div class="sala-exposicion">
+
+      <div class="vitrina" onclick="abrirFicha('trompo')">
+        <div class="visor-container">
+          <model-viewer src="glb/trompo.glb" auto-rotate rotation-per-second="30deg" disable-zoom shadow-intensity="1" camera-orbit="0deg 75deg 2.5m" interaction-prompt="none"></model-viewer>
+        </div>
+        <div class="placa-museo">
+          <h3>Trompo Chileno</h3>
+          <span>Madera torneada y acero</span>
+        </div>
+      </div>
+
+      <div class="vitrina" onclick="abrirFicha('emboque')">
+        <div class="visor-container">
+          <model-viewer src="glb/emboque.glb" auto-rotate rotation-per-second="30deg" disable-zoom shadow-intensity="1" camera-orbit="0deg 75deg 2.5m" interaction-prompt="none"></model-viewer>
+        </div>
+        <div class="placa-museo">
+          <h3>El Emboque</h3>
+          <span>Madera tallada a mano</span>
+        </div>
+      </div>
+
+      <div class="vitrina" onclick="abrirFicha('runrun')">
+        <div class="visor-container">
+          <model-viewer src="glb/runrun.glb" auto-rotate rotation-per-second="30deg" disable-zoom shadow-intensity="1" camera-orbit="0deg 75deg 2.5m" interaction-prompt="none"></model-viewer>
+        </div>
+        <div class="placa-museo">
+          <h3>El Runrún</h3>
+          <span>Disco sonoro tradicional</span>
+        </div>
+      </div>
+
+      <div class="vitrina" onclick="abrirFicha('volantin')">
+        <div class="visor-container">
+          <model-viewer src="glb/volantin.glb" auto-rotate rotation-per-second="30deg" disable-zoom shadow-intensity="1" camera-orbit="0deg 75deg 2.5m" interaction-prompt="none"></model-viewer>
+        </div>
+        <div class="placa-museo">
+          <h3>El Volantín</h3>
+          <span>Papel y coligüe</span>
+        </div>
+      </div>
+
+      <div class="vitrina" onclick="abrirFicha('polcas')">
+        <div class="visor-container">
+          <model-viewer src="glb/polcas.glb" auto-rotate rotation-per-second="30deg" disable-zoom shadow-intensity="1" camera-orbit="0deg 75deg 2.5m" interaction-prompt="none"></model-viewer>
+        </div>
+        <div class="placa-museo">
+          <h3>Las Polcas</h3>
+          <span>Vidrio fundido de colores</span>
+        </div>
+      </div>
+
+      <!-- Aquí el modelo se llama rayuela.glb como pediste -->
+      <div class="vitrina" onclick="abrirFicha('tejo')">
+        <div class="visor-container">
+          <model-viewer src="glb/rayuela.glb" auto-rotate rotation-per-second="30deg" disable-zoom shadow-intensity="1" camera-orbit="0deg 75deg 2.5m" interaction-prompt="none"></model-viewer>
+        </div>
+        <div class="placa-museo">
+          <h3>El Tejo</h3>
+          <span>Disco metálico pesado</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL / FICHA (Aquí sí tiene camera-controls para interactuar) -->
+  <div class="modal-overlay" id="modalMuseo" onclick="cerrarFichaFuera(event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modal-titulo">Nombre del Juguete</h2>
+        <button class="btn-cerrar" onclick="cerrarFicha()">×</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="modal-visor-grande">
+          <model-viewer id="modal-model-viewer" auto-rotate camera-controls shadow-intensity="1" interaction-prompt="auto"></model-viewer>
+          <div class="instruccion-3d">↻ Gira el modelo en 3D</div>
+        </div>
+
+        <div class="ficha-seccion">
+          <h4>Historia y Origen</h4>
+          <p id="modal-historia"></p>
+        </div>
+
+        <div class="ficha-seccion">
+          <h4>¿Cómo se juega?</h4>
+          <p id="modal-juego"></p>
+        </div>
+
+        <div class="ficha-seccion">
+          <h4>Materiales Tradicionales</h4>
+          <ul id="modal-materiales"></ul>
+        </div>
+
+        <div class="ficha-seccion">
+          <h4>Curiosidades</h4>
+          <p id="modal-curiosidades"></p>
+        </div>
+
+        <a href="ar.html" class="btn-ar-invitacion">
+          Escanear tarjeta y verlo en Realidad Aumentada
+        </a>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fichasMuseo = {
+      trompo: {
+        nombre: "Trompo Chileno",
+        glb: "glb/trompo.glb",
+        historia: "El trompo tiene raíces ancestrales en diversas culturas del mundo, llegando a América durante la época colonial española. En Chile, se transformó en uno de los juegos tradicionales más entrañables del campo y la ciudad, especialmente asociado a las festividades patrias. Tradicionalmente tallado a mano en maderas duras como el litre o el espino.",
+        juego: "Se enrolla una cuerda o lienza firmemente alrededor del cuerpo del trompo, comenzando desde la punta de acero hacia arriba. Luego, mediante un movimiento seco y firme de la muñeca, se lanza hacia el suelo para que gire libremente.",
+        materiales: ["Madera nativa (litre, espino o quillay)", "Punta o clavo de acero templado", "Cuerda o lienza de algodón", "Pinturas anilina o esmalte"],
+        curiosidades: "En Chile existían torneos comunales donde los artesanos competían por fabricar el trompo más equilibrado y pesado, capaces de girar ininterrumpidamente por varios minutos."
+      },
+      emboque: {
+        nombre: "El Emboque",
+        glb: "glb/emboque.glb",
+        historia: "De origen prehispánico y popularizado en toda Latinoamérica y Europa, el emboque chileno destaca por su diseño artesanal en madera. Antiguamente era fabricado en los hogares campesinos utilizando tarros o trozos de madera tallados a cuchillo.",
+        juego: "Se sostiene el madero o base con una mano y se realiza un movimiento pendular para lanzar la bola hacia arriba. El objetivo es calcular la trayectoria exacta para que el palito introduzca la perforación de la bola al caer.",
+        materiales: ["Madera torneada", "Cordel de cáñamo resistente", "Torno artesanal"],
+        curiosidades: "Existen variantes en su tamaño; los modelos más pequeños requerían una muñeca extremadamente ágil, mientras que los grandes ponían a prueba todo el brazo."
+      },
+      runrun: {
+        nombre: "El Runrún",
+        glb: "glb/runrun.glb",
+        historia: "El runrún es un juguete sonoro tradicional de gran sencillez y ingenio popular. Utilizado por los niños chilenos desde el siglo XIX, aprovecha los principios básicos de la física para generar un zumbido característico que imita el vuelo de un insecto.",
+        juego: "Se pasa un hilo doble por los dos orificios centrales de un disco de madera o botón grande. Al estirar y aflojar alternadamente los brazos, el disco gira a gran velocidad emitiendo un sonido ronco y constante.",
+        materiales: ["Disco de madera liviana o metal", "Cordel o hilo ceroso", "Pinturas decorativas"],
+        curiosidades: "Era considerado uno de los juguetes más económicos y rápidos de fabricar, ya que cualquier botón grande y un trozo de hilo bastaban para armar uno en minutos."
+      },
+      volantin: {
+        nombre: "El Volantín",
+        glb: "glb/volantin.glb",
+        historia: "Considerado el rey de los cielos chilenos durante septiembre, el volantín llegó a Chile a través de los barcos mercantes españoles en el periodo colonial. Con los años, los artesanos nacionales perfeccionaron su estructura geométrica y liviana.",
+        juego: "Se eleva aprovechando las corrientes de viento al aire libre. Utilizando un carrete con hilo, el jugador controla la altura y distancia. Históricamente, las pampillas reunían a familias en los cerros para maniobrarlos.",
+        materiales: ["Papel de seda de colores", "Varillas delgadas de coligüe", "Cola fría o adhesivo vegetal", "Hilo"],
+        curiosidades: "Existen múltiples categorías tradicionales según su tamaño y diseño, tales como la pava, el torito, el cachudito y la tontita."
+      },
+      polcas: {
+        nombre: "Las Polcas",
+        glb: "glb/polcas.glb",
+        historia: "Las polcas o bolitas de vidrio forman parte de los juegos callejeros universales que arraigaron profundamente en los barrios chilenos de mediados del siglo XX. Las plazas, aceras y patios de tierra se transformaban en tableros naturales.",
+        juego: "Se dibuja un círculo o 'hoyito' en la tierra. Los jugadores lanzan sus polcas desde una línea de distancia. Dependiendo de la modalidad, el objetivo es golpear la polca del oponente o lograr introducir la esfera en el objetivo.",
+        materiales: ["Vidrio fundido de colores", "Arcilla cocida (en versiones antiguas)"],
+        curiosidades: "Las polcas tenían jerarquías de valor según su diseño interior: las comunes de colores eran corrientes, pero las grandes llamadas 'lechones' o 'bombitas' eran codiciados tesoros de colección."
+      },
+      tejo: {
+        nombre: "El Tejo",
+        glb: "glb/rayuela.glb",
+        historia: "El tejo tradicional infantil chileno es una adaptación en miniatura del clásico juego criollo de la rayuela o el tejo de cancha. Desarrollado en zonas rurales y mineras, ponía a prueba la puntería y el cálculo de distancia utilizando discos metálicos pesados.",
+        juego: "Se traza una línea base en el suelo y una zona de llegada o blanco a cierta distancia. Los participantes lanzan turnándose su tejo metálico intentando quedar lo más cerca posible de la marca o de otros tejos contrarios.",
+        materiales: ["Hierro o metal fundido", "Plomo o aleaciones pesadas"],
+        curiosidades: "A pesar de ser un juego de precisión, requería mucha fuerza física dosificada para evitar que el tejo rebotara demasiado al tocar el suelo."
+      }
+    };
+
+    function abrirFicha(id) {
+      const data = fichasMuseo[id];
+      if (!data) return;
+
+      document.getElementById("modal-titulo").textContent = data.nombre;
+      document.getElementById("modal-historia").textContent = data.historia;
+      document.getElementById("modal-juego").textContent = data.juego;
+      document.getElementById("modal-curiosidades").textContent = data.curiosidades;
+
+      const listaMat = document.getElementById("modal-materiales");
+      listaMat.innerHTML = "";
+      data.materiales.forEach(mat => {
+        let li = document.createElement("li");
+        li.textContent = mat;
+        listaMat.appendChild(li);
+      });
+
+      const viewerGrande = document.getElementById("modal-model-viewer");
+      viewerGrande.setAttribute("src", data.glb);
+
+      document.getElementById("modalMuseo").style.display = "flex";
+      document.body.style.overflow = "hidden"; 
+    }
+
+    function cerrarFicha() {
+      document.getElementById("modalMuseo").style.display = "none";
+      document.body.style.overflow = "auto";
+    }
+
+    function cerrarFichaFuera(event) {
+      if (event.target === document.getElementById("modalMuseo")) {
+        cerrarFicha();
+      }
+    }
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") cerrarFicha();
+    });
+  </script>
+
+</body>
+</html>

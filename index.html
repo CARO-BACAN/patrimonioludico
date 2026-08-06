@@ -5,44 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Descubre Chile - Material Educativo con Realidad Aumentada</title>
   
+  <!-- Tipografía principal de la marca: Lato (Elegante, moderna y estructurada) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --azul-principal: #2A5CAA;
-      --azul-oscuro: #123055;
-      --coral: #F56551;
-      --amarillo-pastel: #FFF0B3;
-      --verde-salvia: #68B684;
-      --celeste-claro: #EBF8FF;
-      --blanco-calido: #FCFCFA;
-      --crema: #FFF9EC;
-      --gris-suave: #EDF2F7;
+      /* Paleta cálida y patrimonial */
+      --fondo-papel: #F9F6F0;
+      --azul-patrimonio: #2C3E50;
+      --terracota-suave: #C06C55;
+      --madera-clara: #D9C5B2;
+      --verde-musgo: #7A8B76;
+      --blanco: #FFFFFF;
+      --gris-texto: #555555;
+      --sombra-suave: rgba(44, 62, 80, 0.08);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Nunito', sans-serif;
+      font-family: 'Lato', sans-serif;
+    }
+
+    h1, h2, h3, h4, .marca {
+      font-weight: 900;
+      letter-spacing: -0.5px;
     }
 
     body {
-      background-color: var(--celeste-claro);
+      background-color: var(--fondo-papel);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       align-items: center;
-      color: var(--azul-oscuro);
+      color: var(--azul-patrimonio);
       padding: 20px;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d9c5b2' fill-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
     }
 
     .main-container {
       width: 100%;
-      max-width: 500px;
+      max-width: 520px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -51,59 +58,59 @@
 
     header {
       text-align: center;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     .brand-logo {
       font-weight: 900;
-      font-size: 2em;
-      letter-spacing: -0.5px;
-      color: var(--azul-principal);
+      font-size: 2.2em;
+      letter-spacing: -1px;
+      color: var(--azul-patrimonio);
     }
 
     .brand-logo span {
-      color: var(--coral);
+      color: var(--terracota-suave);
     }
 
     .brand-subtitle {
       font-weight: 700;
-      font-size: 0.9em;
-      color: var(--azul-oscuro);
-      opacity: 0.7;
+      font-size: 0.90em;
+      color: var(--gris-texto);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 2px;
+      letter-spacing: 2px;
+      margin-top: 4px;
     }
 
     .card {
-      background-color: var(--blanco-calido);
+      background-color: var(--blanco);
       width: 100%;
-      padding: 35px 25px;
-      border-radius: 28px;
-      border: 3px solid var(--azul-oscuro);
-      box-shadow: 6px 6px 0px var(--azul-oscuro);
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 1px solid var(--madera-clara);
+      box-shadow: 0 15px 35px var(--sombra-suave);
       text-align: center;
       position: relative;
     }
 
     h1 {
-      font-weight: 800;
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      line-height: 1.25;
-      color: var(--azul-oscuro);
+      font-weight: 900;
+      font-size: 1.6em;
+      margin-bottom: 12px;
+      line-height: 1.3;
+      color: var(--azul-patrimonio);
     }
 
     p.instruccion {
-      font-size: 0.95em;
-      font-weight: 600;
-      margin-bottom: 25px;
-      color: #4A5568;
+      font-size: 1.05em;
+      font-weight: 400;
+      margin-bottom: 30px;
+      color: var(--gris-texto);
+      line-height: 1.5;
     }
 
     .code-input-container {
       position: relative;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
     }
 
     #codigo-real {
@@ -123,88 +130,92 @@
       justify-content: center;
       align-items: center;
       gap: 6px;
-      background: var(--crema);
-      border: 3px solid var(--azul-oscuro);
-      border-radius: 16px;
-      padding: 16px 12px;
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
-      transition: all 0.2s;
+      background: #FAFAFA;
+      border: 1px solid var(--madera-clara);
+      border-radius: 12px;
+      padding: 20px 15px;
+      transition: all 0.3s ease;
     }
 
     .code-input-container:hover .code-slots,
     #codigo-real:focus ~ .code-slots {
-      border-color: var(--azul-principal);
-      background: #FFF;
-      box-shadow: 0 0 0 3px rgba(42, 92, 170, 0.15);
+      border-color: var(--terracota-suave);
+      background: var(--blanco);
+      box-shadow: 0 4px 15px var(--sombra-suave);
     }
 
     .slot {
-      width: 32px;
-      height: 44px;
-      background: #FFFFFF;
-      border: 2px solid #CBD5E0;
-      border-radius: 8px;
+      width: 34px;
+      height: 46px;
+      background: var(--blanco);
+      border: 1px solid #E0E0E0;
+      border-radius: 6px;
       display: flex;
       justify-content: center;
       align-items: center;
       font-size: 1.2em;
-      font-weight: 900;
-      color: var(--azul-oscuro);
-      transition: all 0.15s;
+      font-weight: 700;
+      color: var(--azul-patrimonio);
+      transition: all 0.2s ease;
     }
 
     .slot.active {
-      border-color: var(--azul-principal);
-      box-shadow: 0 0 0 2px rgba(42, 92, 170, 0.2);
+      border-color: var(--terracota-suave);
+      box-shadow: 0 0 0 2px rgba(192, 108, 85, 0.15);
     }
 
     .slot-separator {
       font-size: 1.4em;
-      font-weight: 900;
-      color: var(--azul-oscuro);
-      margin: 0 2px;
+      font-weight: 700;
+      color: #CCC;
+      margin: 0 4px;
     }
 
     button.btn-explorar {
       width: 100%;
       padding: 16px;
       font-size: 1.1em;
-      font-weight: 800;
-      color: #fff;
-      background-color: var(--coral);
-      border: 3px solid var(--azul-oscuro);
-      border-radius: 14px;
+      font-weight: 900;
+      color: var(--blanco);
+      background-color: var(--terracota-suave);
+      border: none;
+      border-radius: 10px;
       cursor: pointer;
-      box-shadow: 4px 4px 0px var(--azul-oscuro);
-      transition: all 0.1s;
+      box-shadow: 0 8px 20px rgba(192, 108, 85, 0.25);
+      transition: all 0.2s ease;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+    }
+
+    button.btn-explorar:hover {
+      background-color: #A85A45;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(192, 108, 85, 0.35);
     }
 
     button.btn-explorar:active {
-      transform: translate(3px, 3px);
-      box-shadow: 0px 0px 0px var(--azul-oscuro);
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(192, 108, 85, 0.2);
     }
 
     .error-msg {
       display: none;
-      background-color: #FFF5F5;
-      color: #C53030;
+      background-color: #FDF3F1;
+      color: var(--terracota-suave);
       font-weight: 700;
-      padding: 10px;
+      padding: 12px;
       border-radius: 8px;
-      border: 2px solid #FEB2B2;
-      margin-top: 15px;
-      font-size: 0.85em;
+      border: 1px solid #F5D3CC;
+      margin-top: 20px;
+      font-size: 0.9em;
     }
 
     .features-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
+      gap: 15px;
       width: 100%;
-      max-width: 500px;
-      margin-top: 25px;
+      margin-top: 30px;
     }
 
     @media (min-width: 480px) {
@@ -214,65 +225,118 @@
     }
 
     .feature-card {
-      background: var(--blanco-calido);
-      border: 2px solid var(--azul-oscuro);
-      border-radius: 14px;
-      padding: 12px 8px;
+      background: transparent;
+      padding: 15px 10px;
       text-align: center;
-      box-shadow: 3px 3px 0px var(--azul-oscuro);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      transition: transform 0.2s;
     }
 
     .feature-icon {
-      font-size: 1.4em;
-      margin-bottom: 6px;
+      margin-bottom: 10px;
+      background: var(--blanco);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px var(--sombra-suave);
+      border: 1px solid var(--madera-clara);
     }
 
     .feature-title {
-      font-weight: 800;
-      font-size: 0.75em;
-      color: var(--azul-oscuro);
-      line-height: 1.2;
+      font-weight: 700;
+      font-size: 0.85em;
+      color: var(--gris-texto);
+      line-height: 1.3;
+    }
+/* --- REPRODUCTOR DE MÚSICA FLOTANTE --- */
+    .btn-musica {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background-color: var(--blanco);
+      border: 1px solid var(--madera-clara);
+      border-radius: 40px; /* Borde bien redondo */
+      padding: 14px; /* Inicia como un círculo */
+      display: flex;
+      align-items: center;
+      gap: 0; /* Sin espacio inicial para mantener el círculo perfecto */
+      cursor: pointer;
+      box-shadow: 0 10px 25px var(--sombra-suave);
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      z-index: 9999;
+      overflow: hidden;
+      color: var(--terracota-suave); /* Color del ícono SVG */
+    }
+
+    /* Al pasar el mouse o al estar reproduciendo, se expande a píldora */
+    .btn-musica:hover, 
+    .btn-musica.activo {
+      padding: 12px 20px;
+      gap: 12px;
+      border-color: var(--terracota-suave);
+      box-shadow: 0 12px 30px rgba(192, 108, 85, 0.2);
+    }
+
+    .btn-musica:active {
+      transform: scale(0.96);
+    }
+
+    .icono-musica {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .credito-musica {
+      font-weight: 600;
+      font-size: 0.9em;
+      color: var(--azul-patrimonio);
+      white-space: nowrap;
+      max-width: 0;
+      opacity: 0;
+      transition: max-width 0.4s ease, opacity 0.4s ease;
+    }
+
+    .btn-musica:hover .credito-musica,
+    .btn-musica.activo .credito-musica {
+      max-width: 250px;
+      opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+      .btn-musica.activo .credito-musica {
+        font-size: 0.85em;
+      }
     }
 
     footer {
-      margin-top: 20px;
-      color: var(--azul-oscuro);
-      font-weight: 700;
-      font-size: 0.8em;
-      opacity: 0.7;
+      margin-top: 30px;
+      color: var(--gris-texto);
+      font-weight: 400;
+      font-size: 0.85em;
       text-align: center;
-    }
-
-    .feature-icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Fondo interactivo -->
-  <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
-
   <div class="main-container">
     
     <header>
       <div class="brand-logo">DescubreChile<span>+</span></div>
-      <div class="brand-subtitle">Material Educativo con Realidad Aumentada</div>
+      <div class="brand-subtitle">Material Educativo Patrimonial</div>
     </header>
 
     <div class="card">
-      <h1>Colecciones educativas que cobran vida</h1>
-      <p class="instruccion">Ingresa el código de tu tarjeta para desbloquear la experiencia.</p>
+      <h1>Nuestras tradiciones cobran vida</h1>
+      <p class="instruccion">Ingresa el código de tu colección para desbloquear la experiencia interactiva.</p>
 
       <div class="code-input-container">
-        <!-- Aumentado a 8 para dejar que escriban un guión por accidente antes de que se limpie -->
         <input 
           type="text" 
           id="codigo-real" 
@@ -280,8 +344,7 @@
           autocomplete="off" 
           autocorrect="off" 
           autocapitalize="characters" 
-          spellcheck="false"
-          placeholder="DCJTC01">
+          spellcheck="false">
 
         <div class="code-slots" id="visual-slots">
           <div class="slot" id="s0"></div>
@@ -291,36 +354,33 @@
           <div class="slot" id="s3"></div>
           <div class="slot" id="s4"></div>
           <div class="slot" id="s5"></div> 
-          <div class="slot" id="s6"></div> <!-- ¡Aquí está el cuadrito que faltaba! -->
+          <div class="slot" id="s6"></div>
         </div>
       </div>
 
       <button class="btn-explorar" onclick="ingresar()">Explorar kit</button>
 
       <div class="error-msg" id="error">
-        Código inválido o no encontrado. Revisa tu tarjeta de bienvenida.
+        Código no encontrado. Por favor revisa tu tarjeta e intenta nuevamente.
       </div>
     </div>
 
-<!-- 4 Tarjetas inferiores con SVG -->
+    <!-- 4 Tarjetas inferiores minimalistas -->
     <div class="features-grid">
-      
-      <!-- Realidad Aumentada -->
       <div class="feature-card">
         <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul-principal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul-patrimonio)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
             <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
             <line x1="12" y1="22.08" x2="12" y2="12"></line>
           </svg>
         </div>
-        <div class="feature-title">Realidad Aumentada</div>
+        <div class="feature-title">Realidad<br>Aumentada</div>
       </div>
 
-      <!-- Material Ilustrado -->
       <div class="feature-card">
         <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--terracota-suave)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
             <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
             <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
             <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
@@ -328,37 +388,53 @@
             <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
           </svg>
         </div>
-        <div class="feature-title">Material Ilustrado</div>
+        <div class="feature-title">Diseño<br>Ilustrado</div>
       </div>
 
-      <!-- Actividades Imprimibles -->
       <div class="feature-card">
         <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--verde-salvia)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--verde-musgo)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
             <polyline points="6 9 6 2 18 2 18 9"></polyline>
             <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
             <rect x="6" y="14" width="12" height="8"></rect>
           </svg>
         </div>
-        <div class="feature-title">Actividades Imprimibles</div>
+        <div class="feature-title">Material<br>Imprimible</div>
       </div>
 
-      <!-- Diseñado en Chile -->
       <div class="feature-card">
         <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul-oscuro)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul-patrimonio)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
         </div>
-        <div class="feature-title">Diseñado en Chile</div>
+        <div class="feature-title">Tradición<br>Chilena</div>
       </div>
-
     </div>
 
   </div>
 
+<audio id="musica-fondo" loop>
+    <source src="audio/guitarra.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Botón de música elegante con SVGs -->
+  <button id="btn-musica" class="btn-musica" onclick="toggleMusica()">
+    <div class="icono-musica">
+      <!-- Ícono Play -->
+      <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+      <!-- Ícono Pausa (Oculto por defecto) -->
+      <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" style="display: none;">
+        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      </svg>
+    </div>
+    <span class="credito-musica">Música por Katherine Cea</span>
+  </button>
+
   <footer>
-    Descubre. Aprende. Impresiona. © 2026 DescubreChile
+    Descubre. Aprende. Conserva. © 2026 DescubreChile
   </footer>
 
   <script>
@@ -377,12 +453,11 @@
       document.getElementById("s3"),
       document.getElementById("s4"),
       document.getElementById("s5"),
-      document.getElementById("s6") // Incluido en la lógica JS
+      document.getElementById("s6")
     ];
 
     inputReal.addEventListener("input", (e) => {
       let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
-      // Ajustado el límite a 7
       if (val.length > 7) val = val.substring(0, 7);
       e.target.value = val;
 
@@ -397,9 +472,7 @@
     });
 
     inputReal.addEventListener("keypress", function(e) {
-      if (e.key === "Enter") {
-        ingresar();
-      }
+      if (e.key === "Enter") ingresar();
     });
 
     function ingresar() {
@@ -409,101 +482,50 @@
         sessionStorage.setItem("kit", codigoLimpio);
         window.location.href = kits[codigoLimpio];
       } else {
-        document.getElementById("error").style.display = "block";
-        document.getElementById("visual-slots").style.borderColor = "#E53E3E";
+        const errorMsg = document.getElementById("error");
+        errorMsg.style.display = "block";
+        document.getElementById("visual-slots").style.borderColor = "#C06C55";
         setTimeout(() => {
-          document.getElementById("visual-slots").style.borderColor = "var(--azul-oscuro)";
-        }, 800);
+          document.getElementById("visual-slots").style.borderColor = "var(--madera-clara)";
+        }, 1500);
       }
     }
 
-    // --- MAGIA DEL FONDO INTERACTIVO Y ANIMADO ---
-    const canvas = document.getElementById('bg-canvas');
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let dots = [];
-    const spacing = 28; // Espacio entre puntitos
-    let mouse = { x: -1000, y: -1000 };
-
-    function initCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      dots = [];
-      for (let x = 0; x < width; x += spacing) {
-        for (let y = 0; y < height; y += spacing) {
-          dots.push({ x, y, baseR: 1.5 });
-        }
-      }
-    }
-
-    // Escuchamos el mouse (Computador)
-    window.addEventListener('resize', initCanvas);
-    window.addEventListener('mousemove', (e) => { 
-      mouse.x = e.clientX; 
-      mouse.y = e.clientY; 
-    });
-    window.addEventListener('mouseout', () => { 
-      mouse.x = -1000; 
-      mouse.y = -1000; 
-    });
-
-    // Escuchamos los toques (Celular/Tablet)
-    window.addEventListener('touchstart', (e) => {
-      mouse.x = e.touches[0].clientX;
-      mouse.y = e.touches[0].clientY;
-    });
-    window.addEventListener('touchmove', (e) => {
-      mouse.x = e.touches[0].clientX;
-      mouse.y = e.touches[0].clientY;
-    });
-    window.addEventListener('touchend', () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    });
-
-    function animateCanvas() {
-      ctx.clearRect(0, 0, width, height);
-      let time = Date.now();
+// --- CONTROL DE MÚSICA ---
+    let reproduciendo = false;
+    let timeoutTexto; // Variable para guardar el temporizador
+    
+    function toggleMusica() {
+      const audio = document.getElementById("musica-fondo");
+      const btnMusica = document.getElementById("btn-musica");
+      const iconPlay = document.getElementById("icon-play");
+      const iconPause = document.getElementById("icon-pause");
       
-      dots.forEach(dot => {
-        // 1. ANIMACIÓN CONSTANTE (Olas suaves tipo "respiración")
-        let waveX = Math.sin(dot.y * 0.02 + time * 0.001) * 3;
-        let waveY = Math.cos(dot.x * 0.02 + time * 0.0015) * 3;
-        
-        let baseX = dot.x + waveX;
-        let baseY = dot.y + waveY;
+      // 1. Cambiamos estado de reproducción e íconos
+      if (reproduciendo) {
+        audio.pause();
+        iconPlay.style.display = "block";
+        iconPause.style.display = "none";
+        reproduciendo = false;
+      } else {
+        audio.play();
+        iconPlay.style.display = "none";
+        iconPause.style.display = "block";
+        reproduciendo = true;
+      }
 
-        // 2. INTERACCIÓN CON MOUSE / DEDO
-        let dx = mouse.x - baseX;
-        let dy = mouse.y - baseY;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        let maxDist = 120; // Radio del campo de fuerza
-        
-        let r = dot.baseR;
-        let finalX = baseX;
-        let finalY = baseY;
-
-        if (distance < maxDist) {
-          let force = (maxDist - distance) / maxDist;
-          finalX -= (dx / distance) * force * 8;
-          finalY -= (dy / distance) * force * 8;
-          r = dot.baseR + force * 1.5;
-          ctx.fillStyle = `rgba(245, 101, 81, ${0.4 + force})`; // Coral
-        } else {
-          // Un pequeño cambio de opacidad con la ola para que brille sutilmente
-          let opacity = 0.5 + Math.sin(dot.x * 0.01 + time * 0.002) * 0.3;
-          ctx.fillStyle = `rgba(203, 213, 224, ${opacity})`; // Gris original
-        }
-        
-        ctx.beginPath();
-        ctx.arc(finalX, finalY, r, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      requestAnimationFrame(animateCanvas);
+      // 2. Lógica de expansión temporal (celulares y clic general)
+      btnMusica.classList.add("activo"); // Expande el botón
+      
+      // Limpiamos cualquier temporizador previo (por si hace doble clic rápido)
+      clearTimeout(timeoutTexto);
+      
+      // Programamos que se esconda después de 3 segundos (3000 milisegundos)
+      timeoutTexto = setTimeout(() => {
+        btnMusica.classList.remove("activo");
+      }, 3000);
     }
 
-    initCanvas();
-    animateCanvas();
   </script>
 
 </body>

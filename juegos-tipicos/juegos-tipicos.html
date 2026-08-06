@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Juegos típicos de Chile - Descubre Chile</title>
+  <title>Juegos típicos de Chile - DescubramosChile</title>
   
   <!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,7 +46,7 @@
 
     .app-container {
       width: 100%;
-      max-width: 900px; /* Ampliado para que el grid luzca perfecto en PC */
+      max-width: 900px;
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -61,7 +61,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 25px;
       margin-top: 20px;
     }
 
@@ -81,7 +81,67 @@
       text-transform: uppercase; 
     }
 
-    /* --- NUEVO: SISTEMA DE GRID PARA COMPUTADOR --- */
+    /* --- TARJETA DE BIENVENIDA (TEXTO COLAPSABLE) --- */
+    .carta-intro {
+      background-color: var(--crema-oscuro);
+      border: 1px dashed var(--rojo-terracota);
+      border-radius: 12px;
+      padding: 25px;
+      width: 100%;
+      margin: 0 auto 35px auto;
+      text-align: justify;
+      transition: all 0.3s ease;
+    }
+    
+    .carta-intro h2 {
+      color: var(--rojo-terracota);
+      font-size: 1.15em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .texto-visible p, .texto-oculto p {
+      font-size: 0.95em;
+      line-height: 1.5;
+      color: var(--azul-marino);
+      margin-bottom: 12px;
+    }
+
+    .texto-oculto {
+      display: none;
+    }
+
+    .texto-oculto.abierto {
+      display: block;
+      animation: aparecerTexto 0.4s ease;
+    }
+
+    @keyframes aparecerTexto {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn-leer-mas {
+      background: none;
+      border: none;
+      color: var(--rojo-terracota);
+      font-family: 'Saira', sans-serif;
+      font-weight: 700;
+      font-size: 0.9em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 5px;
+      padding: 5px 15px;
+      transition: color 0.2s;
+    }
+
+    .btn-leer-mas:hover {
+      color: var(--azul-marino);
+    }
+
+    /* --- SISTEMA DE GRID PARA COMPUTADOR --- */
     .grid-principal {
       display: flex;
       flex-direction: column;
@@ -99,12 +159,12 @@
     @media (min-width: 768px) {
       .grid-principal {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* 2 columnas iguales arriba */
+        grid-template-columns: 1fr 1fr;
         gap: 25px;
       }
       .grid-inferior {
         display: grid;
-        grid-template-columns: 1fr 1fr; /* Tip a la izquierda, recursos a la derecha */
+        grid-template-columns: 1fr 1fr;
         gap: 25px;
         align-items: stretch;
       }
@@ -157,7 +217,7 @@
       letter-spacing: 1px;
     }
 
-    /* INSTRUCCIONES RÁPIDAS: Estilo sutil y limpio */
+    /* INSTRUCCIONES RÁPIDAS */
     .guia-rapida {
       background-color: transparent; 
       border: 1px solid var(--rojo-terracota); 
@@ -200,39 +260,33 @@
       line-height: 1.4; 
     }
 
-    /* NUEVO: CAJA DEL JUEGO */
+    /* CAJA DEL JUEGO */
     .caja-juego {
       border-color: var(--azul-marino);
       background-color: rgba(42, 59, 82, 0.03);
+      text-align: center;
     }
 
     .caja-juego h3 {
       color: var(--azul-marino);
     }
 
-    .caja-juego {
-  text-align: center;
-}
-
-.caja-juego .intro-juego {
-  max-width: 330px;
-  margin: 0 auto 15px auto;
-}
-
-    .caja-juego p.intro-juego {
+    .caja-juego .intro-juego {
+      max-width: 330px;
+      margin: 0 auto 15px auto;
       font-size: 0.95em;
       line-height: 1.4;
-      margin-bottom: 10px;
     }
 
     .caja-juego .btn-ar-gigante {
       border-color: var(--azul-marino);
     }
+    
     .caja-juego .btn-ar-gigante::before {
       border-color: var(--azul-marino);
     }
 
-    /* NUEVO: CONSEJOS AR EXTENDIDOS */
+    /* CONSEJOS AR EXTENDIDOS */
     .consejos-ar {
       border: 1px dashed var(--rojo-terracota);
       border-radius: 8px;
@@ -326,9 +380,25 @@
   <div class="app-container">
     
     <header>
-      <div class="marca">Descubre Chile</div>
+      <div class="marca">DescubramosChile</div>
       <h1>Juegos típicos de Chile</h1>
     </header>
+
+    <!-- TEXTO INTRODUCTORIO PATRIMONIAL (Tarjeta Colapsable) -->
+    <div class="carta-intro">
+      <h2>Nuestro Patrimonio</h2>
+      
+      <div class="texto-visible">
+        <p>Los juegos tradicionales forman parte del patrimonio cultural de Chile. Durante generaciones, niñas y niños compartieron momentos de diversión en patios, plazas y calles, transmitiendo costumbres, recuerdos y formas de convivir que hoy siguen siendo parte de nuestra identidad.</p>
+      </div>
+      
+      <div class="texto-oculto" id="texto-extra">
+        <p>Esta colección reúne algunos de los juegos típicos más representativos del país para acercarlos a las nuevas generaciones mediante ilustraciones, modelos tridimensionales, realidad aumentada y recursos educativos. A través de la tecnología, buscamos preservar y valorar este patrimonio de una manera interactiva, entretenida y significativa.</p>
+        <p>Te invitamos a explorar cada juego, descubrir su historia y conocer cómo estas tradiciones continúan conectando el pasado con el presente.</p>
+      </div>
+      
+      <button class="btn-leer-mas" id="btn-leer" onclick="toggleTexto()">Leer más ↓</button>
+    </div>
 
     <!-- GRID SUPERIOR: MODO EXPLORACIÓN Y MODO JUEGO -->
     <div class="grid-principal">
@@ -401,9 +471,23 @@
     document.addEventListener("DOMContentLoaded", () => {
       const accesoKit = sessionStorage.getItem("kit");
       if (!accesoKit) {
-        window.location.href = "index.html";
+        window.location.href = "../index.html"; 
       }
     });
+
+    // --- FUNCIÓN PARA EL TEXTO COLAPSABLE ---
+    function toggleTexto() {
+      const texto = document.getElementById("texto-extra");
+      const btn = document.getElementById("btn-leer");
+      
+      if (texto.classList.contains("abierto")) {
+        texto.classList.remove("abierto");
+        btn.textContent = "Leer más ↓";
+      } else {
+        texto.classList.add("abierto");
+        btn.textContent = "Ocultar texto ↑";
+      }
+    }
   </script>
 
 </body>

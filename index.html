@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ColeccionAR - Experiencias Interactivas</title>
+  <title>Descubre Chile - Material Educativo con Realidad Aumentada</title>
   
-  <!-- Importando la tipografía amigable Nunito -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      /* Paleta basada en la ilustración */
-      --azul-fondo: #215A9E; 
+      --azul-principal: #2A5CAA;
+      --azul-oscuro: #123055;
+      --coral: #F56551;
+      --amarillo-pastel: #FFF0B3;
+      --verde-salvia: #68B684;
+      --celeste-claro: #EBF8FF;
+      --blanco-calido: #FCFCFA;
       --crema: #FFF9EC;
-      --rojo: #E94F4F;
-      --amarillo: #FFCA3A;
-      --verde: #3BB273;
-      --naranjo: #F59042;
-      --azul-oscuro: #123055; 
+      --gris-suave: #EDF2F7;
     }
 
     * {
@@ -30,214 +30,480 @@
     }
 
     body {
-      background-color: var(--azul-fondo);
+      background-color: var(--celeste-claro);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
       color: var(--azul-oscuro);
-      position: relative;
-      overflow: hidden; 
+      padding: 20px;
     }
 
-    /* Detalles decorativos de fondo tipo vector */
-    .decoracion {
-      position: absolute;
-      z-index: 0;
+    .main-container {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: auto 0;
     }
-    .circulo-rojo { width: 40px; height: 40px; background: var(--rojo); border-radius: 50%; top: 10%; left: 15%; }
-    .cuadrado-amarillo { width: 35px; height: 35px; background: var(--amarillo); transform: rotate(15deg); bottom: 20%; right: 15%; }
-    .triangulo-verde { width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 35px solid var(--verde); top: 15%; right: 20%; transform: rotate(-25deg); }
-    .circulo-naranjo { width: 25px; height: 25px; background: var(--naranjo); border-radius: 50%; bottom: 15%; left: 20%; }
 
-    .login-card {
-      background-color: var(--crema);
-      width: 90%;
-      max-width: 420px;
-      padding: 40px 30px;
-      border-radius: 24px;
-      border: 4px solid var(--azul-oscuro);
-      /* Sombra sólida para el toque ilustrado */
-      box-shadow: 8px 8px 0px var(--azul-oscuro);
+    header {
       text-align: center;
-      z-index: 1;
-      position: relative;
+      margin-bottom: 25px;
     }
 
     .brand-logo {
       font-weight: 900;
-      font-size: 2.2em; /* Un poco más pequeño para que entre la palabra larga */
-      margin-bottom: 5px;
-      letter-spacing: -1px;
-    }
-    
-    /* Coloreando letras para el look lúdico, destacando el AR */
-    .brand-logo .c1 { color: var(--azul-fondo); }
-    .brand-logo .o1 { color: var(--naranjo); }
-    .brand-logo .l { color: var(--verde); }
-    .brand-logo .e { color: var(--amarillo); }
-    .brand-logo .c2 { color: var(--azul-fondo); }
-    .brand-logo .c3 { color: var(--naranjo); }
-    .brand-logo .i { color: var(--verde); }
-    .brand-logo .o2 { color: var(--amarillo); }
-    .brand-logo .n { color: var(--azul-fondo); }
-    
-    .brand-logo .ar { 
-      color: var(--rojo); 
-      font-size: 1.2em; /* Hace que el AR resalte mucho más */
-      text-shadow: 3px 3px 0px var(--azul-oscuro); /* Sombra dura solo para el AR */
-      margin-left: 2px;
+      font-size: 2em;
+      letter-spacing: -0.5px;
+      color: var(--azul-principal);
     }
 
-    .subtitle {
+    .brand-logo span {
+      color: var(--coral);
+    }
+
+    .brand-subtitle {
       font-weight: 700;
-      font-size: 1.1em;
-      color: var(--naranjo);
-      margin-bottom: 25px;
+      font-size: 0.9em;
+      color: var(--azul-oscuro);
+      opacity: 0.7;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
+      margin-top: 2px;
+    }
+
+    .card {
+      background-color: var(--blanco-calido);
+      width: 100%;
+      padding: 35px 25px;
+      border-radius: 28px;
+      border: 3px solid var(--azul-oscuro);
+      box-shadow: 6px 6px 0px var(--azul-oscuro);
+      text-align: center;
+      position: relative;
     }
 
     h1 {
       font-weight: 800;
-      font-size: 1.6em;
-      margin-bottom: 15px;
-      line-height: 1.2;
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      line-height: 1.25;
+      color: var(--azul-oscuro);
     }
 
     p.instruccion {
-      font-size: 1.05em;
-      font-weight: 400;
+      font-size: 0.95em;
+      font-weight: 600;
       margin-bottom: 25px;
-      color: #333;
+      color: #4A5568;
     }
 
-    .input-wrapper {
-      margin-bottom: 20px;
+    .code-input-container {
+      position: relative;
+      margin-bottom: 25px;
     }
 
-    input {
+    #codigo-real {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      padding: 16px;
-      font-size: 1.2em;
-      font-weight: 700;
-      text-align: center;
-      text-transform: uppercase;
-      background-color: #fff;
+      height: 100%;
+      opacity: 0;
+      z-index: 10;
+      cursor: pointer;
+      font-size: 16px; 
+    }
+
+    .code-slots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 6px;
+      background: var(--crema);
       border: 3px solid var(--azul-oscuro);
-      border-radius: 12px;
-      outline: none;
+      border-radius: 16px;
+      padding: 16px 12px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.04);
       transition: all 0.2s;
     }
 
-    input:focus {
-      border-color: var(--naranjo);
-      box-shadow: 0 0 0 4px rgba(245, 144, 66, 0.2);
+    .code-input-container:hover .code-slots,
+    #codigo-real:focus ~ .code-slots {
+      border-color: var(--azul-principal);
+      background: #FFF;
+      box-shadow: 0 0 0 3px rgba(42, 92, 170, 0.15);
     }
 
-    input::placeholder {
-      color: #aaa;
-      font-weight: 400;
-      text-transform: none;
-    }
-
-    button {
-      width: 100%;
-      padding: 16px;
+    .slot {
+      width: 32px;
+      height: 44px;
+      background: #FFFFFF;
+      border: 2px solid #CBD5E0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       font-size: 1.2em;
       font-weight: 900;
+      color: var(--azul-oscuro);
+      transition: all 0.15s;
+    }
+
+    .slot.active {
+      border-color: var(--azul-principal);
+      box-shadow: 0 0 0 2px rgba(42, 92, 170, 0.2);
+    }
+
+    .slot-separator {
+      font-size: 1.4em;
+      font-weight: 900;
+      color: var(--azul-oscuro);
+      margin: 0 2px;
+    }
+
+    button.btn-explorar {
+      width: 100%;
+      padding: 16px;
+      font-size: 1.1em;
+      font-weight: 800;
       color: #fff;
-      background-color: var(--rojo);
+      background-color: var(--coral);
       border: 3px solid var(--azul-oscuro);
-      border-radius: 12px;
+      border-radius: 14px;
       cursor: pointer;
       box-shadow: 4px 4px 0px var(--azul-oscuro);
       transition: all 0.1s;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
-    button:active {
-      transform: translate(4px, 4px);
+    button.btn-explorar:active {
+      transform: translate(3px, 3px);
       box-shadow: 0px 0px 0px var(--azul-oscuro);
     }
 
-    .error {
+    .error-msg {
       display: none;
-      background-color: #FFE5E5;
-      color: var(--rojo);
+      background-color: #FFF5F5;
+      color: #C53030;
       font-weight: 700;
-      padding: 12px;
+      padding: 10px;
       border-radius: 8px;
-      border: 2px solid var(--rojo);
-      margin-top: 20px;
-      font-size: 0.9em;
+      border: 2px solid #FEB2B2;
+      margin-top: 15px;
+      font-size: 0.85em;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+      max-width: 500px;
+      margin-top: 25px;
+    }
+
+    @media (min-width: 480px) {
+      .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .feature-card {
+      background: var(--blanco-calido);
+      border: 2px solid var(--azul-oscuro);
+      border-radius: 14px;
+      padding: 12px 8px;
+      text-align: center;
+      box-shadow: 3px 3px 0px var(--azul-oscuro);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    .feature-icon {
+      font-size: 1.4em;
+      margin-bottom: 6px;
+    }
+
+    .feature-title {
+      font-weight: 800;
+      font-size: 0.75em;
+      color: var(--azul-oscuro);
+      line-height: 1.2;
     }
 
     footer {
-      margin-top: 30px;
-      color: #fff;
+      margin-top: 20px;
+      color: var(--azul-oscuro);
       font-weight: 700;
-      font-size: 0.9em;
+      font-size: 0.8em;
+      opacity: 0.7;
       text-align: center;
-      z-index: 1;
-      opacity: 0.9;
+    }
+
+    .feature-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Figuras flotantes de fondo -->
-  <div class="decoracion circulo-rojo"></div>
-  <div class="decoracion cuadrado-amarillo"></div>
-  <div class="decoracion triangulo-verde"></div>
-  <div class="decoracion circulo-naranjo"></div>
+  <!-- Fondo interactivo -->
+  <canvas id="bg-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;"></canvas>
 
-  <div class="login-card">
-    <div class="brand-logo">
-      <span class="c1">C</span><span class="o1">o</span><span class="l">l</span><span class="e">e</span><span class="c2">c</span><span class="c3">c</span><span class="i">i</span><span class="o2">o</span><span class="n">n</span><span class="ar">AR</span>
-    </div>
-    <div class="subtitle">Kits Interactivos</div>
+  <div class="main-container">
     
-    <h1>¡Descubre la magia en tu tarjeta!</h1>
-    <p class="instruccion">Ingresa el código secreto de tu kit para activar la experiencia.</p>
+    <header>
+      <div class="brand-logo">DescubreChile<span>+</span></div>
+      <div class="brand-subtitle">Material Educativo con Realidad Aumentada</div>
+    </header>
 
-    <div class="input-wrapper">
-      <input type="text" id="codigo" placeholder="Ej. wiwiwi" autocomplete="off">
+    <div class="card">
+      <h1>Colecciones educativas que cobran vida</h1>
+      <p class="instruccion">Ingresa el código de tu tarjeta para desbloquear la experiencia.</p>
+
+      <div class="code-input-container">
+        <!-- Aumentado a 8 para dejar que escriban un guión por accidente antes de que se limpie -->
+        <input 
+          type="text" 
+          id="codigo-real" 
+          maxlength="8" 
+          autocomplete="off" 
+          autocorrect="off" 
+          autocapitalize="characters" 
+          spellcheck="false"
+          placeholder="DCJTC01">
+
+        <div class="code-slots" id="visual-slots">
+          <div class="slot" id="s0"></div>
+          <div class="slot" id="s1"></div>
+          <div class="slot-separator">-</div>
+          <div class="slot" id="s2"></div>
+          <div class="slot" id="s3"></div>
+          <div class="slot" id="s4"></div>
+          <div class="slot" id="s5"></div> 
+          <div class="slot" id="s6"></div> <!-- ¡Aquí está el cuadrito que faltaba! -->
+        </div>
+      </div>
+
+      <button class="btn-explorar" onclick="ingresar()">Explorar kit</button>
+
+      <div class="error-msg" id="error">
+        Código inválido o no encontrado. Revisa tu tarjeta de bienvenida.
+      </div>
     </div>
 
-    <button onclick="ingresar()">Explorar Kit</button>
+<!-- 4 Tarjetas inferiores con SVG -->
+    <div class="features-grid">
+      
+      <!-- Realidad Aumentada -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul-principal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+        </div>
+        <div class="feature-title">Realidad Aumentada</div>
+      </div>
 
-    <div class="error" id="error">
-      ¡Ups! Código incorrecto. Revisa tu tarjeta e intenta de nuevo.
+      <!-- Material Ilustrado -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+            <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+            <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+            <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+            <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"></path>
+          </svg>
+        </div>
+        <div class="feature-title">Material Ilustrado</div>
+      </div>
+
+      <!-- Actividades Imprimibles -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--verde-salvia)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+            <polyline points="6 9 6 2 18 2 18 9"></polyline>
+            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+            <rect x="6" y="14" width="12" height="8"></rect>
+          </svg>
+        </div>
+        <div class="feature-title">Actividades Imprimibles</div>
+      </div>
+
+      <!-- Diseñado en Chile -->
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--azul-oscuro)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </div>
+        <div class="feature-title">Diseñado en Chile</div>
+      </div>
+
     </div>
+
   </div>
 
   <footer>
-    Descubre tu patrimonio con ColeccionAR © 2026
+    Descubre. Aprende. Impresiona. © 2026 DescubreChile
   </footer>
 
   <script>
     const kits = {
-      "VOLANTIN26": "juegos-tipicos/juegos-tipicos.html"
+      "DCJTC01": "juegos-tipicos/juegos-tipicos.html",
+      "DCFNC01": "fauna/fauna.html",
+      "DCFLC01": "flora/flora.html",
+      "DCPOR01": "pueblos/pueblos.html"
     };
 
-    function ingresar() {
-      const codigo = document.getElementById("codigo").value.trim().toUpperCase();
+    const inputReal = document.getElementById("codigo-real");
+    const slots = [
+      document.getElementById("s0"),
+      document.getElementById("s1"),
+      document.getElementById("s2"),
+      document.getElementById("s3"),
+      document.getElementById("s4"),
+      document.getElementById("s5"),
+      document.getElementById("s6") // Incluido en la lógica JS
+    ];
 
-      if (kits[codigo]) {
-        sessionStorage.setItem("kit", codigo);
-        window.location.href = kits[codigo];
-      } else {
-        document.getElementById("error").style.display = "block";
-      }
-    }
+    inputReal.addEventListener("input", (e) => {
+      let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
+      // Ajustado el límite a 7
+      if (val.length > 7) val = val.substring(0, 7);
+      e.target.value = val;
 
-    document.getElementById("codigo").addEventListener("keypress", function(e) {
+      slots.forEach((slot, index) => {
+        slot.textContent = val[index] || "";
+        if (index === val.length) {
+          slot.classList.add("active");
+        } else {
+          slot.classList.remove("active");
+        }
+      });
+    });
+
+    inputReal.addEventListener("keypress", function(e) {
       if (e.key === "Enter") {
         ingresar();
       }
     });
+
+    function ingresar() {
+      const codigoLimpio = inputReal.value.trim().toUpperCase();
+
+      if (kits[codigoLimpio]) {
+        sessionStorage.setItem("kit", codigoLimpio);
+        window.location.href = kits[codigoLimpio];
+      } else {
+        document.getElementById("error").style.display = "block";
+        document.getElementById("visual-slots").style.borderColor = "#E53E3E";
+        setTimeout(() => {
+          document.getElementById("visual-slots").style.borderColor = "var(--azul-oscuro)";
+        }, 800);
+      }
+    }
+
+    // --- MAGIA DEL FONDO INTERACTIVO Y ANIMADO ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let dots = [];
+    const spacing = 28; // Espacio entre puntitos
+    let mouse = { x: -1000, y: -1000 };
+
+    function initCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      dots = [];
+      for (let x = 0; x < width; x += spacing) {
+        for (let y = 0; y < height; y += spacing) {
+          dots.push({ x, y, baseR: 1.5 });
+        }
+      }
+    }
+
+    // Escuchamos el mouse (Computador)
+    window.addEventListener('resize', initCanvas);
+    window.addEventListener('mousemove', (e) => { 
+      mouse.x = e.clientX; 
+      mouse.y = e.clientY; 
+    });
+    window.addEventListener('mouseout', () => { 
+      mouse.x = -1000; 
+      mouse.y = -1000; 
+    });
+
+    // Escuchamos los toques (Celular/Tablet)
+    window.addEventListener('touchstart', (e) => {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    });
+    window.addEventListener('touchmove', (e) => {
+      mouse.x = e.touches[0].clientX;
+      mouse.y = e.touches[0].clientY;
+    });
+    window.addEventListener('touchend', () => {
+      mouse.x = -1000;
+      mouse.y = -1000;
+    });
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, width, height);
+      let time = Date.now();
+      
+      dots.forEach(dot => {
+        // 1. ANIMACIÓN CONSTANTE (Olas suaves tipo "respiración")
+        let waveX = Math.sin(dot.y * 0.02 + time * 0.001) * 3;
+        let waveY = Math.cos(dot.x * 0.02 + time * 0.0015) * 3;
+        
+        let baseX = dot.x + waveX;
+        let baseY = dot.y + waveY;
+
+        // 2. INTERACCIÓN CON MOUSE / DEDO
+        let dx = mouse.x - baseX;
+        let dy = mouse.y - baseY;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        let maxDist = 120; // Radio del campo de fuerza
+        
+        let r = dot.baseR;
+        let finalX = baseX;
+        let finalY = baseY;
+
+        if (distance < maxDist) {
+          let force = (maxDist - distance) / maxDist;
+          finalX -= (dx / distance) * force * 8;
+          finalY -= (dy / distance) * force * 8;
+          r = dot.baseR + force * 1.5;
+          ctx.fillStyle = `rgba(245, 101, 81, ${0.4 + force})`; // Coral
+        } else {
+          // Un pequeño cambio de opacidad con la ola para que brille sutilmente
+          let opacity = 0.5 + Math.sin(dot.x * 0.01 + time * 0.002) * 0.3;
+          ctx.fillStyle = `rgba(203, 213, 224, ${opacity})`; // Gris original
+        }
+        
+        ctx.beginPath();
+        ctx.arc(finalX, finalY, r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateCanvas);
+    }
+
+    initCanvas();
+    animateCanvas();
   </script>
 
 </body>

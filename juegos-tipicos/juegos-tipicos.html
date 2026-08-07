@@ -12,6 +12,9 @@
 
   <!-- Importando Loslana Niu Pro desde Adobe Fonts -->
   <link rel="stylesheet" href="https://use.typekit.net/dum5zgl.css">
+  <!-- Importar model-viewer (ponlo en tu <head> si no lo tienes aún) -->
+<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+
 
   <style>
     :root {
@@ -377,6 +380,20 @@
 </head>
 <body>
 
+  
+<!-- FONDO 3D ROTATORIO -->
+<!-- FONDO 3D ROTATORIO INCLINADO -->
+<model-viewer 
+  src="glb/trompo.glb" 
+  auto-rotate 
+  rotation-per-second="8deg" 
+  camera-controls="false"
+  interaction-prompt="none"
+  scale="0.7 0.7 0.7"
+  orientation="30deg 0deg 0deg"
+  style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; opacity: 0.15; pointer-events: none;">
+</model-viewer>
+
   <div class="app-container">
     
     <header>
@@ -389,12 +406,14 @@
       <h2>Nuestro Patrimonio</h2>
       
       <div class="texto-visible">
-        <p>Los juegos tradicionales forman parte del patrimonio cultural de Chile. Durante generaciones, niñas y niños compartieron momentos de diversión en patios, plazas y calles, transmitiendo costumbres, recuerdos y formas de convivir que hoy siguen siendo parte de nuestra identidad.</p>
+        <p>Los juegos tradicionales forman parte del patrimonio cultural de Chile. Durante generaciones, niñas y niños compartieron momentos de diversión en patios, plazas y calles utilizando juguetes sencillos, creados muchas veces con materiales cotidianos y transmitidos de familia en familia. Más que una forma de entretenerse, estos juegos representan costumbres, formas de convivencia y recuerdos que han acompañado a distintas generaciones.</p>
       </div>
       
       <div class="texto-oculto" id="texto-extra">
         <p>Esta colección reúne algunos de los juegos típicos más representativos del país para acercarlos a las nuevas generaciones mediante ilustraciones, modelos tridimensionales, realidad aumentada y recursos educativos. A través de la tecnología, buscamos preservar y valorar este patrimonio de una manera interactiva, entretenida y significativa.</p>
-        <p>Te invitamos a explorar cada juego, descubrir su historia y conocer cómo estas tradiciones continúan conectando el pasado con el presente.</p>
+        <p>Esta colección invita a descubrir algunos de los juegos típicos más representativos del país, explorando su historia, sus características y la manera en que se practican. A través de ilustraciones, modelos tridimensionales, realidad aumentada y actividades educativas, cada juego se transforma en una oportunidad para conocer y valorar una parte importante de nuestra identidad cultural.</p>
+        <p>Conservar estas tradiciones significa mantener vivo un patrimonio que forma parte de nuestra historia. Al conocer cómo jugaban las generaciones anteriores, comprendemos mejor nuestras raíces y fortalecemos el sentido de pertenencia hacia la cultura chilena. Aprender también puede ser una experiencia interactiva, donde la tecnología se convierte en un puente entre el pasado y las nuevas generaciones.</p>
+        <p>Te invitamos a explorar esta colección, observar cada juguete, descubrir sus curiosidades y experimentar cómo la realidad aumentada permite dar nueva vida a estos juegos tradicionales, acercando el patrimonio cultural de Chile de una manera innovadora, accesible y entretenida.</p>
       </div>
       
       <button class="btn-leer-mas" id="btn-leer" onclick="toggleTexto()">Leer más ↓</button>
@@ -447,7 +466,7 @@
       
       <!-- Advertencia de luz / Consejos AR extendidos -->
       <div class="consejos-ar">
-        <h4>💡 Tips para la magia AR</h4>
+        <h4>Tips para la magia AR</h4>
         <p>• <strong>Iluminación:</strong> Busca un lugar con buena luz natural, evitando sombras fuertes sobre la mesa.</p>
         <p>• <strong>Cero reflejos:</strong> Asegúrate de que la tarjeta no tenga brillos ni reflejos molestos.</p>
         <p>• <strong>Encuadre:</strong> Enfócala completa y de frente en tu pantalla para una lectura perfecta.</p>

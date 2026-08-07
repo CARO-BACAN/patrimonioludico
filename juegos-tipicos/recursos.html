@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Material Pedagógico - ColeccionAR</title>
   
-<!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
+  <!-- Tipografías de la marca: Saira (Títulos) y Lato (Textos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Saira:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Saira:wght@400;600;700;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -19,18 +19,21 @@
       --linea-suave: #D1C7B7;
       --crema-oscuro: #DFD5C4;
       --blanco: #FFFFFF;
+      --sombra-suave: rgba(42, 59, 82, 0.08);
+      --sombra-fuerte: rgba(42, 59, 82, 0.15);
     }
 
     * { 
       box-sizing: border-box; 
       margin: 0; 
       padding: 0; 
-      font-family: 'Roboto', sans-serif; 
+      font-family: 'Lato', sans-serif; 
     }
 
     h1, h2, h3, h4, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
       font-family: 'Saira', sans-serif;
-      font-weight: 700; 
+      font-weight: 900; 
+      letter-spacing: -0.5px;
     }
 
     body {
@@ -57,7 +60,7 @@
       align-items: center;
       justify-content: center;
       margin-top: 10px;
-      margin-bottom: 25px;
+      margin-bottom: 30px;
       position: relative;
     }
 
@@ -65,26 +68,26 @@
       background: var(--fondo-papel);
       color: var(--azul-marino);
       text-decoration: none;
-      padding: 8px 12px;
+      padding: 10px 16px;
       font-family: 'Saira', sans-serif;
-      font-weight: 700;
+      font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 1px;
       font-size: 0.85em;
-      border: 2px solid var(--azul-marino);
-      box-shadow: 3px 3px 0px var(--azul-marino);
-      transition: all 0.1s;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px var(--sombra-fuerte);
+      transition: all 0.2s ease;
       position: absolute;
       left: 0;
     }
 
     .btn-volver:active { 
-      transform: translate(3px, 3px); 
-      box-shadow: 0px 0px 0px var(--azul-marino); 
+      transform: translateY(2px); 
+      box-shadow: 0 2px 5px var(--sombra-fuerte); 
     }
 
     h1 { 
-      font-weight: 700; 
       font-size: 1.4em; 
       text-align: center; 
       text-transform: uppercase;
@@ -92,27 +95,32 @@
 
     .intro {
       text-align: center;
-      font-size: 1em;
-      font-weight: 500;
+      font-size: 1.05em;
+      font-weight: 400;
       color: var(--azul-marino);
-      line-height: 1.4;
-      margin-bottom: 25px;
+      line-height: 1.5;
+      margin-bottom: 30px;
     }
 
     /* ACORDEONES (CARTAS DE RECURSOS) */
     .acordeon {
       background: var(--blanco);
-      border: 2px solid var(--azul-marino);
-      border-radius: 12px;
-      margin-bottom: 15px;
-      box-shadow: 4px 4px 0px rgba(42, 59, 82, 0.15);
+      border: 1px solid var(--linea-suave);
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px var(--sombra-suave);
       overflow: hidden;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .acordeon:hover {
+      box-shadow: 0 15px 35px var(--sombra-fuerte);
     }
 
     .acordeon-cabecera {
       display: flex;
       align-items: center;
-      padding: 16px 20px;
+      padding: 20px 24px;
       cursor: pointer;
       user-select: none;
       background-color: var(--blanco);
@@ -121,14 +129,14 @@
     .icono { font-size: 1.8em; margin-right: 15px; }
     
     .textos { flex-grow: 1; }
-    .textos h4 { font-size: 1.1em; color: var(--azul-marino); text-transform: uppercase; letter-spacing: 1px; }
-    .textos p { font-size: 0.85em; font-weight: 500; color: #666; margin-top: 2px; }
+    .textos h4 { font-size: 1.1em; color: var(--azul-marino); text-transform: uppercase; letter-spacing: 0px; }
+    .textos p { font-size: 0.9em; font-weight: 400; color: #666; margin-top: 4px; }
 
     .flecha {
       font-weight: 900;
       font-size: 1.5em;
       color: var(--rojo-terracota);
-      transition: transform 0.3s;
+      transition: transform 0.4s ease;
     }
 
     .acordeon.activo .flecha { transform: rotate(45deg); }
@@ -137,7 +145,7 @@
     .acordeon-contenido {
       max-height: 0px;
       overflow: hidden;
-      padding: 0 20px;
+      padding: 0 24px;
       background-color: var(--fondo-papel);
       border-top: 1px solid var(--linea-suave);
       transition: max-height 0.4s ease-in-out, padding 0.4s ease-in-out;
@@ -145,36 +153,37 @@
 
     .material-desc {
       font-size: 0.95em;
-      font-weight: 500;
+      font-weight: 400;
       color: var(--azul-marino);
-      line-height: 1.4;
-      margin-bottom: 15px;
-      padding-top: 15px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      padding-top: 20px;
     }
 
     /* RECURSOS INTERNOS */
     .resource {
       background: var(--blanco);
       border: 1px solid var(--linea-suave);
-      border-radius: 8px;
-      padding: 15px;
+      border-radius: 12px;
+      padding: 20px;
       margin-bottom: 15px;
+      box-shadow: 0 4px 12px var(--sombra-suave);
     }
 
     .resource-title {
       font-family: 'Saira', sans-serif;
-      font-weight: 700;
-      font-size: 1.05em;
+      font-weight: 900;
+      font-size: 1.1em;
       color: var(--azul-marino);
-      margin-bottom: 5px;
+      margin-bottom: 8px;
     }
 
     .resource-desc {
-      font-size: 0.9em;
+      font-size: 0.95em;
       font-weight: 400;
       color: #555;
-      line-height: 1.3;
-      margin-bottom: 12px;
+      line-height: 1.4;
+      margin-bottom: 15px;
     }
 
     /* BOTONES DE DESCARGA */
@@ -184,28 +193,45 @@
       color: var(--blanco);
       text-decoration: none;
       text-align: center;
-      padding: 12px;
+      padding: 14px;
       font-family: 'Saira', sans-serif;
-      font-weight: 700;
+      font-weight: 900;
       font-size: 0.95em;
       text-transform: uppercase;
       letter-spacing: 1px;
-      border: 2px solid var(--azul-marino);
-      box-shadow: 3px 3px 0px var(--azul-marino);
-      transition: all 0.1s;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(164, 58, 46, 0.25);
+      transition: all 0.2s ease;
       position: relative;
       z-index: 2;
     }
 
+    .btn-download:hover {
+      background-color: #8C2F24;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(164, 58, 46, 0.35);
+    }
+
     .btn-download:active { 
-      transform: translate(3px, 3px); 
-      box-shadow: 0px 0px 0px var(--azul-marino); 
+      transform: translateY(2px); 
+      box-shadow: 0 4px 10px rgba(164, 58, 46, 0.2); 
     }
 
     .btn-pack {
       background: var(--azul-marino);
       color: var(--fondo-papel);
-      margin-bottom: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 20px rgba(42, 59, 82, 0.25);
+    }
+
+    .btn-pack:hover {
+      background-color: #1A2533;
+      box-shadow: 0 10px 25px rgba(42, 59, 82, 0.35);
+    }
+
+    .btn-pack:active {
+      box-shadow: 0 4px 10px rgba(42, 59, 82, 0.2);
     }
   </style>
 </head>

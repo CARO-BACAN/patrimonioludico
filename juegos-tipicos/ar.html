@@ -10,11 +10,10 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.2/dist/mindar-image-aframe.prod.js"></script>
   <script src="js/datos.js"></script>
 
-<!-- Importando Roboto (Textos) y Saira (Títulos) desde Google Fonts -->
+<!-- Tipografías de la marca: Saira (Títulos) y Lato (Textos) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&family=Saira:wght@600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Saira:wght@400;600;700;900&display=swap" rel="stylesheet">
   <script>
     /* Componente para detectar cuál juguete está enfocado */
     AFRAME.registerComponent('detector-juguete', {
@@ -41,34 +40,36 @@
 
   <style>
     :root {
-      --azul: #163354;
-      --rojo: #8c2a20;
-      --beige: #f6ecd8;
-      --texto: #333333;
+      /* Paleta patrimonial del sistema de diseño */
+      --fondo-papel: #EAE3D5;
+      --azul-marino: #2A3B52;
+      --rojo-terracota: #A43A2E;
+      --linea-suave: #D1C7B7;
+      --crema-oscuro: #DFD5C4;
+      --blanco: #FFFFFF;
+      --sombra-fuerte: rgba(42, 59, 82, 0.4);
     }
     
-
-/* Todo el texto base usará Roboto por defecto */
+    /* Todo el texto base usará Lato por defecto */
     * { 
       box-sizing: border-box; 
       margin: 0; 
       padding: 0; 
-      font-family: 'Roboto', sans-serif; 
+      font-family: 'Lato', sans-serif; 
     }
 
     /* Los títulos y elementos destacados usarán Saira */
-    h1, h2, h3, h4, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
+    h1, h2, h3, h4, .info-header h2, .marca, .recursos-titulo, .guia-destacada h2, .acordeon-cabecera h4 {
       font-family: 'Saira', sans-serif;
-      font-weight: 700; 
+      font-weight: 900; 
+      letter-spacing: -0.5px;
     }
-
 
     html, body {
       margin: 0;
       width: 100%;
       height: 100%;
       overflow: hidden;
-      font-family: Arial, sans-serif;
     }
 
     /* Estilos personalizados para las guías de escaneo rectangulares (Proporción 9x14) */
@@ -79,11 +80,13 @@
       max-height: 373px !important;
       border: 2px dashed rgba(255, 255, 255, 0.8) !important;
       background: transparent !important;
+      border-radius: 12px !important;
     }
     .mindar-ui-scanning .scanning-text {
       display: none !important;
     }
 
+    /* Botones y UI superior */
     .ar-ui-top { 
       position: fixed; 
       top: 20px; 
@@ -91,26 +94,37 @@
       z-index: 99999; 
     }
     
-    .ar-btn { 
-      background-color: #8c2a20; 
-      color: white; 
-      border: none; 
-      padding: 12px 20px; 
-      border-radius: 8px; 
-      font-weight: bold; 
-      font-size: 1rem; 
-      cursor: pointer; 
-      box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
-      text-decoration: none; 
-      display: inline-block; 
+    .ar-btn, .btn-comenzar, .btn-secondary {
+      font-family: 'Saira', sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
     }
+
+    .ar-btn { 
+      background-color: var(--fondo-papel); 
+      color: var(--azul-marino); 
+      padding: 12px 20px; 
+      font-size: 0.95rem; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25); 
+    }
+
+    .ar-btn:active { transform: translateY(2px); }
 
     /* Fondo difuminado moderno para el inicio */
     .fullscreen-overlay {
       position: fixed; 
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(22, 51, 84, 0.85); 
-      backdrop-filter: blur(4px); 
+      background: rgba(42, 59, 82, 0.85); /* Azul marino translúcido */
+      backdrop-filter: blur(5px); 
+      -webkit-backdrop-filter: blur(5px);
       z-index: 9999999;
       display: flex; 
       justify-content: center; 
@@ -119,47 +133,66 @@
       box-sizing: border-box;
     }
 
+    /* Tarjeta estilo sistema de diseño */
     .carga-card {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 30px 24px;
+      background: var(--crema-oscuro);
+      border: 1px solid var(--linea-suave);
+      border-radius: 20px;
+      padding: 35px 25px;
       text-align: center;
       width: 100%;
       max-width: 360px;
       box-sizing: border-box;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 15px 35px var(--sombra-fuerte);
       animation: popIn 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     }
 
     .icono-camara { font-size: 3rem; margin-bottom: 5px; }
-    .carga-card h2 { color: var(--azul); font-size: 1.6rem; margin-bottom: 12px; margin-top: 0; }
-    .carga-card p { color: #555555; font-size: 1rem; line-height: 1.4; margin-bottom: 25px; }
-
-    .btn-comenzar {
-      background-color: var(--rojo);
-      color: white;
-      border: none;
-      padding: 14px 24px;
-      border-radius: 30px;
-      font-weight: bold;
-      font-size: 1.1rem;
-      width: 100%;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(140, 42, 32, 0.3);
+    
+    .carga-card h2 { 
+      color: var(--rojo-terracota); 
+      font-size: 1.6rem; 
+      margin-bottom: 12px; 
+      margin-top: 0; 
+      text-transform: uppercase;
+    }
+    
+    .carga-card p { 
+      color: var(--azul-marino); 
+      font-size: 1.05rem; 
+      line-height: 1.5; 
+      margin-bottom: 25px; 
     }
 
+    .btn-comenzar {
+      background-color: var(--rojo-terracota);
+      color: var(--blanco);
+      padding: 16px 24px;
+      font-size: 1.1rem;
+      width: 100%;
+      box-shadow: 0 8px 20px rgba(164, 58, 46, 0.25);
+    }
+    
+    .btn-comenzar:hover { background-color: #8C2F24; }
+    .btn-comenzar:active { transform: translateY(2px); }
+
     @keyframes popIn {
-      0% { transform: scale(0.8); opacity: 0; }
+      0% { transform: scale(0.9); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
     /* Tarjeta deslizable de información */
     .info-card {
       position: fixed; bottom: 24px; left: 24px; right: 24px;
-      background: #ffffff; border-radius: 16px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.4); z-index: 99999;
-      overflow: hidden; transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s ease;
-      max-width: 450px; margin: 0 auto; border: 2px solid var(--azul);
+      background: var(--blanco); 
+      border-radius: 20px;
+      border: 1px solid var(--linea-suave);
+      box-shadow: 0 10px 30px var(--sombra-fuerte); 
+      z-index: 99999;
+      overflow: hidden; 
+      transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s ease;
+      max-width: 450px; 
+      margin: 0 auto;
     }
 
     .info-card.oculto {
@@ -168,24 +201,38 @@
 
     .info-header {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 16px 20px; background: #ffffff; color: var(--azul);
+      padding: 18px 20px; 
+      background: var(--crema-oscuro); 
+      color: var(--rojo-terracota);
       cursor: pointer; user-select: none;
     }
 
-    .info-header h2 { margin: 0; font-size: 1.3rem; font-weight: 800; }
-    .info-arrow { font-size: 1.2rem; transition: transform 0.4s ease; color: var(--rojo); }
+    .info-header h2 { margin: 0; font-size: 1.3rem; text-transform: uppercase; }
+    .info-arrow { font-size: 1.2rem; transition: transform 0.4s ease; color: var(--azul-marino); font-weight: bold; }
 
     .info-content {
-      max-height: 0; overflow: hidden; background: var(--beige);
+      max-height: 0; overflow: hidden; background: var(--fondo-papel);
       transition: max-height 0.4s ease-out, padding 0.4s ease; padding: 0 20px;
     }
 
-    .info-content p { margin: 16px 0; font-size: 0.95rem; line-height: 1.4; color: var(--texto); }
+    .info-content p { 
+      margin: 16px 0; 
+      font-size: 1rem; 
+      line-height: 1.5; 
+      color: var(--azul-marino); 
+    }
     
     .btn-secondary {
-      display: block; width: 100%; background: var(--azul); color: white; border: none;
-      padding: 10px; border-radius: 8px; font-weight: bold; margin-bottom: 16px; cursor: pointer;
+      width: 100%; 
+      background-color: var(--azul-marino); 
+      color: var(--blanco); 
+      padding: 14px; 
+      font-size: 0.95rem;
+      margin-bottom: 20px; 
+      box-shadow: 0 6px 15px rgba(42, 59, 82, 0.2);
     }
+    
+    .btn-secondary:active { transform: translateY(2px); }
   </style>
 </head>
 

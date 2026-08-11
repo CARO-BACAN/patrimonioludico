@@ -47,7 +47,41 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px; /* Igualado al index */
+      padding: 20px;
+      position: relative; /* ¡Importante para la nueva capa! */
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      /* Hacemos la capa más grande para esconder los bordes al moverse */
+      top: -5vh; 
+      left: -5vw; 
+      width: 110vw; 
+      height: 110vh;
+      
+      background-image: url('IMG/patron-repetible.png'); 
+      background-repeat: repeat;
+      background-size: 550px;
+      
+      opacity: 0.15; 
+      /* ¡Esto arregla el modelo 3D! Lo empujamos al fondo absoluto (-999), 
+         dejando al trompo (-2) reinar por encima */
+      z-index: -2; 
+      pointer-events: none;
+
+      /* Animación 1: Levitado diagonal lento y constante */
+      animation: levitadoPatron 25s ease-in-out infinite alternate;
+      
+      /* Animación 2: Preparación para reaccionar al mouse */
+      transform: translate(var(--mov-x, 0px), var(--mov-y, 0px));
+      transition: transform 0.6s ease-out; /* Regreso súper suave */
+    }
+
+    /* El motor del levitado constante */
+    @keyframes levitadoPatron {
+      0% { background-position: 0px 0px; }
+      100% { background-position: 60px 80px; }
     }
 
     .app-container {
@@ -56,6 +90,8 @@
       display: flex;
       flex-direction: column;
       min-height: 100vh;
+      position: relative; 
+      z-index: 10;
     }
 
     /* --- ENCABEZADO ESTILO SISTEMA DE DISEÑO --- */
@@ -83,7 +119,14 @@
 
     /* --- CLASE COMPARTIDA PARA TODAS LAS TARJETAS (Hereda de .card del index) --- */
     .tarjeta-base {
-      background-color: var(--crema-oscuro);
+
+      /* Usamos RGBA para hacer transparente el fondo (es tu color crema-oscuro al 85% de visibilidad) */
+      background-color: rgba(223, 213, 196, 0.2); 
+      
+      /* El toque mágico: difumina ligeramente el patrón de fondo justo detrás de la tarjeta */
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px); /* Para que funcione en Safari/iPhone */
+
       border-radius: 20px;
       border: 1px solid var(--linea-suave);
       box-shadow: 0 15px 35px var(--sombra-suave);
@@ -304,6 +347,47 @@
       line-height: 1.4;
     }
 
+    /* --- ESCENARIO Y CARRUSEL 3D --- */
+    .escenario-3d {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1; /* Capa intermedia: Sobre el patrón (-2) y bajo el contenido (10) */
+      pointer-events: none;
+      display: flex;
+      align-items: center; 
+      overflow: hidden;
+    }
+
+    .carrusel-3d {
+      display: flex;
+      align-items: center;
+      gap: 40vw; /* Espacio de separación entre los juguetes */
+      padding: 0 20vw;
+      /* Animación que va de izquierda a derecha sin parar */
+      animation: paseoJuguetes 40s ease-in-out infinite alternate;
+    }
+
+    .modelo-fondo {
+      width: 250px;
+      height: 350px;
+      opacity: 0.25; /* Transparencia para que parezcan marcas de agua */
+    }
+
+    /* Ajuste de tamaños para computadores */
+    @media (min-width: 768px) {
+      .carrusel-3d { gap: 25vw; }
+      .modelo-fondo { width: 350px; height: 450px; }
+    }
+
+    /* El recorrido del carrusel */
+    @keyframes paseoJuguetes {
+      0% { transform: translateX(20vw); } /* Empieza empujado hacia la derecha */
+      100% { transform: translateX(-150vw); } /* Termina arrastrado hacia la izquierda */
+    }
+
   </style>
 </head>
 <body>
@@ -431,7 +515,28 @@
         btn.textContent = "Ocultar texto ↑";
       }
     }
+
+
+    
   </script>
 
+  <!-- Interacción Parallax del Patrón de Fondo -->
+  <script>
+    document.addEventListener('mousemove', (e) => {
+      // Calcula la posición del mouse y la traduce en un empujón sutil (máximo 30px)
+      const x = (e.clientX / window.innerWidth - 0.5) * 30;
+      const y = (e.clientY / window.innerHeight - 0.5) * 30;
+      
+      // Inyecta el movimiento al CSS
+      document.body.style.setProperty('--mov-x', `${x}px`);
+      document.body.style.setProperty('--mov-y', `${y}px`);
+    });
+
+    // Cuando el usuario saca el cursor de la web, el patrón regresa a su centro natural
+    document.addEventListener('mouseleave', () => {
+      document.body.style.setProperty('--mov-x', '0px');
+      document.body.style.setProperty('--mov-y', '0px');
+    });
+  </script>
 </body>
 </html>

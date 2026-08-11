@@ -344,6 +344,31 @@ h1, h2, h3, h4, .marca {
       font-size: 0.85em;
       text-align: center;
     }
+
+    /* --- ANIMACIÓN DE ONDAS DEL BOTÓN --- */
+    .ondas-ritmo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      height: 100%;
+      transform: translate(-50%, -50%);
+      border-radius: 40px;
+      border: 2px solid var(--terracota-suave);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+
+    /* Solo se activa cuando tiene la clase reproduciendo */
+    .btn-musica.reproduciendo .ondas-ritmo {
+      animation: latidoMusical 1.5s infinite ease-out;
+    }
+
+    @keyframes latidoMusical {
+      0% { width: 100%; height: 100%; opacity: 0.8; border-width: 2px; }
+      100% { width: 180%; height: 180%; opacity: 0; border-width: 0px; }
+    }
   </style>
 </head>
 <body>
@@ -445,7 +470,9 @@ h1, h2, h3, h4, .marca {
   </audio>
 
   <!-- Botón de música elegante con SVGs -->
+  <!-- Botón de música elegante con ondas y SVGs -->
   <button id="btn-musica" class="btn-musica" onclick="toggleMusica()">
+    <div class="ondas-ritmo"></div>
     <div class="icono-musica">
       <!-- Ícono Play -->
       <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
@@ -464,11 +491,10 @@ h1, h2, h3, h4, .marca {
   </footer>
 
   <script>
-// --- RUTAS DE LOS KITS (OCULTAS EN BASE64) ---
-    // Clave real que escribe el usuario: "DCJTC01" -> Codificado: "RENKVEMwMQ=="
+    // --- RUTAS DE LOS KITS (OCULTAS EN BASE64) ---
     const kitsOcultos = {
       "RENKVEMwMQ==": "juegos-tipicos/juegos-tipicos.html",
-      "RENQT1IwMQ==": "pueblos/pueblos.html"           // ejemplo futuro
+      "RENQT1IwMQ==": "pueblos/pueblos.html"           
     };
 
     // --- LÓGICA DEL CÓDIGO ---
@@ -484,7 +510,6 @@ h1, h2, h3, h4, .marca {
     ];
 
     inputReal.addEventListener("input", (e) => {
-      // Limpia todo lo que no sea letra o número (el guion visual se ignora)
       let val = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, "");
       if (val.length > 7) val = val.substring(0, 7);
       e.target.value = val;
@@ -505,8 +530,6 @@ h1, h2, h3, h4, .marca {
 
     function ingresar() {
       const codigoLimpio = inputReal.value.trim().toUpperCase();
-      
-      // Transformamos el código limpio a Base64 para compararlo
       const codigoCodificado = btoa(codigoLimpio);
 
       if (kitsOcultos[codigoCodificado]) {
@@ -522,55 +545,70 @@ h1, h2, h3, h4, .marca {
       }
     }
 
-// --- CONTROL DE MÚSICA ---
+    // --- LECTOR DE AUDIO EN TIEMPO REAL ---
+    let audioCtx, analizador, datosFrecuencia;
+    let nivelRitmo = 0;
+
+    function iniciarLectorAudio() {
+      if (audioCtx) return; 
+      const audio = document.getElementById("musica-fondo");
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analizador = audioCtx.createAnalyser();
+      const fuente = audioCtx.createMediaElementSource(audio);
+      fuente.connect(analizador);
+      analizador.connect(audioCtx.destination);
+      analizador.fftSize = 256;
+      datosFrecuencia = new Uint8Array(analizador.frequencyBinCount);
+    }
+
+    // --- CONTROL DE MÚSICA ---
     let reproduciendo = false;
-    let timeoutTexto; // Variable para guardar el temporizador
+    let timeoutTexto; 
     
     function toggleMusica() {
+      iniciarLectorAudio();
+      
       const audio = document.getElementById("musica-fondo");
       const btnMusica = document.getElementById("btn-musica");
       const iconPlay = document.getElementById("icon-play");
       const iconPause = document.getElementById("icon-pause");
       
-      // 1. Cambiamos estado de reproducción e íconos
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
       if (reproduciendo) {
         audio.pause();
         iconPlay.style.display = "block";
         iconPause.style.display = "none";
+        btnMusica.classList.remove("reproduciendo");
         reproduciendo = false;
       } else {
         audio.play();
         iconPlay.style.display = "none";
         iconPause.style.display = "block";
+        btnMusica.classList.add("reproduciendo");
         reproduciendo = true;
       }
 
-      // 2. Lógica de expansión temporal (celulares y clic general)
-      btnMusica.classList.add("activo"); // Expande el botón
-      
-      // Limpiamos cualquier temporizador previo (por si hace doble clic rápido)
+      btnMusica.classList.add("activo"); 
       clearTimeout(timeoutTexto);
       
-      // Programamos que se esconda después de 3 segundos (3000 milisegundos)
       timeoutTexto = setTimeout(() => {
         btnMusica.classList.remove("activo");
       }, 3000);
     }
 
-// --- ANIMACIÓN FLUIDA DE TARJETAS (SOLO MÓVIL) ---
+    // --- ANIMACIÓN FLUIDA DE TARJETAS (SOLO MÓVIL) ---
     const sliderTarjetas = document.querySelector('.features-grid');
     let animacionPausada = false;
     let direccionScroll = 1;
-    let velocidadScroll = 0.5; // Velocidad suave
-    let posicionExacta = 0; // El secreto para la fluidez sub-píxel
+    let velocidadScroll = 0.5; 
+    let posicionExacta = 0; 
 
     function autoScrollTarjetas() {
       if (window.innerWidth < 480 && !animacionPausada) {
-        // Sumamos los decimales para un movimiento perfecto
         posicionExacta += velocidadScroll * direccionScroll;
         sliderTarjetas.scrollLeft = posicionExacta;
         
-        // Detectar si tocamos los bordes para devolvernos
         if (sliderTarjetas.scrollLeft >= (sliderTarjetas.scrollWidth - sliderTarjetas.clientWidth - 1)) {
           direccionScroll = -1;
         } else if (sliderTarjetas.scrollLeft <= 0) {
@@ -580,38 +618,32 @@ h1, h2, h3, h4, .marca {
       requestAnimationFrame(autoScrollTarjetas);
     }
 
-    // Arrancamos la magia
     autoScrollTarjetas();
 
-    // Si pones el dedo, se pausa instantáneamente
     sliderTarjetas.addEventListener('touchstart', () => {
       animacionPausada = true;
     }, {passive: true});
 
-    // Mientras deslizas con el dedo, sincronizamos la posición exacta
-    // para que no dé un salto brusco al soltar
     sliderTarjetas.addEventListener('scroll', () => {
       if (animacionPausada) {
         posicionExacta = sliderTarjetas.scrollLeft;
       }
     }, {passive: true});
 
-    // Cuando sueltas el dedo, espera un segundito y retoma el vaivén
     sliderTarjetas.addEventListener('touchend', () => {
       setTimeout(() => {
         animacionPausada = false;
-        posicionExacta = sliderTarjetas.scrollLeft; // Reajusta
+        posicionExacta = sliderTarjetas.scrollLeft; 
         
-        // Decide inteligentemente hacia dónde retomar el movimiento
         if (sliderTarjetas.scrollLeft >= (sliderTarjetas.scrollWidth - sliderTarjetas.clientWidth) / 2) {
-           direccionScroll = -1; // Hacia la izquierda si estás más cerca del final
+           direccionScroll = -1; 
         } else {
-           direccionScroll = 1;  // Hacia la derecha si estás al principio
+           direccionScroll = 1;  
         }
       }, 1500);
     }, {passive: true});
 
-    // --- MAGIA DEL FONDO INTERACTIVO (DESTELLOS ✦) ---
+    // --- MAGIA DEL FONDO INTERACTIVO (DESTELLOS MUSICALES ✦) ---
     const canvas = document.getElementById('bg-canvas');
     const ctx = canvas.getContext('2d');
     let width, height;
@@ -670,6 +702,16 @@ h1, h2, h3, h4, .marca {
       ctx.clearRect(0, 0, width, height);
       let time = Date.now();
       
+      // Leer la música en tiempo real
+      if (reproduciendo && analizador) {
+        analizador.getByteFrequencyData(datosFrecuencia);
+        let suma = 0;
+        for (let i = 0; i < datosFrecuencia.length; i++) suma += datosFrecuencia[i];
+        nivelRitmo = suma / datosFrecuencia.length; 
+      } else {
+        nivelRitmo *= 0.9; 
+      }
+      
       sparks.forEach(spark => {
         let waveX = Math.sin(spark.y * 0.02 + time * 0.0008) * 4;
         let waveY = Math.cos(spark.x * 0.02 + time * 0.0012) * 4;
@@ -681,27 +723,27 @@ h1, h2, h3, h4, .marca {
         let dy = mouse.y - baseY;
         let distance = Math.sqrt(dx * dx + dy * dy);
         
-        // 1. Radio de acción más pequeño
         let maxDist = 90; 
         
-        let currentSize = spark.baseSize;
+        // Inyectamos el nivel de la música al tamaño de las estrellas
+        let impactoMusical = nivelRitmo * 0.04;
+        let currentSize = spark.baseSize + impactoMusical;
+        
         let finalX = baseX;
         let finalY = baseY;
         let color = '';
 
         if (distance < maxDist) {
           let force = (maxDist - distance) / maxDist;
-          
-          // 2. Empuje y crecimiento mucho más sutiles
           finalX -= (dx / distance) * force * 4; 
           finalY -= (dy / distance) * force * 4;
-          currentSize = spark.baseSize + force * 1.5; 
+          currentSize += force * 1.5; 
           
-          // 3. Color terracota más translúcido
           color = `rgba(192, 108, 85, ${0.15 + force * 0.25})`;
         } else {
           let opacity = 0.15 + Math.sin(spark.x * 0.05 + time * 0.001) * 0.2;
-          color = `rgba(217, 197, 178, ${Math.max(0.05, opacity)})`; 
+          // Las estrellas brillan sutilmente más fuerte con el ritmo
+          color = `rgba(217, 197, 178, ${Math.max(0.05, opacity + (nivelRitmo * 0.002))})`; 
         }
         
         drawSparkle(finalX, finalY, currentSize, color);

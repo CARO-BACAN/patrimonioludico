@@ -465,23 +465,31 @@ h1, h2, h3, h4, .marca {
 
   </div>
 
-<audio id="musica-fondo" loop>
-    <source src="audio/guitarra.mp3" type="audio/mpeg">
-  </audio>
+<audio id="musica-fondo" loop crossorigin="anonymous">
+  <source src="audio/guitarra.mp3" type="audio/mpeg">
+</audio>
 
   <!-- Botón de música elegante con SVGs -->
+  <!-- Botón de música elegante con ondas y SVGs -->
   <!-- Botón de música elegante con ondas y SVGs -->
   <button id="btn-musica" class="btn-musica" onclick="toggleMusica()">
     <div class="ondas-ritmo"></div>
     <div class="icono-musica">
-      <!-- Ícono Play -->
-      <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-        <path d="M8 5v14l11-7z"/>
+      
+      <!-- Ícono Nota Musical (Apagado) -->
+      <svg id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22">
+        <path d="M9 18V5l12-2v13"></path>
+        <circle cx="6" cy="18" r="3"></circle>
+        <circle cx="18" cy="16" r="3"></circle>
       </svg>
-      <!-- Ícono Pausa (Oculto por defecto) -->
-      <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" width="22" height="22" style="display: none;">
-        <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+      
+      <!-- Ícono Altavoz Sonando (Encendido) -->
+      <svg id="icon-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="22" height="22" style="display: none;">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
       </svg>
+
     </div>
     <span class="credito-musica">Música por Katherine Cea</span>
   </button>
@@ -726,7 +734,7 @@ h1, h2, h3, h4, .marca {
         let maxDist = 90; 
         
         // Inyectamos el nivel de la música al tamaño de las estrellas
-        let impactoMusical = nivelRitmo * 0.04;
+        let impactoMusical = nivelRitmo * 0.20;
         let currentSize = spark.baseSize + impactoMusical;
         
         let finalX = baseX;

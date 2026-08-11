@@ -710,13 +710,16 @@ h1, h2, h3, h4, .marca {
       ctx.clearRect(0, 0, width, height);
       let time = Date.now();
       
-      // Leer la música en tiempo real
+      let nivelRitmo = 0;
+      
+      // Promediamos solo las frecuencias bajas/medias de la guitarra para un pulso estable
       if (reproduciendo && analizador) {
         analizador.getByteFrequencyData(datosFrecuencia);
         let suma = 0;
-        for (let i = 0; i < datosFrecuencia.length; i++) suma += datosFrecuencia[i];
-        nivelRitmo = suma / datosFrecuencia.length; 
+        for (let i = 0; i < 40; i++) suma += datosFrecuencia[i];
+        nivelRitmo = suma / 40; 
       } else {
+        // Hace que las estrellas bajen suavemente si pausas la música
         nivelRitmo *= 0.9; 
       }
       
@@ -731,14 +734,22 @@ h1, h2, h3, h4, .marca {
         let dy = mouse.y - baseY;
         let distance = Math.sqrt(dx * dx + dy * dy);
         
-        let maxDist = 90; 
+        // --- ARREGLO: ONDA GLOBAL CON MÁS FUERZA ABAJO ---
         
-        // Inyectamos el nivel de la música al tamaño de las estrellas
-        let impactoMusical = nivelRitmo * 0.20;
+        // Calculamos la posición: 0 es el techo y 1 es el suelo de tu web
+        let proporcionY = spark.y / height; 
+        
+        // Todas las estrellas crecen con la música para no dejar el techo vacío
+        let impactoMusical = nivelRitmo * 0.04;
+        
+        // El empuje hacia arriba es drásticamente más fuerte en la base
+        let saltoArriba = nivelRitmo * (proporcionY * proporcionY) * 0.4; 
+        
         let currentSize = spark.baseSize + impactoMusical;
-        
         let finalX = baseX;
-        let finalY = baseY;
+        let finalY = baseY - saltoArriba; 
+        
+        let maxDist = 90; 
         let color = '';
 
         if (distance < maxDist) {
@@ -750,7 +761,6 @@ h1, h2, h3, h4, .marca {
           color = `rgba(192, 108, 85, ${0.15 + force * 0.25})`;
         } else {
           let opacity = 0.15 + Math.sin(spark.x * 0.05 + time * 0.001) * 0.2;
-          // Las estrellas brillan sutilmente más fuerte con el ritmo
           color = `rgba(217, 197, 178, ${Math.max(0.05, opacity + (nivelRitmo * 0.002))})`; 
         }
         
